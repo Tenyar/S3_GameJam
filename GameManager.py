@@ -6,8 +6,12 @@ class GameManager():
         if GameManager.instance != None : 
             raise Exception("instance already exists")
         GameManager.instance = self
-        # self.Player = Player()
+        self.Player = Player()
 # on simule un singleton
+
+    def isRunning():
+        return True
+
     
         
 
