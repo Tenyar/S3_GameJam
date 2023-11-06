@@ -1,7 +1,12 @@
 import Task
 
 class TaskManager:
+    instance = None
+    #simulation d'un singleton : Si on essaye de créer une nouvelle instance de TaskManager, une exception est levée    
     def __init__(self) -> None:
+        if TaskManager.instance != None : 
+            raise Exception("instance already exists")
+        TaskManager.instance = self
         self.tasks = []
 
     def getTaskAmount(self):
