@@ -21,3 +21,5 @@ while gameManager.isRunning():
     dt = clock.tick(60)
     gameManager.update(dt)
     pygame.display.flip()
+
+pygame.quit()
