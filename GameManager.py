@@ -1,4 +1,5 @@
-import pygame 
+import pygame
+import Player
 
 class GameManager():
     instance = None
@@ -6,7 +7,7 @@ class GameManager():
         if GameManager.instance != None : 
             raise Exception("instance already exists")
         GameManager.instance = self
-        self.Player = Player()
+        self.Player = Player.Player()
 # on simule un singleton
 
     def isRunning():
