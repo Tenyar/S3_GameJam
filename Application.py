@@ -1,6 +1,7 @@
 import pygame
 import GameManager
 import sys
+import Player
 
 print("\n\n\n", sys.argv, "\n\n\n")
 
@@ -11,6 +12,10 @@ screen = pygame.display.set_mode((1280, 720))
 clock = pygame.time.Clock()
 dt = 0
 
+player = Player.Player(25, 25)
+player_group = pygame.sprite.Group()
+player_group.add(player)
+
 gameManager = GameManager.GameManager()
 while gameManager.isRunning():
     # On regarde si l'évenement "quitter la fenêtre" est déclenché.
@@ -20,6 +25,5 @@ while gameManager.isRunning():
 
     dt = clock.tick(60)
     gameManager.update(dt)
+    player_group.draw(screen)
     pygame.display.flip()
-
-pygame.quit()
