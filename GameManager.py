@@ -10,10 +10,11 @@ class GameManager():
         self.Player = Player.Player(50, 50)
 # on simule un singleton
 
-    def isRunning():
+    def isRunning(self):
         return True
 
-    
+    def update(self, i):
+        return
         
 
 
