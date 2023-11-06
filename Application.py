@@ -9,7 +9,7 @@ clock = pygame.time.Clock()
 dt = 0
 
 gameManager = GameManager.GameManager()
-while gameManager.isrunning():
+while gameManager.isRunning():
     dt = clock.tick(60)
     gameManager.update(dt)
     pygame.display.flip()
