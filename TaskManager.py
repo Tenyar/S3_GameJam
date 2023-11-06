@@ -11,3 +11,6 @@ class TaskManager:
         self.tasks[0].addProgress(amount)
         if self.tasks[0].isFinished():
             self.tasks.pop(0)
+
+    def addTask(self):
+        self.tasks.append(Task())
