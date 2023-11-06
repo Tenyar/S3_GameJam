@@ -1,5 +1,8 @@
 import pygame
 import GameManager
+import sys
+
+print("\n\n\n", sys.argv, "\n\n\n")
 
 pygame.init
 pygame.font.init()
