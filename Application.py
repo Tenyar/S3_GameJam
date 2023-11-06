@@ -2,10 +2,10 @@ import pygame
 import GameManager.py
 
 pygame.init
-pg.font.init()
-pg.display.set_caption("PONG")
+pygame.font.init()
+pygame.display.set_caption("PONG")
 screen = pygame.display.set_mode((1280, 720))
-clock = pg.time.Clock()
+clock = pygame.time.Clock()
 dt = 0
 
 gameManager = GameManager()
