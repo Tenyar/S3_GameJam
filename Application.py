@@ -8,7 +8,7 @@ screen = pygame.display.set_mode((1280, 720))
 clock = pygame.time.Clock()
 dt = 0
 
-gameManager = GameManager()
+gameManager = GameManager.GameManager()
 while gameManager.isrunning():
     dt = clock.tick(60)
     gameManager.update(dt)
