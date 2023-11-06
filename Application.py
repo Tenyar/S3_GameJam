@@ -1,5 +1,5 @@
 import pygame
-import GameManager.py
+import GameManager
 
 pygame.init
 pygame.font.init()
