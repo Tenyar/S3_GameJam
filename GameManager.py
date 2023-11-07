@@ -48,6 +48,7 @@ class GameManager():
         return True
 
     def update(self, deltaTime):
+        self.hungerBar.subProgress(0.1/deltaTime)
         self.screen.blit(self.background, (0,0))
         self.taskManager.draw(self.screen)
         self.playerGroup.draw(self.screen)
