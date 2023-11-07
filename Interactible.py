@@ -45,21 +45,21 @@ class Interactible(pg.sprite.Sprite):
     def showKey(self, keyValue):
         print("Appuyez sur : ", pg.key.name(keyValue))
 
+if __name__ == "__main__":
+    pg.init
+    pg.font.init()
+    pg.display.set_caption("survie")
+    screen = pg.display.set_mode((1920,1080))
+    clock = pg.time.Clock()
+    dt = 0
 
-pg.init
-pg.font.init()
-pg.display.set_caption("survie")
-screen = pg.display.set_mode((1920,1080))
-clock = pg.time.Clock()
-dt = 0
+    pc = Interactible(width=1, height=1, position=pg.Vector2(0, 0))
+    pc.startInteraction()
+    while(True):
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
 
-pc = Interactible(width=1, height=1, position=pg.Vector2(0, 0))
-pc.startInteraction()
-while(True):
-    for event in pg.event.get():
-        if event.type == pg.QUIT:
-            pg.quit()
-
-    pc.update()
-    dt = clock.tick(60)
-    pg.display.flip()
+        pc.update()
+        dt = clock.tick(60)
+        pg.display.flip()
