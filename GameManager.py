@@ -24,7 +24,7 @@ class GameManager():
         self.playerGroup = pygame.sprite.Group()
         self.playerGroup.add(self.player)
 
-        self.interactibles = [Interactible.Interactible(self, 100, 100, pygame.Vector2(100,100))]
+        self.interactibles = [Interactible.Interactible(self, 10, 10, pygame.Vector2(100,0))]
         self.interactibleGroup = pygame.sprite.Group()
         self.interactibleGroup.add(self.interactibles[0])
 
