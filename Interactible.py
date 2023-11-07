@@ -22,11 +22,13 @@ class Interactible(pg.sprite.Sprite):
         self.isActive = True
         self.currentKey = self.choseRandomKey()
         self.showKey(self.currentKey)
-            
+    
+    def stopInteraction(self):
+        print("Fin de l'interaction")
+        self.isActive = False
 
     def update(self):
         if(not self.isActive):
-            print("Not active")
             return
         if(self.progress > 100):#TaskManager.currentTask.size
             print("End of interaction")

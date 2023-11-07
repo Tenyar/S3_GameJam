@@ -23,11 +23,13 @@ class Player(pygame.sprite.Sprite):
         # Dessine un rectangle autour de l'image qui prendra comme grandeur la width et height de l'image
         self.rect = self.image.get_rect()
 
+        self.screenWidth = pygame.display.get_surface().get_width()
+        self.screenHeight = pygame.display.get_surface().get_height()
+
 
     def update(self):
 
         # Récupération de l'instance d'application
-        app = None#Application.Application.instance
 
         # Prise d'informations sur les touches saisit.
         keys = pygame.key.get_pressed()
@@ -36,33 +38,33 @@ class Player(pygame.sprite.Sprite):
         # True si la touche K_LEFT ou autre touche est déclenché.
         if keys[pygame.K_LEFT]:
             if self.pos_x > 0:
-                self.pos_x -= 3
+                self.pos_x -= 12
                 
                 # pour des pixels de différence avec la vélocité
                 # Si il dépasse à gauche 
-                if self.pos_x < (app.screenWidth - (self.width)):
-                    self.pos_x = (app.screenWidth - (self.width))
+                #if self.pos_x < (self.screenWidth - (self.width)):
+                #    self.pos_x = (self.screenWidth - (self.width))
 
         if keys[pygame.K_RIGHT]:
-            if self.pos_x < (app.screenWidth - self.width): # Prise de la taille de la fenêtre et du joueur en compte
+            if self.pos_x < (self.screenWidth - self.width): # Prise de la taille de la fenêtre et du joueur en compte
                 self.pos_x += 3
 
-                if self.pos_x > (app.screenWidth - (self.width)):
-                    self.pos_x = (app.screenWidth - (self.width))
+                if self.pos_x > (self.screenWidth - (self.width)):
+                    self.pos_x = (self.screenWidth - (self.width))
 
         if keys[pygame.K_DOWN]:
-            if self.pos_y < (app.screenHeight - (self.height)):
+            if self.pos_y < (self.screenHeight - (self.height)):
                 self.pos_y += 3
 
-                if self.pos_y > (app.screenHeight - (self.height)):
-                    self.pos_y = (app.screenHeight - (self.height))
+                if self.pos_y > (self.screenHeight - (self.height)):
+                    self.pos_y = (self.screenHeight - (self.height))
 
         if keys[pygame.K_UP]:
             if self.pos_y > 0:
                 self.pos_y -= 3
 
-                if self.pos_y < (app.screenHeight - (self.height)):
-                    self.pos_y = (app.screenHeight - (self.height))
+                #if self.pos_y < (self.screenHeight - (self.height)):
+                #    self.pos_y = (self.screenHeight - (self.height))
 
         self.rect.topleft = (self.pos_x, self.pos_y) # définit la position du player dans la scène # Set the top-left position of the player's rect
 
