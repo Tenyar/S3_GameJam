@@ -18,13 +18,13 @@ class GameManager():
         return True
 
     def update(self):
-        TaskManager.draw()
+        self.taskManager.draw()
         
     def stopInteractions(self):
         print("Interaction stopped")
         #
 
-    def tryInteraction(self):
-        """for i in self.interactibles:
-            if ((self.player.rect.x - i.rect.x)**2 + (self.player.rect.y - i.rect.y)**2)**0.5 <= 50:
-                print("interaction avec ", i)"""
+    def tryInteraction(self, position : pygame.Vector2):
+        for i in self.interactibles:
+            if position in i:
+                print("interaction avec ", i)
