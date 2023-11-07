@@ -7,9 +7,7 @@ class Task ():
     def __init__(self) -> None:
         self.completionPercentage = 0
         self.taskContainer = pygame.image.load("Art/Task_ProofOfConcept.png")
-        self.position = pygame.Vector2
-        self.position.x = 0
-        self.position.y = 5
+        self.position = pygame.Vector2(0, 5)
 
     def addProgress(self, amount : float):
         self.completionPercentage += amount

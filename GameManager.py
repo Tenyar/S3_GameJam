@@ -20,9 +20,11 @@ class GameManager():
         self.playerGroup = pygame.sprite.Group()
         self.playerGroup.add(self.player)
 
-        self.interactibles = [Interactible.Interactible(10, 10, pygame.Vector2(0,0))]
+        self.interactibles = [Interactible.Interactible(self, 100, 100, pygame.Vector2(100,100))]
         self.interactibleGroup = pygame.sprite.Group()
         self.interactibleGroup.add(self.interactibles[0])
+
+        self.taskManager.addTask()
 
     def isRunning(self):
         return True
@@ -31,6 +33,7 @@ class GameManager():
         self.taskManager.draw(self.screen)
         self.playerGroup.draw(self.screen)
         self.interactibleGroup.draw(self.screen)
+        self.tryInteraction(self.player.rect)
         self.player.update()
 
         for item in self.interactibles:
@@ -40,7 +43,12 @@ class GameManager():
         for item in self.interactibles:
             item.stopInteraction()
 
-    def tryInteraction(self, position : pygame.Vector2):
+    def tryInteraction(self, position : pygame.Rect):
         for item in self.interactibles:
-            if item.rect.collidepoint(position.x, position.y):
-                print("interaction avec ", item)
+            if item.rect.colliderect(position):
+                if not item.isActive:
+                    #print("interaction avec ", item)
+                    item.startInteraction()
+            elif item.isActive:
+                item.stopInteraction()
+            

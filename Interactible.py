@@ -4,20 +4,24 @@ from pygame.sprite import AbstractGroup
 
 class Interactible(pg.sprite.Sprite):
 
-    def __init__(self, width, height, position : pg.Vector2) -> None:
+    def __init__(self, gameManager, width, height, position : pg.Vector2) -> None:
         super().__init__()
+
+        self.gameManager = gameManager
+        self.taskManager = self.gameManager.taskManager
 
         self.image = pg.Surface([width,height])
         self.position = position
         self.rect = pg.Rect(position.x, position.y, width, height)
 
         self.isActive = False
-        self.progress = 0
         self.currentKey = pg.K_0
         self.progressPerSuccess = 25
 
 
     def startInteraction(self):
+        if len(self.taskManager.tasks) == 0:
+            return
         print("Début de l'interaction")
         self.isActive = True
         self.currentKey = self.choseRandomKey()
@@ -28,18 +32,19 @@ class Interactible(pg.sprite.Sprite):
         self.isActive = False
 
     def update(self):
+        if len(self.taskManager.tasks) == 0:
+            return
+        currentTask = self.taskManager.getCurrentTask()
         if(not self.isActive):
             return
-        if(self.progress > 100):#TaskManager.currentTask.size
-            print("End of interaction")
-            self.isActive = False
-    
 
         if pg.key.get_pressed()[self.currentKey]:
             self.currentKey = self.choseRandomKey()
             self.showKey(self.currentKey)
-            self.progress += self.progressPerSuccess
-
+            if currentTask.addProgress(self.progressPerSuccess):
+                print("End of interaction")
+                self.isActive = False
+                return
 
     def choseRandomKey(self) -> int:
         return random.choice([pg.K_a, pg.K_b, pg.K_c, pg.K_d])
