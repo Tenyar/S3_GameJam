@@ -24,7 +24,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
 
-    def move(self):
+    def update(self):
 
         # Récupération de l'instance d'application
         app = None#Application.Application.instance
