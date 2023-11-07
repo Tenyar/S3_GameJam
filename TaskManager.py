@@ -8,6 +8,7 @@ class TaskManager:
             raise Exception("instance already exists")
         TaskManager.instance = self
         self.tasks = []
+        
 
     def getTaskAmount(self):
         return len(self.tasks)
@@ -17,8 +18,13 @@ class TaskManager:
         
 
     def addTask(self):
-        self.tasks.append(Task())
+        self.tasks.append(Task.Task())
     
     def deleteFinishedTask(self):
         if self.tasks[0].isFinished():
             self.tasks.pop(0)
+
+    def draw(self):
+        for task in self.tasks :
+            #task.draw()
+            return
