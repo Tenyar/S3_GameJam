@@ -10,15 +10,22 @@ class GameManager():
         if GameManager.instance != None : 
             raise Exception("instance already exists")
         GameManager.instance = self
-        taskManager = TaskManager.TaskManager()
-        self.player = Player.Player(50, 50)
+
+        self.taskManager = TaskManager.TaskManager()
+
+        # Création d'un player
+        self.player = Player.Player(50, 110, 0, 0, (255, 75, 25))
+        self.player_group = pygame.sprite.Group()
+        self.player_group.add(self.player)
+
         self.interactibles = [Interactible.Interactible(10, 10)]
 
     def isRunning(self):
         return True
 
-    def update(self):
-        self.taskManager.draw()
+    def update(self,screen : pygame.display):
+        self.taskManager.draw(screen)
+        #self.player_group.draw(self.screen)
         
     def stopInteractions(self):
         print("Interaction stopped")
@@ -26,5 +33,5 @@ class GameManager():
 
     def tryInteraction(self, position : pygame.Vector2):
         for i in self.interactibles:
-            if position in i:
+            if i.rect.collidepoint(position.x, position.y):
                 print("interaction avec ", i)

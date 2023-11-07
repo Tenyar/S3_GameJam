@@ -1,4 +1,5 @@
 import Task
+import pygame
 
 class TaskManager:
     instance = None
@@ -24,7 +25,7 @@ class TaskManager:
         if self.tasks[0].isFinished():
             self.tasks.pop(0)
 
-    def draw(self):
+    def draw(self,screen : pygame.display,):
         for task in self.tasks :
-            #task.draw()
-            return
+            task.draw(screen)
+            task.position.y += 2

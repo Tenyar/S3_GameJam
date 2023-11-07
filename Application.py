@@ -1,38 +1,67 @@
 import pygame
 import GameManager
 import sys
-import Player
 
-print("\n\n\n", sys.argv, "\n\n\n")
+## Patterne Singleton
+class Application(object):
+    # Variable static (de classe)
+    instance = None
 
-pygame.init
-pygame.font.init()
-pygame.display.set_caption("survie")
-screen = pygame.display.set_mode((1920,1080))
-clock = pygame.time.Clock()
-dt = 0
+    # On créer une instance de la classe seulement si il n'y en à pas d'autres sinon on retourne celui déjà créée. 
+    def __init__(self, screenWidth, screenHeight):
+        if Application.instance != None:
+            raise Exception("Une instace existe déjà !")
+        else:
+            # attributs du l'instance "application"
+            Application.instance = self
+            self.screenWidth = screenWidth
+            self.screenHeight = screenHeight
+            # Taille de l'écran
+            self.screen = pygame.display.set_mode((screenWidth, screenHeight))
+            # Nom de la fenêtre
+            pygame.display.set_caption("JamingJamers")
+            self.deltaTime = 0
+            # Gère temps entre deux images
+            self.clock = pygame.time.Clock()
 
-player = Player.Player(25, 25)
-player_group = pygame.sprite.Group()
-player_group.add(player)
-background_image = pygame.image.load("Art/Background.png")
-background_image = pygame.transform.scale(background_image,screen.get_size())
-task = pygame.image.load("Art/Task_ProofOfConcept.png")
+    def startGame(self):
+        gameManager = GameManager.GameManager()
+        while gameManager.isRunning():
+            
+            # On regarde si l'évenement "quitter la fenêtre" est déclenché.
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    #print("******** Position finale du player **********")
+                    #print("X : ", player.pos_x)
+                    #print("Y : ", player.pos_y)
+                    pygame.quit()
+                    sys.exit()
 
+            # remplir la scène(fenêtre) à chaque fois qu'il change de position
+            self.screen.fill((255,255,255))
 
-gameManager = GameManager.GameManager()
-while gameManager.isRunning():
-    # On regarde si l'évenement "quitter la fenêtre" est déclenché.
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
+            self.deltaTime = self.clock.tick(60)
+            gameManager.update(self.screen)
+            pygame.display.update() # Update les données sur la fenêtre
+            pygame.display.flip()
 
-    player_group.draw(screen)
-    screen.blit(task,(0,0))
-    screen.blit(background_image,(0,0))
+        
+
+def main():
+    print("\n\n\n", sys.argv, "\n\n\n")
+
+    # Initialisation de pygame
+    pygame.init()
     
-    
+    # Initalisation du module de gestion des fonts
+    pygame.font.init()
 
-    dt = clock.tick(60)
-    gameManager.update(dt)
-    pygame.display.flip()
+    # Création du singleton
+    app = Application(1280, 720)
+
+    app.startGame()
+
+    # pygame.quit()
+    # sys.exit()
+
+main()
