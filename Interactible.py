@@ -38,12 +38,12 @@ class Interactible(pg.sprite.Sprite):
             return
 
         if pg.key.get_pressed()[self.currentKey]:
-            self.currentKey = self.choseRandomKey()
-            self.showKey(self.currentKey)
             if self.taskManager.progressCurrentTask(self.progressPerSuccess):
                 print("End of interaction")
                 self.isActive = False
                 return
+            self.currentKey = self.choseRandomKey()
+            self.showKey(self.currentKey)
 
     def choseRandomKey(self) -> int:
         return random.choice([pg.K_a, pg.K_b, pg.K_c, pg.K_d])
