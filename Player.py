@@ -16,18 +16,16 @@ class Player(pygame.sprite.Sprite):
         self.color = color
 
         self.speed = 0.3
-        # Initialise l'objet qu'on hérite
-        super().__init__()
-        # Créer une image
-        self.image = pygame.Surface([width,height])
-        # Remplie l'image d'une couleur
-        self.image.fill(color) # une couleur = rgb soit (..., ..., ...)
-        # Dessine un rectangle autour de l'image qui prendra comme grandeur la width et height de l'image
-        self.rect = self.image.get_rect()
 
         self.screenWidth = pygame.display.get_surface().get_width()
         self.screenHeight = pygame.display.get_surface().get_height()
 
+        # Initialise l'objet qu'on hérite
+        super().__init__()
+        self.image = pygame.image.load("Art/Player_Single.png")
+        self.image = pygame.transform.scale(self.image, (28*self.screenWidth/256, 18*self.screenHeight/144))
+        # Dessine un rectangle autour de l'image qui prendra comme grandeur la width et height de l'image
+        self.rect = self.image.get_rect()
 
     def update(self, deltaTime, interactibleGroup, backgroundRect : pygame.Rect):
 
@@ -92,7 +90,3 @@ class Player(pygame.sprite.Sprite):
                 #    self.pos_y = (self.screenHeight - (self.height))
 
         self.rect.topleft = (self.pos_x, self.pos_y) # définit la position du player dans la scène # Set the top-left position of the player's rect
-
-    # Destructeur (rarement utile)
-    def __del__(self):
-        print("Player détruit")
