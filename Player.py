@@ -14,6 +14,8 @@ class Player(pygame.sprite.Sprite):
         self.pos_x = pos_x
         self.pos_y = pos_y
         self.color = color
+
+        self.speed = 0.3
         # Initialise l'objet qu'on hérite
         super().__init__()
         # Créer une image
@@ -27,7 +29,7 @@ class Player(pygame.sprite.Sprite):
         self.screenHeight = pygame.display.get_surface().get_height()
 
 
-    def update(self):
+    def update(self, deltaTime):
 
         # Récupération de l'instance d'application
 
@@ -38,7 +40,7 @@ class Player(pygame.sprite.Sprite):
         # True si la touche K_LEFT ou autre touche est déclenché.
         if keys[pygame.K_LEFT]:
             if self.pos_x > 0:
-                self.pos_x -= 12
+                self.pos_x -= self.speed * deltaTime
                 
                 # pour des pixels de différence avec la vélocité
                 # Si il dépasse à gauche 
@@ -47,21 +49,21 @@ class Player(pygame.sprite.Sprite):
 
         if keys[pygame.K_RIGHT]:
             if self.pos_x < (self.screenWidth - self.width): # Prise de la taille de la fenêtre et du joueur en compte
-                self.pos_x += 3
+                self.pos_x += self.speed * deltaTime
 
                 if self.pos_x > (self.screenWidth - (self.width)):
                     self.pos_x = (self.screenWidth - (self.width))
 
         if keys[pygame.K_DOWN]:
             if self.pos_y < (self.screenHeight - (self.height)):
-                self.pos_y += 3
+                self.pos_y += self.speed * deltaTime
 
                 if self.pos_y > (self.screenHeight - (self.height)):
                     self.pos_y = (self.screenHeight - (self.height))
 
         if keys[pygame.K_UP]:
             if self.pos_y > 0:
-                self.pos_y -= 3
+                self.pos_y -= self.speed * deltaTime
 
                 #if self.pos_y < (self.screenHeight - (self.height)):
                 #    self.pos_y = (self.screenHeight - (self.height))
