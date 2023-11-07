@@ -29,9 +29,32 @@ class Player(pygame.sprite.Sprite):
         self.screenHeight = pygame.display.get_surface().get_height()
 
 
-    def update(self, deltaTime):
+    def update(self, deltaTime, interactibleGroup, backgroundRect : pygame.Rect):
 
-        # Récupération de l'instance d'application
+        # Check collisions
+        doesContactTop = False
+        doesContactBottom = False
+        doesContactLeft = False
+        doesContactRight = False
+
+        if self.rect.clipline(backgroundRect.topleft, backgroundRect.topright):
+            doesContactTop = True
+        if self.rect.clipline(backgroundRect.bottomleft, backgroundRect.bottomright):
+            doesContactBottom = True
+        if self.rect.clipline(backgroundRect.topleft, backgroundRect.bottomleft):
+            doesContactLeft = True
+        if self.rect.clipline(backgroundRect.topright, backgroundRect.bottomright):
+            doesContactRight = True
+
+        for sprite in interactibleGroup:
+            if sprite.rect.clipline(self.rect.topleft, self.rect.topright):
+                doesContactTop = True
+            if sprite.rect.clipline(self.rect.bottomleft, self.rect.bottomright):
+                doesContactBottom = True
+            if sprite.rect.clipline(self.rect.topleft, self.rect.bottomleft):
+                doesContactLeft = True
+            if sprite.rect.clipline(self.rect.topright, self.rect.bottomright):
+                doesContactRight = True
 
         # Prise d'informations sur les touches saisit.
         keys = pygame.key.get_pressed()
@@ -39,7 +62,7 @@ class Player(pygame.sprite.Sprite):
         # Check dans la structure de donnée sur une clé K_LEFT ou autre
         # True si la touche K_LEFT ou autre touche est déclenché.
         if keys[pygame.K_LEFT]:
-            if self.pos_x > 0:
+            if not doesContactLeft:
                 self.pos_x -= self.speed * deltaTime
                 
                 # pour des pixels de différence avec la vélocité
@@ -48,21 +71,21 @@ class Player(pygame.sprite.Sprite):
                 #    self.pos_x = (self.screenWidth - (self.width))
 
         if keys[pygame.K_RIGHT]:
-            if self.pos_x < (self.screenWidth - self.width): # Prise de la taille de la fenêtre et du joueur en compte
+            if not doesContactRight: # Prise de la taille de la fenêtre et du joueur en compte
                 self.pos_x += self.speed * deltaTime
 
                 if self.pos_x > (self.screenWidth - (self.width)):
                     self.pos_x = (self.screenWidth - (self.width))
 
         if keys[pygame.K_DOWN]:
-            if self.pos_y < (self.screenHeight - (self.height)):
+            if not doesContactBottom:
                 self.pos_y += self.speed * deltaTime
 
                 if self.pos_y > (self.screenHeight - (self.height)):
                     self.pos_y = (self.screenHeight - (self.height))
 
         if keys[pygame.K_UP]:
-            if self.pos_y > 0:
+            if not doesContactTop:
                 self.pos_y -= self.speed * deltaTime
 
                 #if self.pos_y < (self.screenHeight - (self.height)):

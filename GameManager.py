@@ -39,7 +39,9 @@ class GameManager():
         self.playerGroup.draw(self.screen)
         self.interactibleGroup.draw(self.screen)
         self.tryInteraction(self.player.rect)
-        self.player.update(deltaTime)
+        self.player.update(deltaTime, self.interactibleGroup, pygame.Rect(90, 20, 1105, 610))
+
+        #pygame.draw.rect(self.background, (0,0,0), pygame.Rect(90, 20, 1105, 610))
 
         for item in self.interactibles:
             item.update()
