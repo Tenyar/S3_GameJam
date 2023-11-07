@@ -1,5 +1,5 @@
 import pygame
-import Application
+#import Application
 
 
 screen = pygame.display.set_mode((1920,1080))
@@ -15,7 +15,7 @@ class Task ():
         return self.completionPercentage >= 100
     
     def draw(self, position : pygame.Vector2):
-        Application.screen.blit(self.taskContainer,(position.x,position.y))
+        return#Application.screen.blit(self.taskContainer,(position.x,position.y))
         
 
         

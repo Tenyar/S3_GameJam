@@ -10,8 +10,14 @@ class GameManager():
         if GameManager.instance != None : 
             raise Exception("instance already exists")
         GameManager.instance = self
+
         self.taskManager = TaskManager.TaskManager()
-        self.player = Player.Player(50, 50)
+
+        # Création d'un player
+        self.player = Player.Player(50, 110, 0, 0, (255, 75, 25))
+        self.player_group = pygame.sprite.Group()
+        self.player_group.add(self.player)
+
         self.interactibles = [Interactible.Interactible(10, 10)]
 
     def isRunning(self):
@@ -19,6 +25,7 @@ class GameManager():
 
     def update(self):
         self.taskManager.draw()
+        #self.player_group.draw(self.screen)
         
     def stopInteractions(self):
         print("Interaction stopped")

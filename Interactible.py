@@ -3,8 +3,8 @@ from pygame.sprite import AbstractGroup
 
 class Interactible(pygame.sprite.Sprite):
 
-    def __init__(self, *groups: AbstractGroup, width, height) -> None:
-        super().__init__(*groups)
+    def __init__(self, width, height) -> None:
+        super().__init__()
 
         self.image = pygame.Surface([width,height])
 
