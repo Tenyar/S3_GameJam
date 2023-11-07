@@ -26,5 +26,5 @@ class GameManager():
 
     def tryInteraction(self, position : pygame.Vector2):
         for i in self.interactibles:
-            if position in i:
+            if i.rect.collidepoint(position.x, position.y):
                 print("interaction avec ", i)
