@@ -14,8 +14,11 @@ class TaskManager:
     
     def progressCurrentTask(self, amount : float):
         self.tasks[0].addProgress(amount)
-        if self.tasks[0].isFinished():
-            self.tasks.pop(0)
+        
 
     def addTask(self):
         self.tasks.append(Task())
+    
+    def deleteFinishedTask(self):
+        if self.tasks[0].isFinished():
+            self.tasks.pop(0)
