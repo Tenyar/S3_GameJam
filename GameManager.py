@@ -10,7 +10,7 @@ class GameManager():
         if GameManager.instance != None : 
             raise Exception("instance already exists")
         GameManager.instance = self
-        taskManager = TaskManager.TaskManager()
+        self.taskManager = TaskManager.TaskManager()
         self.player = Player.Player(50, 50)
         self.interactibles = [Interactible.Interactible(10, 10)]
 
