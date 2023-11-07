@@ -23,8 +23,8 @@ class GameManager():
     def isRunning(self):
         return True
 
-    def update(self):
-        self.taskManager.draw()
+    def update(self,screen : pygame.display):
+        self.taskManager.draw(screen)
         #self.player_group.draw(self.screen)
         
     def stopInteractions(self):
