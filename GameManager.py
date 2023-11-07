@@ -15,6 +15,10 @@ class GameManager():
 
         self.screen = screen
 
+        # Création du background et affichage de celui ci sur la fenêtre
+        image = pygame.image.load("Art/Background.png")
+        self.background = pygame.transform.scale(image, (1280, 720))
+
         # Création d'un player
         self.player = Player.Player(50, 110, 0, 0, (255, 75, 25))
         self.playerGroup = pygame.sprite.Group()
@@ -29,6 +33,7 @@ class GameManager():
 
     def update(self):
         self.taskManager.draw(self.screen)
+        self.screen.blit(self.background, (0,0))
         self.playerGroup.draw(self.screen)
         self.interactibleGroup.draw(self.screen)
         self.player.update()
