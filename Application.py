@@ -26,8 +26,8 @@ class Application(object):
 
     def startGame(self):
         gameManager = GameManager.GameManager(self.screen)
+
         while gameManager.isRunning():
-            
             # On regarde si l'évenement "quitter la fenêtre" est déclenché.
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -41,7 +41,7 @@ class Application(object):
             self.screen.fill((255,255,255))
 
             self.deltaTime = self.clock.tick(60)
-            gameManager.update()
+            gameManager.update(self.deltaTime)
             pygame.display.update() # Update les données sur la fenêtre
             pygame.display.flip()
 

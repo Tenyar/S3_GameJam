@@ -31,12 +31,12 @@ class GameManager():
     def isRunning(self):
         return True
 
-    def update(self):
-        self.taskManager.draw(self.screen)
+    def update(self, deltaTime):
         self.screen.blit(self.background, (0,0))
+        self.taskManager.draw(self.screen)
         self.playerGroup.draw(self.screen)
         self.interactibleGroup.draw(self.screen)
-        self.player.update()
+        self.player.update(deltaTime)
 
         for item in self.interactibles:
             item.update()
