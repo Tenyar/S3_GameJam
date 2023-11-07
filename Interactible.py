@@ -45,6 +45,10 @@ class Interactible(pg.sprite.Sprite):
     def showKey(self, keyValue):
         print("Appuyez sur : ", pg.key.name(keyValue))
 
+
+
+
+
 if __name__ == "__main__":
     pg.init
     pg.font.init()
