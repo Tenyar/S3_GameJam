@@ -34,14 +34,13 @@ class Interactible(pg.sprite.Sprite):
     def update(self):
         if len(self.taskManager.tasks) == 0:
             return
-        currentTask = self.taskManager.getCurrentTask()
         if(not self.isActive):
             return
 
         if pg.key.get_pressed()[self.currentKey]:
             self.currentKey = self.choseRandomKey()
             self.showKey(self.currentKey)
-            if currentTask.addProgress(self.progressPerSuccess):
+            if self.taskManager.progressCurrentTask(self.progressPerSuccess):
                 print("End of interaction")
                 self.isActive = False
                 return
