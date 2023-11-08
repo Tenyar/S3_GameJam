@@ -25,7 +25,7 @@ class TaskManager:
     
     def update(self, deltaTime):
 
-        self.counter -= deltaTime * self.parameters["taskSpeed"]
+        self.counter -= deltaTime * self.parameters["tasksSpeed"]
 
         if(self.counter <= 0 and self.getTaskAmount() < self.maxTask):
             self.counterCurrentMax = max(self.counterCurrentMax - self.counterDecreaseStep, self.counterClampMin)
