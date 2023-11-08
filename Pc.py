@@ -19,35 +19,35 @@ class Pc(pg.sprite.Sprite):
         self.rectKey = pg.Rect(position.x, position.y -50, 69, 64)
 
 
-        # Liste des touches du clavier (hashmap / dico)
-        self.keyboard = {
-            pg.K_a: 0,
-            pg.K_b: 1,
-            pg.K_c: 2,
-            pg.K_d: 3,
-            pg.K_e: 4,
-            pg.K_f: 5,
-            pg.K_g: 6,
-            pg.K_h: 7,
-            pg.K_i: 8,
-            pg.K_j: 9,
-            pg.K_k: 10,
-            pg.K_l: 11,
-            pg.K_m: 12,
-            pg.K_n: 13,
-            pg.K_o: 14,
-            pg.K_p: 15,
-            pg.K_q: 16,
-            pg.K_r: 17,
-            pg.K_s: 18,
-            pg.K_t: 19,
-            pg.K_u: 20,
-            pg.K_v: 21,
-            pg.K_w: 22,
-            pg.K_x: 23,
-            pg.K_y: 24,
-            pg.K_z: 25
-        }
+        # Liste des touches du clavier
+        self.keyboard = [
+            pg.K_a,
+            pg.K_b,
+            pg.K_c,
+            pg.K_d,
+            pg.K_e,
+            pg.K_f,
+            pg.K_g,
+            pg.K_h,
+            pg.K_i,
+            pg.K_j,
+            pg.K_k,
+            pg.K_l,
+            pg.K_m,
+            pg.K_n,
+            pg.K_o,
+            pg.K_p,
+            pg.K_q,
+            pg.K_r,
+            pg.K_s,
+            pg.K_t,
+            pg.K_u,
+            pg.K_v,
+            pg.K_w,
+            pg.K_x,
+            pg.K_y,
+            pg.K_z
+        ]
 
         # Attributs conditionnel
         self.isActive = False
@@ -72,11 +72,10 @@ class Pc(pg.sprite.Sprite):
     def update(self, dt):
         
         if self.isActive:
+            # Récupère l'index(position) de la touche dans la liste (parcours implicite)
+            result = self.keyboard.index(self.currentKey)
             # Affichage du rectangle créée pour les touches si tâche activé
-            for clef in self.keyboard:
-                if clef == self.currentKey:
-                    print(self.keyboard[clef])
-                    self.screenUser.blit(self.imageKey, self.rectKey)
+            self.screenUser.blit(self.imageKey, self.rectKey)
 
         self.imageKey.blit(self.screenUser, (self.position.x, self.position.y -50 ))
         if not self.isActive:
@@ -110,9 +109,6 @@ class Pc(pg.sprite.Sprite):
 
     def showKey(self, keyValue):
         print("Appuyez sur : ", pg.key.name(keyValue))
-
-
-
 
 
 if __name__ == "__main__":
