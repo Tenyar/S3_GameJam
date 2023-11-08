@@ -1,5 +1,4 @@
 import pygame as pg
-from pygame.sprite import AbstractGroup
 
 class Lit(pg.sprite.Sprite):
     def __init__(self, gameManager, width, height, position : pg.Vector2) -> None:
