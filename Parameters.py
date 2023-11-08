@@ -45,13 +45,13 @@ class Parameters:
         elif self.parameters["gamesDifficulty"] < 0:
             self.parameters["gamesDifficulty"] = 0
         
-        self.parameters["litSpeed"] *= self.parameters["tasksDifficulty"]/2
-        self.parameters["litSpeedDifference"] *= self.parameters["tasksDifficulty"]/2
-        self.parameters["litSleepBarProgressPerSuccess"] *= self.parameters["tasksDifficulty"]/2
-        self.parameters["litZoneLength"] *= self.parameters["tasksDifficulty"]/2
-        self.parameters["socialZoneLength"] *= self.parameters["tasksDifficulty"]/2
-        self.parameters["socialSpeed"] *= self.parameters["tasksDifficulty"]/2
-        self.parameters["socialBarProgressPerSuccess"] *= self.parameters["tasksDifficulty"]/2
-        self.parameters["socialTimeAfterError"] *= self.parameters["tasksDifficulty"]/2
+        self.parameters["litSpeed"] *= self.parameters["gamesDifficulty"]/2
+        self.parameters["litSpeedDifference"] *= self.parameters["gamesDifficulty"]/2
+        self.parameters["litSleepBarProgressPerSuccess"] *= self.parameters["gamesDifficulty"]/2
+        self.parameters["litZoneLength"] *= self.parameters["gamesDifficulty"]/2
+        self.parameters["socialZoneLength"] *= self.parameters["gamesDifficulty"]/2
+        self.parameters["socialSpeed"] *= self.parameters["gamesDifficulty"]/2
+        self.parameters["socialBarProgressPerSuccess"] *= self.parameters["gamesDifficulty"]/2
+        self.parameters["socialTimeAfterError"] *= self.parameters["gamesDifficulty"]/2
 
 
