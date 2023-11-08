@@ -15,7 +15,7 @@ class GameManager():
             raise Exception("instance already exists")
         GameManager.instance = self
 
-        self.taskManager = TaskManager.TaskManager(10, 0.5, 5, 10)
+        self.taskManager = TaskManager.TaskManager(5, 0.5, 5, 5)
 
         self.screen = screen
 
@@ -55,8 +55,8 @@ class GameManager():
         self.sleep = 100
 
         # Création des barres de progressions
-        self.socialBar = ProgressBar.ProgressBar("SocialBar", 300, 15, pygame.Vector2(50,50), (255,25,50))
-        self.sleepBar = ProgressBar.ProgressBar("SleepBar", 300, 15, pygame.Vector2(50,25), (0,0,200))
+        self.socialBar = ProgressBar.ProgressBar("SocialBar", 300, 15, pygame.Vector2(50,50), (255,25,50), True)
+        self.sleepBar = ProgressBar.ProgressBar("SleepBar", 300, 15, pygame.Vector2(50,25), (0,0,200), True)
         # Group des barres de progression
         self.barGroup = pygame.sprite.Group()
         self.barGroup.add(self.sleepBar)
@@ -71,8 +71,6 @@ class GameManager():
         self.interactibleGroup = pygame.sprite.Group()
         for key in self.interactibles:
             self.interactibleGroup.add(self.interactibles[key])
-
-        self.taskManager.addTask()
 
     def isRunning(self):
         return True
@@ -165,15 +163,15 @@ class GameManager():
         self.taskManager.draw(self.screen)
         #pygame.draw.rect(self.background, (0,0,0), pygame.Rect(90, 20, 1105, 610))
 
-        for item in self.interactibles:
+        for item in self.interactibles.values(): # .values() pour accéder à l'objet directement.
             item.update(deltaTime)
         
     def stopInteractions(self):
-        for item in self.interactibles:
+        for item in self.interactibles.values():
             item.stopInteraction()
 
     def tryInteraction(self, position : pygame.Rect):
-        for item in self.interactibles:
+        for item in self.interactibles.values():
             if item.rect.colliderect(position):
                 if not item.isActive:
                     #print("interaction avec ", item)
