@@ -56,7 +56,7 @@ class Social(pg.sprite.Sprite):
                     else:
                         self.timeBeforeNextTry = 1000
                 
-        print(self.social.getProg(), self.pos)
+        print(self.pos)
 
 
 
