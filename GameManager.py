@@ -165,7 +165,7 @@ class GameManager():
         self.taskManager.draw(self.screen)
         #pygame.draw.rect(self.background, (0,0,0), pygame.Rect(90, 20, 1105, 610))
 
-        for item in self.interactibles.values(): # .values() pour accéder à l'objet directement
+        for item in self.interactibles.values(): # .values() pour accéder à l'objet directement.
             item.update(deltaTime)
         
     def stopInteractions(self):
