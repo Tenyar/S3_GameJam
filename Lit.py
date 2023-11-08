@@ -21,20 +21,25 @@ class Lit(pg.sprite.Sprite):
         self.progress = 0.02
         self.zonePos = 50 # En pourcentage %
         self.zoneLength = 10 # En pourcentage %
+        self.position = position
 
+        self.imageProgLen = 300 # Width de la bar principale du miniJeu
+
+        # Création du rectangle principale du jeu
+        # Chargement de l'image
+        self.imageJeuUI = pg.image.load("Art/Bed_Bar.png").convert()
+        self.imageJeuUI.set_colorkey(0)
+        self.imageJeuUI = self.imageJeuUI.convert_alpha()
+        self.JeuUI = pg.transform.scale(self.imageJeuUI, ((self.imageJeuUI.get_width() * 5) + 5, self.imageJeuUI.get_height() * 5))
+        self.rectJeu =  pg.Rect(self.imageProgLen -5, self.position.y - 80, self.width, self.height)
+        
         # Creation des rectangles
         self.image = pg.Surface([width,height])
-        self.position = position
         self.rect = pg.Rect(position.x, position.y, width, height)
 
     def startInteraction(self):
         # Rend aléatoire la position de la bar succès dans un intervale entre [50 et 80] avec un pas de 10 pixel
         self.zonePos = random.randrange(50, 80, 10)
-        # Création du rectangle principale du jeu
-        self.imageProgLen = 300 # Width de la bar principale du miniJeu
-        self.imageProg = pg.Surface([self.imageProgLen,20])
-        self.rectProg = pg.Rect(self.imageProgLen, self.position.y - 75, self.width, self.height)
-        self.imageProg.fill("green")
 
         # Calcul de la longer de la bar success
         barWidth = (self.zoneLength / 100) * self.imageProgLen
@@ -42,9 +47,9 @@ class Lit(pg.sprite.Sprite):
         barPos = ((self.zonePos / 100) * self.imageProgLen) - (barWidth/2)
         # Longueur de l'image selon la zone ou le joueur doit rester
         self.imageSuccess = pg.Surface([barWidth,20])
-        # Position du rect de l'image rouge selon l'attribut barPos
+        # Position du rect success selon l'attribut barPos
         self.rectSuccess = pg.Rect(self.imageProgLen + barPos, self.position.y - 75, barWidth, self.height)
-        self.imageSuccess.fill("red")
+        self.imageSuccess.fill((141,72,194))
 
         print("Début de l'interaction")
         self.isActive = True
@@ -61,9 +66,9 @@ class Lit(pg.sprite.Sprite):
             print(barPos)
             self.imagePlayer = pg.Surface([5,30])
             self.rectPlayer = pg.Rect(self.imageProgLen + barPos, self.position.y - 80, 5, 30) # Height - 5(offset pour démarquer la barPlayer de l'ensemble des bar du miniJeu)
-            self.imagePlayer.fill("yellow")
+            self.imagePlayer.fill("white")
 
-            self.screenUser.blit(self.imageProg, self.rectProg)
+            self.screenUser.blit(self.JeuUI, self.rectJeu)
             self.screenUser.blit(self.imageSuccess, self.rectSuccess)
             self.screenUser.blit(self.imagePlayer, self.rectPlayer)
 
@@ -80,7 +85,7 @@ class Lit(pg.sprite.Sprite):
             self.pos += self.speed * self.speedDifference * dt
             if(self.pos > 100):
                 self.pos = 100
-                
+
             if self.zonePos - self.zoneLength/2 < self.pos < self.zonePos + self.zoneLength/2:
                 self.sleep.addProgress(self.progress*dt)
         print(self.pos)
