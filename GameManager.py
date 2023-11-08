@@ -1,5 +1,3 @@
-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
-
 import pygame
 import Player
 import Pc
