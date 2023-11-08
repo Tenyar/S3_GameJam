@@ -12,7 +12,7 @@ class GameManager():
             raise Exception("instance already exists")
         GameManager.instance = self
 
-        self.taskManager = TaskManager.TaskManager()
+        self.taskManager = TaskManager.TaskManager(10, 0.5, 5, 10)
 
         self.screen = screen
 
@@ -54,6 +54,7 @@ class GameManager():
         self.playerGroup.draw(self.screen)
         self.interactibleGroup.draw(self.screen)
         self.tryInteraction(self.player.rect)
+        self.taskManager.update(deltaTime)
         self.player.update(deltaTime, self.interactibleGroup, pygame.Rect(90, 20, 1105, 610))
 
         self.screen.blit(self.foreground, (0,0))
