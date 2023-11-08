@@ -7,6 +7,7 @@ class Task (pygame.sprite.Sprite):
     def __init__(self,title : str) -> None:
         # initialise l'objet dont on hérite
         super().__init__()
+        # pourcentage de completion de la barre : utilisé pour l'affichage de l'avancement de la tâche
         self.completionPercentage = 0
         # image de fond de la tâche
         self.image = pygame.image.load("Art/Task.png")
@@ -22,7 +23,9 @@ class Task (pygame.sprite.Sprite):
         self.progressBarPosition = pygame.Vector2(self.rect.bottomleft)
         self.progressBarPosition.x += 1.5*4
         # on crée une barre de progression associée à la tâche
-        self.progressBar = ProgressBar.ProgressBar(title, 36*4, 2*4, self.progressBarPosition, (0,255,0),False)
+        self.progressBar = ProgressBar.ProgressBar(title, 36*4, 2*4, self.progressBarPosition, (100, 100, 100),False)
+
+        self.title = title
 
          
 
@@ -39,4 +42,5 @@ class Task (pygame.sprite.Sprite):
         # dessin de la barre de progression de la tâche
         self.progressBar.update(screen)
         # dessing de font
-        font.render('Test', False, (0,0,0))
+        text = font.render(self.title, False, (0,0,0))
+        screen.blit(text, (self.position.x + 10, self.position.y + 10))
