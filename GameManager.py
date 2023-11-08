@@ -40,7 +40,7 @@ class GameManager():
         self.barGroup.add(self.sleepBar)
         self.barGroup.add(self.hungerBar)
 
-        self.interactibles = [Interactible.Interactible(self, 10, 10, pygame.Vector2(100,0))]
+        self.interactibles = [Interactible.Interactible(self, 50, 50, pygame.Vector2(500,100))]
         self.interactibleGroup = pygame.sprite.Group()
         self.interactibleGroup.add(self.interactibles[0])
 
@@ -63,7 +63,7 @@ class GameManager():
         #pygame.draw.rect(self.background, (0,0,0), pygame.Rect(90, 20, 1105, 610))
 
         for item in self.interactibles:
-            item.update()
+            item.update(deltaTime)
         
     def stopInteractions(self):
         for item in self.interactibles:

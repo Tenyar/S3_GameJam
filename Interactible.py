@@ -15,8 +15,10 @@ class Interactible(pg.sprite.Sprite):
         self.rect = pg.Rect(position.x, position.y, width, height)
 
         self.isActive = False
-        self.currentKey = pg.K_0
-        self.progressPerSuccess = 25
+        self.currentKey = pg.K_ESCAPE
+        self.oldKey = pg.K_ESCAPE
+        self.progressPerSuccess = 20
+        self.timeBeforeNextTry = 0
 
 
     def startInteraction(self):
@@ -31,22 +33,35 @@ class Interactible(pg.sprite.Sprite):
         print("Fin de l'interaction")
         self.isActive = False
 
-    def update(self):
+    def update(self, dt):
+        if not self.isActive:
+            return
         if len(self.taskManager.tasks) == 0:
             return
-        if(not self.isActive):
+        if self.timeBeforeNextTry > 0:
+            self.timeBeforeNextTry -= dt
             return
-
-        if pg.key.get_pressed()[self.currentKey]:
-            if self.taskManager.progressCurrentTask(self.progressPerSuccess):
-                print("End of interaction")
-                self.isActive = False
-                return
+        
+        self.showKey(self.currentKey)
+        keys = pg.key.get_pressed()
+        '''for event in pg.event.get():
+                if event.type == pg.KEYDOWN:
+                    keys = pg.key.get_pressed()
+                    self.oldKey = event.key'''
+        if keys.count(True) == 1 and not keys[self.oldKey] and not keys[pg.K_LEFT] and not keys[pg.K_RIGHT] and not keys[pg.K_UP] and not keys[pg.K_DOWN]:
+            if keys[self.currentKey]:
+                if self.taskManager.progressCurrentTask(self.progressPerSuccess):
+                    print("End of interaction")
+                    self.isActive = False
+            else:
+                self.timeBeforeNextTry = 1000
+            self.oldKey = self.currentKey
             self.currentKey = self.choseRandomKey()
-            self.showKey(self.currentKey)
+        elif keys.count(True) == 0:
+            self.oldKey = pg.K_ESCAPE
 
     def choseRandomKey(self) -> int:
-        return random.choice([pg.K_a, pg.K_b, pg.K_c, pg.K_d])
+        return random.choice([pg.K_a, pg.K_b, pg.K_c, pg.K_d, pg.K_e, pg.K_f, pg.K_g, pg.K_h, pg.K_i, pg.K_j, pg.K_k, pg.K_l, pg.K_m, pg.K_n, pg.K_o, pg.K_p, pg.K_q, pg.K_r, pg.K_s, pg.K_t, pg.K_u, pg.K_v, pg.K_w, pg.K_x, pg.K_y, pg.K_z])
 
     def showKey(self, keyValue):
         print("Appuyez sur : ", pg.key.name(keyValue))
