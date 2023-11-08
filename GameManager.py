@@ -74,9 +74,9 @@ class GameManager():
 
         # Liste des objets interactibles
         self.interactibles = {
-            "Pc": Pc.Pc(self, 50, 50, pygame.Vector2(500,100), self.screen, parameters),
-            "Lit": Lit.Lit(self, 50, 50, pygame.Vector2(250,250), self.screen, parameters),
-            "Social": Social.Social(self, 50, 50, pygame.Vector2(1250, 500), parameters)
+            "Pc": Pc.Pc(self, 180, 50, pygame.Vector2(440,131), self.screen, parameters),
+            "Lit": Lit.Lit(self, 270, 110, pygame.Vector2(150,580), self.screen, parameters),
+            "Social": Social.Social(self, 50, 50, pygame.Vector2(950, 200), parameters)
         }
         # On ajoute chaque objet dans un groupe
         self.interactibleGroup = pygame.sprite.Group()
@@ -102,20 +102,20 @@ class GameManager():
         self.socialBar.subProgress(self.parameters["socialBarSpeed"] * deltaTime)
         self.sleepBar.subProgress(self.parameters["sleepBarSpeed"] * deltaTime)
 
-        self.screen.blit(self.background, (0,0))
-        self.playerGroup.draw(self.screen)
-        self.interactibleGroup.draw(self.screen)
         self.tryInteraction(self.player.rect)
         self.taskManager.update(deltaTime)
         self.player.update(deltaTime, self.interactibleGroup, pygame.Rect(150, 45, 980, 635))
 
+        self.screen.blit(self.background, (0,0))
+        self.playerGroup.draw(self.screen)
         self.screen.blit(self.bedBase, (0, 720 - self.bedBase.get_height()))
         self.screen.blit(self.treeShadow, (1280 - self.treeShadow.get_width(), 720 - self.treeShadow.get_height()))
         self.screen.blit(self.tree, (1280 - self.tree.get_width(), 720 - self.tree.get_height()))
         self.screen.blit(self.foreground, (0,0))
-
-        self.barGroup.update(self.screen)
+        self.interactibleGroup.draw(self.screen)
         self.taskManager.draw(self.screen)
+        self.barGroup.update(self.screen)
+
 
         #Rect dedebugging
         #pygame.draw.rect(self.foreground, (100,0,0), pygame.Rect(150, 45, 980, 635))
