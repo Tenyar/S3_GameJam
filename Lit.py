@@ -15,7 +15,7 @@ class Lit(pg.sprite.Sprite):
         self.pos = 0
         self.speed = 0.1
         self.speedDifference = 3
-        self.progress = 0.03
+        self.progress = 0.02
         self.zonePos = 50
         self.zoneLength = 10
 
@@ -36,7 +36,7 @@ class Lit(pg.sprite.Sprite):
         if(self.pos < 0):
             self.pos = 0
         elif(self.pos > 100):
-            self.pos
+            self.pos = 100
 
         keys = pg.key.get_pressed()
         if keys[pg.K_SPACE]:
