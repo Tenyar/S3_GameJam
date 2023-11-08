@@ -40,14 +40,22 @@ class GameManager():
         # Joue la musique 
         mixer.music.play()
 
-        # Création du background et affichage de celui ci sur la fenêtre
+        # Création du background et du foreground
         backgroundImage = pygame.image.load("Art/Background.png")
         self.background = pygame.transform.scale(backgroundImage, (1280, 720))
         foregroundImage = pygame.image.load("Art/Foreground.png")
         self.foreground = pygame.transform.scale(foregroundImage, (1280, 720))
+        treeImage = pygame.image.load("Art/Arbre.png")
+        self.tree = pygame.transform.scale(treeImage, (1280, 720))
+        treeShadowImage = pygame.image.load("Art/Arbre_Ombre.png")
+        self.treeShadow = pygame.transform.scale(treeShadowImage, (1280, 720))
+        bedBaseImage = pygame.image.load("Art/Lit_Base.png")
+        self.bedBase = pygame.transform.scale(bedBaseImage, (1280, 720))
+        tablesImage = pygame.image.load("Art/Tables.png")
+        self.tables = pygame.transform.scale(tablesImage, (1280, 720))
 
         # Création d'un player
-        self.player = Player.Player(50, 110, 0, 0, (255, 75, 25), parameters)
+        self.player = Player.Player(50, 110, 300, 500, (255, 75, 25), parameters)
         # Group du joueur
         self.playerGroup = pygame.sprite.Group()
         self.playerGroup.add(self.player)
@@ -66,14 +74,24 @@ class GameManager():
 
         # Liste des objets interactibles
         self.interactibles = {
-            "Pc": Pc.Pc(self, 50, 50, pygame.Vector2(500,100), parameters),
-            "Lit": Lit.Lit(self, 50, 50, pygame.Vector2(250,250), parameters),
-            "Social": Social.Social(self, 50, 50, pygame.Vector2(1250, 500), parameters)
+            #"Pc": Pc.Pc(self, 50, 50, pygame.Vector2(500,100), parameters),
+            #"Lit": Lit.Lit(self, 50, 50, pygame.Vector2(250,250), parameters),
+            #"Social": Social.Social(self, 50, 50, pygame.Vector2(1250, 500), parameters)
+            "Pc": Pc.Pc(self, 50, 50, pygame.Vector2(500,100)),
+            "Lit": Lit.Lit(self, 50, 50, pygame.Vector2(250,250)),
+            "Social": Social.Social(self, 50, 50, pygame.Vector2(1250, 500))
         }
         # On ajoute chaque objet dans un groupe
         self.interactibleGroup = pygame.sprite.Group()
         for key in self.interactibles:
             self.interactibleGroup.add(self.interactibles[key])
+
+        #Ajout de collisions supplémentaires
+        collisionTables = pygame.sprite.Sprite()
+        collisionTables.rect = pygame.Rect(0, 0, 650, 180)
+        collisionTables.image = pygame.Surface((0,0))
+        collisionTables.image.set_alpha(0)
+        self.interactibleGroup.add(collisionTables)
 
     def isRunning(self):
         return True
@@ -81,18 +99,26 @@ class GameManager():
     def update(self, deltaTime):
         self.socialBar.subProgress(0.01 * deltaTime)
         self.sleepBar.subProgress(0.01 * deltaTime)
+
         self.screen.blit(self.background, (0,0))
+        self.screen.blit(self.tables, (0, 0))
+
         self.playerGroup.draw(self.screen)
         self.interactibleGroup.draw(self.screen)
         self.tryInteraction(self.player.rect)
         self.taskManager.update(deltaTime)
-        self.player.update(deltaTime, self.interactibleGroup, pygame.Rect(90, 20, 1105, 610))
+        self.player.update(deltaTime, self.interactibleGroup, pygame.Rect(150, 45, 980, 635))
 
+        self.screen.blit(self.bedBase, (0, 0))
+        self.screen.blit(self.treeShadow, (0, 0))
+        self.screen.blit(self.tree, (0, 0))
         self.screen.blit(self.foreground, (0,0))
 
         self.barGroup.update(self.screen)
         self.taskManager.draw(self.screen)
-        #pygame.draw.rect(self.background, (0,0,0), pygame.Rect(90, 20, 1105, 610))
+
+        #Rect dedebugging
+        #pygame.draw.rect(self.foreground, (100,0,0), pygame.Rect(150, 45, 980, 635))
 
         for item in self.interactibles.values():
             item.update(deltaTime)
