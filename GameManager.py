@@ -1,6 +1,7 @@
 import pygame
 import Player
 import Pc
+import Lit
 import TaskManager
 import ProgressBar
 from pygame import mixer
@@ -60,9 +61,12 @@ class GameManager():
         self.barGroup.add(self.sleepBar)
         self.barGroup.add(self.hungerBar)
 
+        # Liste des objets interactibles
         self.interactibles = {
             "Pc": Pc.Pc(self, 50, 50, pygame.Vector2(500,100)),
+            "Lit": Lit.Lit(self, 50, 50, pygame.Vector2(250,250))
         }
+        # On ajoute chaque objet dans un groupe
         self.interactibleGroup = pygame.sprite.Group()
         for key in self.interactibles:
             self.interactibleGroup.add(self.interactibles[key])
