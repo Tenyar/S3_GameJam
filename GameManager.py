@@ -74,7 +74,7 @@ class GameManager():
         # Liste des objets interactibles
         self.interactibles = {
             "Pc": Pc.Pc(self, 50, 50, pygame.Vector2(500,100), self.screen, parameters),
-            "Lit": Lit.Lit(self, 50, 50, pygame.Vector2(250,250), parameters),
+            "Lit": Lit.Lit(self, 50, 50, pygame.Vector2(250,250), self.screen, parameters),
             "Social": Social.Social(self, 50, 50, pygame.Vector2(1250, 500), parameters)
         }
         # On ajoute chaque objet dans un groupe
@@ -90,6 +90,8 @@ class GameManager():
         self.interactibleGroup.add(collisionTables)
 
     def isRunning(self):
+        if self.sleepBar.getProg() <= 0 or self.socialBar.getProg() <= 0 or self.taskManager.isTaskTimeOut:
+            return False
         return True
 
     def update(self, deltaTime):
