@@ -6,6 +6,7 @@ import TaskManager
 import ProgressBar
 from pygame import mixer
 
+
 class GameManager():
     instance = None
     def __init__(self, screen : pygame.display) -> None:
@@ -54,8 +55,8 @@ class GameManager():
         self.sleep = 100
 
         # Création des barres de progressions
-        self.sleepBar = ProgressBar.ProgressBar("SleepBar", 300, 15, pygame.Vector2(50,25), (0,0,200),False)
-        self.hungerBar = ProgressBar.ProgressBar("HungerBar", 300, 15, pygame.Vector2(50,50), (255,75,25),False)
+        self.socialBar = ProgressBar.ProgressBar("SocialBar", 300, 15, pygame.Vector2(50,50), (255,25,50))
+        self.sleepBar = ProgressBar.ProgressBar("SleepBar", 300, 15, pygame.Vector2(50,25), (0,0,200))
         # Group des barres de progression
         self.barGroup = pygame.sprite.Group()
         self.barGroup.add(self.sleepBar)
@@ -71,7 +72,7 @@ class GameManager():
         for key in self.interactibles:
             self.interactibleGroup.add(self.interactibles[key])
 
-        self.taskManager.addTask("SAE")
+        self.taskManager.addTask()
 
     def isRunning(self):
         return True
@@ -101,6 +102,78 @@ class GameManager():
 
     def tryInteraction(self, position : pygame.Rect):
         for item in self.interactibles.values(): # .values() qui accède via la clé à la valeur, l'objet en l'occurence
+            if item.rect.colliderect(position):
+                if not item.isActive:
+                    #print("interaction avec ", item)
+                    item.startInteraction()
+            elif item.isActive:
+                item.stopInteraction()
+            
+
+
+        # Création du background et affichage de celui ci sur la fenêtre
+        backgroundImage = pygame.image.load("Art/Background.png")
+        self.background = pygame.transform.scale(backgroundImage, (1280, 720))
+        foregroundImage = pygame.image.load("Art/Foreground.png")
+        self.foreground = pygame.transform.scale(foregroundImage, (1280, 720))
+
+        # Création d'un player
+        self.player = Player.Player(50, 110, 0, 0, (255, 75, 25))
+        # Group du joueur
+        self.playerGroup = pygame.sprite.Group()
+        self.playerGroup.add(self.player)
+
+        # Données pour les progressBar
+        self.hunger = 100
+        self.sleep = 100
+
+        # Création des barres de progressions
+        self.sleepBar = ProgressBar.ProgressBar("SleepBar", 300, 15, pygame.Vector2(50,25), (0,0,200))
+        self.hungerBar = ProgressBar.ProgressBar("HungerBar", 300, 15, pygame.Vector2(50,50), (255,75,25))
+        # Group des barres de progression
+        self.barGroup = pygame.sprite.Group()
+        self.barGroup.add(self.sleepBar)
+        self.barGroup.add(self.hungerBar)
+
+        # Liste des objets interactibles
+        self.interactibles = {
+            "Pc": Pc.Pc(self, 50, 50, pygame.Vector2(500,100)),
+            "Lit": Lit.Lit(self, 50, 50, pygame.Vector2(250,250))
+        }
+        # On ajoute chaque objet dans un groupe
+        self.interactibleGroup = pygame.sprite.Group()
+        for key in self.interactibles:
+            self.interactibleGroup.add(self.interactibles[key])
+
+        self.taskManager.addTask()
+
+    def isRunning(self):
+        return True
+
+    def update(self, deltaTime):
+        self.hungerBar.subProgress(0.1/deltaTime)
+        self.screen.blit(self.background, (0,0))
+        self.playerGroup.draw(self.screen)
+        self.interactibleGroup.draw(self.screen)
+        self.tryInteraction(self.player.rect)
+        self.taskManager.update(deltaTime)
+        self.player.update(deltaTime, self.interactibleGroup, pygame.Rect(90, 20, 1105, 610))
+
+        self.screen.blit(self.foreground, (0,0))
+
+        self.barGroup.update(self.screen)
+        self.taskManager.draw(self.screen)
+        #pygame.draw.rect(self.background, (0,0,0), pygame.Rect(90, 20, 1105, 610))
+
+        for item in self.interactibles:
+            item.update(deltaTime)
+        
+    def stopInteractions(self):
+        for item in self.interactibles:
+            item.stopInteraction()
+
+    def tryInteraction(self, position : pygame.Rect):
+        for item in self.interactibles:
             if item.rect.colliderect(position):
                 if not item.isActive:
                     #print("interaction avec ", item)
