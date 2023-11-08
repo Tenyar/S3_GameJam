@@ -17,8 +17,10 @@ class GameManager():
         self.screen = screen
 
         # Création du background et affichage de celui ci sur la fenêtre
-        image = pygame.image.load("Art/Background.png")
-        self.background = pygame.transform.scale(image, (1280, 720))
+        backgroundImage = pygame.image.load("Art/Background.png")
+        self.background = pygame.transform.scale(backgroundImage, (1280, 720))
+        foregroundImage = pygame.image.load("Art/Foreground.png")
+        self.foreground = pygame.transform.scale(foregroundImage, (1280, 720))
 
         # Création d'un player
         self.player = Player.Player(50, 110, 0, 0, (255, 75, 25))
@@ -49,13 +51,15 @@ class GameManager():
 
     def update(self, deltaTime):
         self.screen.blit(self.background, (0,0))
-        self.taskManager.draw(self.screen)
         self.playerGroup.draw(self.screen)
-        self.barGroup.update(self.screen)
         self.interactibleGroup.draw(self.screen)
         self.tryInteraction(self.player.rect)
         self.player.update(deltaTime, self.interactibleGroup, pygame.Rect(90, 20, 1105, 610))
 
+        self.screen.blit(self.foreground, (0,0))
+
+        self.barGroup.update(self.screen)
+        self.taskManager.draw(self.screen)
         #pygame.draw.rect(self.background, (0,0,0), pygame.Rect(90, 20, 1105, 610))
 
         for item in self.interactibles:
