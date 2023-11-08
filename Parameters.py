@@ -2,25 +2,31 @@ class Parameters:
     def __init__(self, argv : list[str]) -> None:
         self.parameters = {
             "playerSpeed": 0.45,
-
             "tasksDifficulty": 2,
+            "gamesDifficulty": 2,
+
             "tasksSpeed": 0.001,
             "tasksProgressPerSuccess": 20,
             "tasksTimeAfterError": 1000,
 
-            "gamesDifficulty": 2,
             "litSpeed": 0.1,
             "litSpeedDifference": 3,
             "litProgress": 0.2,
             "litZoneLength": 10,
+
             "socialZoneLength": 10,
             "socialSpeed": 0.03,
             "socialProgress": 10,
             "socialTimeAfterError": 1000
         }
+
         for text in argv[1:]:
-            key, value = text.split('=')
-            if key in self.parameters:
+            try:
+                key, strvalue = text.split('=')
+                value = float(strvalue)
+            except:
+                pass
+            if key in self.parameters and value != None:
                 self.parameters[key] = value
 
         if self.parameters["tasksDifficulty"] > 5:
