@@ -13,7 +13,7 @@ class Parameters:
 
             "litSpeed": 0.1,
             "litSpeedDifference": 3,
-            "litProgress": 0.2,
+            "litSleepBarProgressPerSuccess": 0.2,
             "litZoneLength": 10,
 
             "socialZoneLength": 10,
@@ -47,7 +47,7 @@ class Parameters:
         
         self.parameters["litSpeed"] *= self.parameters["tasksDifficulty"]/2
         self.parameters["litSpeedDifference"] *= self.parameters["tasksDifficulty"]/2
-        self.parameters["litProgress"] *= self.parameters["tasksDifficulty"]/2
+        self.parameters["litSleepBarProgressPerSuccess"] *= self.parameters["tasksDifficulty"]/2
         self.parameters["litZoneLength"] *= self.parameters["tasksDifficulty"]/2
         self.parameters["socialZoneLength"] *= self.parameters["tasksDifficulty"]/2
         self.parameters["socialSpeed"] *= self.parameters["tasksDifficulty"]/2

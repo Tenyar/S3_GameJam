@@ -18,7 +18,7 @@ class Lit(pg.sprite.Sprite):
         self.pos = 0
         self.speed = parameters.parameters["litSpeed"]
         self.speedDifference = parameters.parameters["litSpeedDifference"]
-        self.progress = parameters.parameters["litProgress"]
+        self.progress = parameters.parameters["litSleepBarProgressPerSuccess"]
         self.zonePos = 50
         self.zoneLength = parameters.parameters["litZoneLength"]
         self.position = position
