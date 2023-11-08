@@ -18,7 +18,7 @@ class Parameters:
 
             "socialZoneLength": 10,
             "socialSpeed": 0.03,
-            "socialProgress": 10,
+            "socialBarProgressPerSuccess": 10,
             "socialTimeAfterError": 1000
         }
 
@@ -51,7 +51,7 @@ class Parameters:
         self.parameters["litZoneLength"] *= self.parameters["tasksDifficulty"]/2
         self.parameters["socialZoneLength"] *= self.parameters["tasksDifficulty"]/2
         self.parameters["socialSpeed"] *= self.parameters["tasksDifficulty"]/2
-        self.parameters["socialProgress"] *= self.parameters["tasksDifficulty"]/2
+        self.parameters["socialBarProgressPerSuccess"] *= self.parameters["tasksDifficulty"]/2
         self.parameters["socialTimeAfterError"] *= self.parameters["tasksDifficulty"]/2
 
 

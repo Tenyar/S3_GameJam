@@ -17,7 +17,7 @@ class Social(pg.sprite.Sprite):
         self.pos = [0.0]
         self.zoneLength = parameters.parameters["socialZoneLength"]
         self.speed = parameters.parameters["socialSpeed"]
-        self.progress = parameters.parameters["socialProgress"]
+        self.progress = parameters.parameters["socialBarProgressPerSuccess"]
         self.timeBeforeNextBar = random.uniform(3000 * self.speed, 50000 * self.speed)
         self.timeAfterError = parameters.parameters["socialTimeAfterError"]
         self.timeBeforeNextTry = 0
