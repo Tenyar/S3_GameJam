@@ -54,8 +54,8 @@ class GameManager():
         self.sleep = 100
 
         # Création des barres de progressions
-        self.socialBar = ProgressBar.ProgressBar("SocialBar", 300, 15, pygame.Vector2(50,50), (255,25,50))
-        self.sleepBar = ProgressBar.ProgressBar("SleepBar", 300, 15, pygame.Vector2(50,25), (0,0,200))
+        self.sleepBar = ProgressBar.ProgressBar("SleepBar", 300, 15, pygame.Vector2(50,25), (0,0,200),False)
+        self.hungerBar = ProgressBar.ProgressBar("HungerBar", 300, 15, pygame.Vector2(50,50), (255,75,25),False)
         # Group des barres de progression
         self.barGroup = pygame.sprite.Group()
         self.barGroup.add(self.sleepBar)
@@ -71,7 +71,7 @@ class GameManager():
         for key in self.interactibles:
             self.interactibleGroup.add(self.interactibles[key])
 
-        self.taskManager.addTask()
+        self.taskManager.addTask("SAE")
 
     def isRunning(self):
         return True
