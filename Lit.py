@@ -16,6 +16,9 @@ class Lit(pg.sprite.Sprite):
         self.pos = 0
         self.speed = 0.1
         self.speedDifference = 3
+        self.progress = 0.03
+        self.zone = 50
+        self.zoneLength = 10
 
     def startInteraction(self):
         print("Début de l'interaction")
@@ -29,16 +32,17 @@ class Lit(pg.sprite.Sprite):
         if not self.isActive:
             return
 
-        self.sleep.subProgress(0.001*dt)
         self.pos -= self.speed * dt
         if(self.pos < 0):
             self.pos = 0
+        elif(self.pos > 100):
+            self.pos
 
         keys = pg.key.get_pressed()
         if keys[pg.K_SPACE]:
             self.pos += self.speed * self.speedDifference * dt
-            if 45 < self.pos < 55:
-                self.sleep.addProgress(0.03*dt)
+            if self.zone - self.zoneLength/2 < self.pos < self.zone + self.zoneLength/2:
+                self.sleep.addProgress(self.progress*dt)
         print(self.sleep.getProg(), self.pos)
 
 
