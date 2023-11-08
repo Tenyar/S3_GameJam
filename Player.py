@@ -1,4 +1,5 @@
 import pygame
+import Parameters
 #import Application
 
 class Player(pygame.sprite.Sprite):
@@ -6,7 +7,7 @@ class Player(pygame.sprite.Sprite):
 
     # Constructeur de la classe
     # pos_x/pos_y sont les coordonées de ce player(sprite)
-    def __init__(self, width, height, pos_x, pos_y, color):
+    def __init__(self, width, height, pos_x, pos_y, color, parameters:Parameters.Parameters):
 
         # Création des attributs de l'instance
         self.width = width

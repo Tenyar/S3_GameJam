@@ -1,12 +1,13 @@
 import Task
 import pygame
+import Parameters
 
 class TaskManager:
 
     instance = None
 
     #simulation d'un singleton : Si on essaye de créer une nouvelle instance de TaskManager, une exception est levée
-    def __init__(self, startCounteurValue, counterDecreaseStep, counterClampMin, maxTask) -> None:
+    def __init__(self, startCounteurValue, counterDecreaseStep, counterClampMin, maxTask, parameters:Parameters.Parameters) -> None:
         if TaskManager.instance != None :
             raise Exception("instance already exists")
         TaskManager.instance = self
