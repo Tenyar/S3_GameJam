@@ -77,7 +77,7 @@ if __name__ == "__main__":
     clock = pg.time.Clock()
     dt = 0
 
-    pc = Interactible(width=1, height=1, position=pg.Vector2(0, 0))
+    pc = Pc(width=1, height=1, position=pg.Vector2(0, 0))
     pc.startInteraction()
     while(True):
         for event in pg.event.get():

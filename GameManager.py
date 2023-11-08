@@ -31,7 +31,7 @@ class GameManager():
             "Error": "Sound/Error_Sound.wav"
         }
         # Charge le(s) fichier(s) audio
-        # mixer.music.load("Sound/Transition_Sound.wav")
+        mixer.music.load("Sound/Transition_Sound.wav")
         # Met le volume du gestionnaire de musique
         mixer.music.set_volume(0.2)
         # Joue la musique 
@@ -50,16 +50,16 @@ class GameManager():
         self.playerGroup.add(self.player)
 
         # Données pour les progressBar
-        self.hunger = 100
+        self.social = 100
         self.sleep = 100
 
         # Création des barres de progressions
+        self.socialBar = ProgressBar.ProgressBar("SocialBar", 300, 15, pygame.Vector2(50,50), (255,25,50))
         self.sleepBar = ProgressBar.ProgressBar("SleepBar", 300, 15, pygame.Vector2(50,25), (0,0,200))
-        self.hungerBar = ProgressBar.ProgressBar("HungerBar", 300, 15, pygame.Vector2(50,50), (255,75,25))
         # Group des barres de progression
         self.barGroup = pygame.sprite.Group()
         self.barGroup.add(self.sleepBar)
-        self.barGroup.add(self.hungerBar)
+        self.barGroup.add(self.socialBar)
 
         # Liste des objets interactibles
         self.interactibles = {
@@ -77,7 +77,8 @@ class GameManager():
         return True
 
     def update(self, deltaTime):
-        self.hungerBar.subProgress(0.1/deltaTime)
+        self.socialBar.subProgress(0.01 * deltaTime)
+        self.sleepBar.subProgress(0.01 * deltaTime)
         self.screen.blit(self.background, (0,0))
         self.playerGroup.draw(self.screen)
         self.interactibleGroup.draw(self.screen)
@@ -91,15 +92,15 @@ class GameManager():
         self.taskManager.draw(self.screen)
         #pygame.draw.rect(self.background, (0,0,0), pygame.Rect(90, 20, 1105, 610))
 
-        for item in self.interactibles:
+        for item in self.interactibles.values():
             item.update(deltaTime)
         
     def stopInteractions(self):
-        for item in self.interactibles:
+        for item in self.interactibles.values():
             item.stopInteraction()
 
     def tryInteraction(self, position : pygame.Rect):
-        for item in self.interactibles:
+        for item in self.interactibles.values(): # .values() qui accède via la clé à la valeur, l'objet en l'occurence
             if item.rect.colliderect(position):
                 if not item.isActive:
                     #print("interaction avec ", item)
