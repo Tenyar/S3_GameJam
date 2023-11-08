@@ -74,12 +74,9 @@ class GameManager():
 
         # Liste des objets interactibles
         self.interactibles = {
-            #"Pc": Pc.Pc(self, 50, 50, pygame.Vector2(500,100), parameters),
-            #"Lit": Lit.Lit(self, 50, 50, pygame.Vector2(250,250), parameters),
-            #"Social": Social.Social(self, 50, 50, pygame.Vector2(1250, 500), parameters)
-            "Pc": Pc.Pc(self, 50, 50, pygame.Vector2(500,100)),
-            "Lit": Lit.Lit(self, 50, 50, pygame.Vector2(250,250)),
-            "Social": Social.Social(self, 50, 50, pygame.Vector2(1250, 500))
+            "Pc": Pc.Pc(self, 50, 50, pygame.Vector2(500,100), parameters),
+            "Lit": Lit.Lit(self, 50, 50, pygame.Vector2(250,250), parameters),
+            "Social": Social.Social(self, 50, 50, pygame.Vector2(1250, 500), parameters)
         }
         # On ajoute chaque objet dans un groupe
         self.interactibleGroup = pygame.sprite.Group()
