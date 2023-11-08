@@ -22,4 +22,6 @@ class Task (pygame.sprite.Sprite):
 
     def draw(self,screen : pygame.display):
         screen.blit(self.image,(self.position.x,self.position.y))
+        # dessing de font
+        self.font.render('Test', False, (0,0,0))
 

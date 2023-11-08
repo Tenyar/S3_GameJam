@@ -18,6 +18,8 @@ class TaskManager:
         self.counterClampMin = counterClampMin
         self.maxTask = maxTask
 
+        self.font = pygame.font.Font("Font/Quinquefive-ALoRM.ttf", 12)
+
     
     def update(self, deltaTime):
 
