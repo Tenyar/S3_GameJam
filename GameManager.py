@@ -15,7 +15,7 @@ class GameManager():
             raise Exception("instance already exists")
         GameManager.instance = self
 
-        self.taskManager = TaskManager.TaskManager(10, 0.5, 5, 10)
+        self.taskManager = TaskManager.TaskManager(5, 0.5, 5, 5)
 
         self.screen = screen
 

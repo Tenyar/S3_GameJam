@@ -18,7 +18,7 @@ class TaskManager:
         self.counterClampMin = counterClampMin
         self.maxTask = maxTask
 
-        self.font = pygame.font.Font("Font/Quinquefive-ALoRM.ttf", 12)
+        self.font = pygame.font.Font("Font/Quinquefive-ALoRM.ttf", 15)
 
     
     def update(self, deltaTime):
@@ -48,12 +48,12 @@ class TaskManager:
             self.tasks.pop(0)
 
     def draw(self,screen : pygame.display,):
-        current_task = 0
+        currentTaskId = 0
         for task in self.tasks :
-            task.position.y = current_task * 73 + 50
-            task.progressBar.posY = current_task*73+84
+            task.position.y = currentTaskId * 95 + 180
+            task.progressBar.posY = currentTaskId * 95 + 34 + 180
             task.draw(screen, self.font)
-            current_task += 1
+            currentTaskId += 1
 
 
 
