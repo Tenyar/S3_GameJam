@@ -10,13 +10,14 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, width, height, pos_x, pos_y, color, parameters:Parameters.Parameters):
 
         # Création des attributs de l'instance
+        self.parameters = parameters.parameters
         self.width = width
         self.height = height
         self.pos_x = pos_x
         self.pos_y = pos_y
         self.color = color
 
-        self.speed = 0.45
+        self.speed = parameters.parameters["playerSpeed"]
 
         self.screenWidth = pygame.display.get_surface().get_width()
         self.screenHeight = pygame.display.get_surface().get_height()

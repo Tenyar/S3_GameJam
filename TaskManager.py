@@ -12,6 +12,7 @@ class TaskManager:
             raise Exception("instance already exists")
         TaskManager.instance = self
 
+        self.parameters = parameters.parameters
         self.tasks = []
         self.counter = startCounteurValue
         self.counterDecreaseStep = counterDecreaseStep
@@ -24,7 +25,7 @@ class TaskManager:
     
     def update(self, deltaTime):
 
-        self.counter -= deltaTime * 0.001
+        self.counter -= deltaTime * self.parameters["taskSpeed"]
 
         if(self.counter <= 0 and self.getTaskAmount() < self.maxTask):
             self.counterCurrentMax = max(self.counterCurrentMax - self.counterDecreaseStep, self.counterClampMin)

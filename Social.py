@@ -1,8 +1,9 @@
 import pygame as pg
 import random
+import Parameters
 
 class Social(pg.sprite.Sprite):
-    def __init__(self, gameManager, width, height, position : pg.Vector2) -> None:
+    def __init__(self, gameManager, width, height, position : pg.Vector2, parameters:Parameters.Parameters) -> None:
         super().__init__()
 
         self.gameManager = gameManager
@@ -14,10 +15,10 @@ class Social(pg.sprite.Sprite):
 
         self.isActive = False
         self.pos = [0.0]
-        self.timeBeforeNextBar = random.randint(100, 2000)
         self.zoneLength = 10
         self.speed = 0.03
         self.progress = 10
+        self.timeBeforeNextBar = random.randint(3000 * self.speed, 50000 * self.speed)
         self.timeBeforeNextTry = 0
     
     def startInteraction(self):

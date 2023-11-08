@@ -1,7 +1,8 @@
 import pygame as pg
+import Parameters
 
 class Lit(pg.sprite.Sprite):
-    def __init__(self, gameManager, width, height, position : pg.Vector2) -> None:
+    def __init__(self, gameManager, width, height, position : pg.Vector2, parameters:Parameters.Parameters) -> None:
         super().__init__()
 
         self.gameManager = gameManager
