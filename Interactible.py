@@ -70,6 +70,8 @@ class Interactible(pg.sprite.Sprite):
 
 
 if __name__ == "__main__":
+    import GameManager
+
     pg.init
     pg.font.init()
     pg.display.set_caption("survie")
@@ -77,13 +79,13 @@ if __name__ == "__main__":
     clock = pg.time.Clock()
     dt = 0
 
-    pc = Interactible(width=1, height=1, position=pg.Vector2(0, 0))
+    pc = Interactible(gameManager=GameManager.GameManager(screen), width=1, height=1, position=pg.Vector2(0, 0))
     pc.startInteraction()
-    while(True):
+    while(pc.isActive):
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 pg.quit()
 
-        pc.update()
+        pc.update(dt)
         dt = clock.tick(60)
         pg.display.flip()
