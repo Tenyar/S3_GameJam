@@ -26,7 +26,7 @@ class TaskManager:
         if(self.counter <= 0 and self.getTaskAmount() < self.maxTask):
             self.counterCurrentMax = max(self.counterCurrentMax - self.counterDecreaseStep, self.counterClampMin)
             self.counter = self.counterCurrentMax
-            self.addTask()
+            self.addTask("SAE")
 
 
     def getTaskAmount(self):
@@ -39,17 +39,18 @@ class TaskManager:
             return True
     
 
-    def addTask(self):
-        self.tasks.append(Task.Task())
+    def addTask(self,title : str):
+        self.tasks.append(Task.Task(title))
 
     def deleteCurrentTask(self):
             self.tasks.pop(0)
 
-    def draw(self,screen : pygame.display,):
+    def draw(self,screen : pygame.display):
         current_task = 0
         for task in self.tasks :
-            task.draw(screen)
             task.position.y = current_task*73 +50
+            task.progressBar.posY = current_task*73+84
+            task.draw(screen)
             current_task += 1
 
 

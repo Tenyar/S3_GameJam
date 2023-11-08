@@ -55,7 +55,7 @@ def main():
     
     # Initalisation du module de gestion des fonts
     pygame.font.init()
-    pygame.font.Font("Font/Quinquefive-AloRM.tff", 12)
+    pygame.font.Font("Font/Quinquefive-ALoRM.ttf", 12)
 
     # Création du singleton
     app = Application(1280, 720)

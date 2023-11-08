@@ -31,7 +31,7 @@ class GameManager():
             "Error": "Sound/Error_Sound.wav"
         }
         # Charge le(s) fichier(s) audio
-        # mixer.music.load("Sound/Transition_Sound.wav")
+        mixer.music.load("Sound/Transition_Sound.wav")
         # Met le volume du gestionnaire de musique
         mixer.music.set_volume(0.2)
         # Joue la musique 
@@ -54,8 +54,8 @@ class GameManager():
         self.sleep = 100
 
         # Création des barres de progressions
-        self.sleepBar = ProgressBar.ProgressBar("SleepBar", 300, 15, pygame.Vector2(50,25), (0,0,200))
-        self.hungerBar = ProgressBar.ProgressBar("HungerBar", 300, 15, pygame.Vector2(50,50), (255,75,25))
+        self.sleepBar = ProgressBar.ProgressBar("SleepBar", 300, 15, pygame.Vector2(50,25), (0,0,200),False)
+        self.hungerBar = ProgressBar.ProgressBar("HungerBar", 300, 15, pygame.Vector2(50,50), (255,75,25),False)
         # Group des barres de progression
         self.barGroup = pygame.sprite.Group()
         self.barGroup.add(self.sleepBar)
@@ -71,7 +71,7 @@ class GameManager():
         for key in self.interactibles:
             self.interactibleGroup.add(self.interactibles[key])
 
-        self.taskManager.addTask()
+        self.taskManager.addTask("SAE")
 
     def isRunning(self):
         return True

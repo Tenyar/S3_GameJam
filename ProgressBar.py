@@ -2,7 +2,7 @@ import pygame
 
 class ProgressBar(pygame.sprite.Sprite):
 
-    def __init__(self, title : str, width, height, pos : pygame.Vector2, color):
+    def __init__(self, title : str, width, height, pos : pygame.Vector2, color,withBackground : bool):
 
         # constructeur du sprite
         super().__init__()
@@ -18,6 +18,8 @@ class ProgressBar(pygame.sprite.Sprite):
         self.progAmount = 100
         # couleur de la bar
         self.color = color
+        # gère si on affiche le fond ou non
+        self.withbackground = withBackground
 
     def getProg(self):
         return self.progAmount
@@ -42,6 +44,7 @@ class ProgressBar(pygame.sprite.Sprite):
         barWidth = (self.progAmount / 100) * self.width
 
         # Background
-        pygame.draw.rect(screen, (100,100,100), (self.posX, self.posY, self.width + 4, self.height + 4))
+        if self.withbackground:
+            pygame.draw.rect(screen, (100,100,100), (self.posX, self.posY, self.width + 4, self.height + 4 ))
         # Progression
         pygame.draw.rect(screen, self.color, (self.posX + 2, self.posY + 2, barWidth, self.height))
