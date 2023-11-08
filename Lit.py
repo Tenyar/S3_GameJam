@@ -39,7 +39,7 @@ class Lit(pg.sprite.Sprite):
 
     def startInteraction(self):
         # Rend aléatoire la position de la bar succès dans un intervale entre [50 et 80] avec un pas de 10 pixel
-        self.zonePos = random.randrange(50, 80, 10)
+        self.zonePos = random.randrange(30, 80, 10)
 
         # Calcul de la longer de la bar success
         barWidth = (self.zoneLength / 100) * self.imageProgLen
