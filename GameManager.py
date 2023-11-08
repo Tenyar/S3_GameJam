@@ -165,17 +165,17 @@ class GameManager():
         self.taskManager.draw(self.screen)
         #pygame.draw.rect(self.background, (0,0,0), pygame.Rect(90, 20, 1105, 610))
 
-        for item in self.interactibles:
+        for item in self.interactibles.values(): # .values() pour accéder à l'objet directement
             item.update(deltaTime)
         
     def stopInteractions(self):
-        for item in self.interactibles:
+        for item in self.interactibles.values():
             item.stopInteraction()
 
     def tryInteraction(self, position : pygame.Rect):
-        for item in self.interactibles:
+        for item in self.interactibles.values():
             if item.rect.colliderect(position):
-                if not item.isActive:
+                if not item.isActive.values():
                     #print("interaction avec ", item)
                     item.startInteraction()
             elif item.isActive:
