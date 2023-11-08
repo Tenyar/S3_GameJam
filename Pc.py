@@ -1,7 +1,7 @@
 import pygame as pg
 import random
 
-class Interactible(pg.sprite.Sprite):
+class Pc(pg.sprite.Sprite):
 
     def __init__(self, gameManager, width, height, position : pg.Vector2) -> None:
         super().__init__()
@@ -70,8 +70,6 @@ class Interactible(pg.sprite.Sprite):
 
 
 if __name__ == "__main__":
-    import GameManager
-
     pg.init
     pg.font.init()
     pg.display.set_caption("survie")
@@ -79,13 +77,13 @@ if __name__ == "__main__":
     clock = pg.time.Clock()
     dt = 0
 
-    pc = Interactible(gameManager=GameManager.GameManager(screen), width=1, height=1, position=pg.Vector2(0, 0))
+    pc = Interactible(width=1, height=1, position=pg.Vector2(0, 0))
     pc.startInteraction()
-    while(pc.isActive):
+    while(True):
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 pg.quit()
 
-        pc.update(dt)
+        pc.update()
         dt = clock.tick(60)
         pg.display.flip()
