@@ -8,12 +8,10 @@ class Player(pygame.sprite.Sprite):
     # Constructeur de la classe
     # pos_x/pos_y sont les coordonées de ce player(sprite)
     def __init__(self, width, height, pos_x, pos_y, color, parameters:Parameters.Parameters):
-        #temps à attendre pour changer la frame à afficher (on le multipliera par deltatime)
-        self.spriteDelay = 5
-        # temps que l'animation reste a l'écran
-        self.animationSpeed = 3*0.001
+        # vitesse de l'animation
+        self.animationSpeed = 3
         #compteur de temps depuis le dernier changement de sprite
-        self.TimeSinceLastSpriteChange=0
+        self.animationTime = 0
         # Création des attributs de l'instance
         self.parameters = parameters.parameters
         self.width = width
@@ -70,8 +68,7 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_LEFT]:
             if not doesContactLeft:
                 self.pos_x -= self.speed * deltaTime
-                self.image = self.sprite_sheet.getSpriteAt(2, (int)((self.TimeSinceLastSpriteChange * self.animationSpeed) % 2) + 1)
-                print((int)((self.TimeSinceLastSpriteChange * self.animationSpeed) % 2) + 1)
+                self.image = self.sprite_sheet.getSpriteAt(2, (int)(self.animationTime % 2.0) + 1)
                 self.image = pygame.transform.scale(self.image,(20*5, 30*5))
                 # pour des pixels de différence avec la vélocité
                 # Si il dépasse à gauche 
@@ -82,6 +79,7 @@ class Player(pygame.sprite.Sprite):
             if not doesContactRight: # Prise de la taille de la fenêtre et du joueur en compte
                 self.pos_x += self.speed * deltaTime
                 self.image = self.sprite_sheet.getSpriteAt(3,1)
+                self.image = self.sprite_sheet.getSpriteAt(3, (int)(self.animationTime % 2.0) + 1)
                 self.image = pygame.transform.scale(self.image,(20*5, 30*5))
                 if self.pos_x > (self.screenWidth - (self.width)):
                     self.pos_x = (self.screenWidth - (self.width))
@@ -90,6 +88,7 @@ class Player(pygame.sprite.Sprite):
             if not doesContactBottom:
                 self.pos_y += self.speed * deltaTime
                 self.image = self.sprite_sheet.getSpriteAt(0,1)
+                self.image = self.sprite_sheet.getSpriteAt(0, (int)(self.animationTime % 2.0) + 1)
                 self.image = pygame.transform.scale(self.image,(20*5, 30*5))
                 if self.pos_y > (self.screenHeight - (self.height)):
                     self.pos_y = (self.screenHeight - (self.height))     
@@ -98,10 +97,11 @@ class Player(pygame.sprite.Sprite):
             if not doesContactTop:
                 self.pos_y -= self.speed * deltaTime
                 self.image = self.sprite_sheet.getSpriteAt(1,1)
+                self.image = self.sprite_sheet.getSpriteAt(1, (int)(self.animationTime % 2.0) + 1)
                 self.image = pygame.transform.scale(self.image,(20*5, 30*5))
                 #if self.pos_y < (self.screenHeight - (self.height)):
                 #    self.pos_y = (self.screenHeight - (self.height))
 
         
-        self.TimeSinceLastSpriteChange += deltaTime*0.001  
+        self.animationTime += deltaTime * 0.001 * self.animationSpeed  
         self.rect.topleft = (self.pos_x, self.pos_y) # définit la position du player dans la scène # Set the top-left position of the player's rect
