@@ -1,5 +1,6 @@
 import pygame
 import GameManager
+import Parameters
 import sys
 
 ## Patterne Singleton
@@ -8,7 +9,7 @@ class Application(object):
     instance = None
 
     # On créer une instance de la classe seulement si il n'y en à pas d'autres sinon on retourne celui déjà créée. 
-    def __init__(self, screenWidth, screenHeight):
+    def __init__(self, screenWidth, screenHeight, parameters:Parameters.Parameters):
         if Application.instance != None:
             raise Exception("Une instace existe déjà !")
         else:
@@ -23,9 +24,11 @@ class Application(object):
             self.deltaTime = 0
             # Gère temps entre deux images
             self.clock = pygame.time.Clock()
+            # Gère les paramètres
+            self.parameters = parameters
 
     def startGame(self):
-        gameManager = GameManager.GameManager(self.screen)
+        gameManager = GameManager.GameManager(self.screen, self.parameters)
 
         while gameManager.isRunning():
             # On regarde si l'évenement "quitter la fenêtre" est déclenché.
@@ -48,7 +51,6 @@ class Application(object):
         
 
 def main():
-    print("\n\n\n", sys.argv, "\n\n\n")
 
     # Initialisation de pygame
     pygame.init()
@@ -57,7 +59,11 @@ def main():
     pygame.font.init()
 
     # Création du singleton
-    app = Application(1280, 720)
+    app = Application(1280, 720, Parameters.Parameters(sys.argv))
+
+    # 2 méthodes pour mettre en FullScreen
+    #pygame.display.toggle_fullscreen()
+    #pygame.display.set_mode(flags=pygame.FULLSCREEN)
 
     app.startGame()
 
