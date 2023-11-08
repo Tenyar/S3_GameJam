@@ -2,13 +2,31 @@ import Task
 import pygame
 
 class TaskManager:
+
     instance = None
+
     #simulation d'un singleton : Si on essaye de créer une nouvelle instance de TaskManager, une exception est levée
-    def __init__(self) -> None:
+    def __init__(self, startCounteurValue, counterDecreaseStep, counterClampMin, maxTask) -> None:
         if TaskManager.instance != None :
             raise Exception("instance already exists")
         TaskManager.instance = self
+
         self.tasks = []
+        self.counter = startCounteurValue
+        self.counterDecreaseStep = counterDecreaseStep
+        self.counterCurrentMax = startCounteurValue
+        self.counterClampMin = counterClampMin
+        self.maxTask = maxTask
+
+    
+    def update(self, deltaTime):
+
+        self.counter -= deltaTime * 0.001
+
+        if(self.counter <= 0 and self.getTaskAmount() < self.maxTask):
+            self.counterCurrentMax = max(self.counterCurrentMax - self.counterDecreaseStep, self.counterClampMin)
+            self.counter = self.counterCurrentMax
+            self.addTask()
 
 
     def getTaskAmount(self):
@@ -17,7 +35,7 @@ class TaskManager:
     def progressCurrentTask(self, amount : float):
         self.tasks[0].addProgress(amount)
         if self.tasks[0].isFinished():
-            self.deleteFinishedTask()
+            self.deleteCurrentTask()
             return True
     
 

@@ -15,7 +15,7 @@ class Player(pygame.sprite.Sprite):
         self.pos_y = pos_y
         self.color = color
 
-        self.speed = 0.3
+        self.speed = 0.45
 
         self.screenWidth = pygame.display.get_surface().get_width()
         self.screenHeight = pygame.display.get_surface().get_height()

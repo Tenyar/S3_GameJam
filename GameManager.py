@@ -12,13 +12,15 @@ class GameManager():
             raise Exception("instance already exists")
         GameManager.instance = self
 
-        self.taskManager = TaskManager.TaskManager()
+        self.taskManager = TaskManager.TaskManager(10, 0.5, 5, 10)
 
         self.screen = screen
 
         # Création du background et affichage de celui ci sur la fenêtre
-        image = pygame.image.load("Art/Background.png")
-        self.background = pygame.transform.scale(image, (1280, 720))
+        backgroundImage = pygame.image.load("Art/Background.png")
+        self.background = pygame.transform.scale(backgroundImage, (1280, 720))
+        foregroundImage = pygame.image.load("Art/Foreground.png")
+        self.foreground = pygame.transform.scale(foregroundImage, (1280, 720))
 
         # Création d'un player
         self.player = Player.Player(50, 110, 0, 0, (255, 75, 25))
@@ -38,7 +40,7 @@ class GameManager():
         self.barGroup.add(self.sleepBar)
         self.barGroup.add(self.hungerBar)
 
-        self.interactibles = [Interactible.Interactible(self, 10, 10, pygame.Vector2(100,0))]
+        self.interactibles = [Interactible.Interactible(self, 50, 50, pygame.Vector2(500,100))]
         self.interactibleGroup = pygame.sprite.Group()
         self.interactibleGroup.add(self.interactibles[0])
 
@@ -50,17 +52,20 @@ class GameManager():
     def update(self, deltaTime):
         self.hungerBar.subProgress(0.1/deltaTime)
         self.screen.blit(self.background, (0,0))
-        self.taskManager.draw(self.screen)
         self.playerGroup.draw(self.screen)
-        self.barGroup.update(self.screen)
         self.interactibleGroup.draw(self.screen)
         self.tryInteraction(self.player.rect)
+        self.taskManager.update(deltaTime)
         self.player.update(deltaTime, self.interactibleGroup, pygame.Rect(90, 20, 1105, 610))
 
+        self.screen.blit(self.foreground, (0,0))
+
+        self.barGroup.update(self.screen)
+        self.taskManager.draw(self.screen)
         #pygame.draw.rect(self.background, (0,0,0), pygame.Rect(90, 20, 1105, 610))
 
         for item in self.interactibles:
-            item.update()
+            item.update(deltaTime)
         
     def stopInteractions(self):
         for item in self.interactibles:
