@@ -3,9 +3,9 @@ import random
 
 class Pc(pg.sprite.Sprite):
 
-    def __init__(self, gameManager, width, height, position : pg.Vector2) -> None:
+    def __init__(self, gameManager, width, height, position : pg.Vector2, screen) -> None:
         super().__init__()
-
+        self.screenUser = screen
         self.gameManager = gameManager
         self.taskManager = self.gameManager.taskManager
 
@@ -13,6 +13,43 @@ class Pc(pg.sprite.Sprite):
         self.position = position
         self.rect = pg.Rect(position.x, position.y, width, height)
 
+        # Chargement de l'image
+        self.imageKey = pg.image.load("Art/A.png").convert()
+        # Création du rectangle qui prendra les images des touches.
+        self.rectKey = pg.Rect(position.x, position.y -50, 69, 64)
+
+
+        # Liste des touches du clavier (hashmap / dico)
+        self.keyboard = {
+            pg.K_a: 0,
+            pg.K_b: 1,
+            pg.K_c: 2,
+            pg.K_d: 3,
+            pg.K_e: 4,
+            pg.K_f: 5,
+            pg.K_g: 6,
+            pg.K_h: 7,
+            pg.K_i: 8,
+            pg.K_j: 9,
+            pg.K_k: 10,
+            pg.K_l: 11,
+            pg.K_m: 12,
+            pg.K_n: 13,
+            pg.K_o: 14,
+            pg.K_p: 15,
+            pg.K_q: 16,
+            pg.K_r: 17,
+            pg.K_s: 18,
+            pg.K_t: 19,
+            pg.K_u: 20,
+            pg.K_v: 21,
+            pg.K_w: 22,
+            pg.K_x: 23,
+            pg.K_y: 24,
+            pg.K_z: 25
+        }
+
+        # Attributs conditionnel
         self.isActive = False
         self.currentKey = pg.K_ESCAPE
         self.oldKey = pg.K_ESCAPE
@@ -31,8 +68,17 @@ class Pc(pg.sprite.Sprite):
     def stopInteraction(self):
         print("Fin de l'interaction")
         self.isActive = False
-
+        
     def update(self, dt):
+        
+        if self.isActive:
+            # Affichage du rectangle créée pour les touches si tâche activé
+            for clef in self.keyboard:
+                if clef == self.currentKey:
+                    print(self.keyboard[clef])
+                    self.screenUser.blit(self.imageKey, self.rectKey)
+
+        self.imageKey.blit(self.screenUser, (self.position.x, self.position.y -50 ))
         if not self.isActive:
             return
         if len(self.taskManager.tasks) == 0:
