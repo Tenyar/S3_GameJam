@@ -1,9 +1,10 @@
 import pygame as pg
 import random
+import Parameters
 
 class Pc(pg.sprite.Sprite):
 
-    def __init__(self, gameManager, width, height, position : pg.Vector2, screen) -> None:
+    def __init__(self, gameManager, width, height, position : pg.Vector2, screen, parameters:Parameters.Parameters) -> None:
         super().__init__()
         self.screenUser = screen
         self.gameManager = gameManager
@@ -14,7 +15,7 @@ class Pc(pg.sprite.Sprite):
         self.rect = pg.Rect(position.x, position.y, width, height)
 
         # Chargement de l'image
-        self.imageKey = pg.image.load("Art/A.png").convert()
+        self.imageKey = pg.image.load("Art/sprite_sheet_keyboard.png").convert()
         # Création du rectangle qui prendra les images des touches.
         self.rectKey = pg.Rect(position.x, position.y -50, 69, 64)
 
