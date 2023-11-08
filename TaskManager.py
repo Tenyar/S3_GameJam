@@ -25,9 +25,9 @@ class TaskManager:
         self.font = pygame.font.Font("Font/Quinquefive-ALoRM.ttf", 15)
 
     
-    def update(self, dt):
+    def update(self, deltaTime):
 
-        self.counter -= dt * self.parameters["tasksSpeed"]
+        self.counter -= deltaTime * 0.001 * self.parameters["tasksSpeed"]
 
         if(self.counter <= 0 and self.getTaskAmount() < self.maxTask):
             self.counterCurrentMax = max(self.counterCurrentMax - self.counterDecreaseStep, self.counterClampMin)
@@ -35,7 +35,12 @@ class TaskManager:
             self.addTask("Test")
         
         for task in self.tasks:
-            self.isTaskTimeOut = task.update(dt)
+            self.isTaskTimeOut = task.update(deltaTime)
+
+        if self.getTaskAmount() > 0:
+            self.tasks[0].limitTime -= deltaTime * 0.001
+            if self.tasks[0].limitTime <= 0:
+                self.deleteCurrentTask()
                
 
 

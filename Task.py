@@ -26,13 +26,8 @@ class Task (pygame.sprite.Sprite):
         self.progressBar = ProgressBar.ProgressBar(title, 36*4, 2*4, self.progressBarPosition, (100, 100, 100),False)
 
         self.title = title
-        self.limitTime = 20
-         
-    def update(self, dt):
-        self.limitTime -= dt
-        if self.limitTime <= 0:
-            return False
-        return True
+        self.limitTime = 20       
+
 
     def addProgress(self, amount : float):
         self.completionPercentage += amount
