@@ -7,7 +7,6 @@ class Task (pygame.sprite.Sprite):
     def __init__(self,title : str) -> None:
         # initialise l'objet dont on hérite
         super().__init__()
-        # pourcentage de completion de la barre : utilisé pour l'affichage de l'avancement de la tâche
         self.completionPercentage = 0
         # image de fond de la tâche
         self.image = pygame.image.load("Art/Task.png")
