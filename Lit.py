@@ -16,11 +16,11 @@ class Lit(pg.sprite.Sprite):
 
         self.isActive = False
         self.pos = 0
-        self.speed = 0.1
-        self.speedDifference = 3
-        self.progress = 0.02
-        self.zonePos = 50 # En pourcentage %
-        self.zoneLength = 10 # En pourcentage %
+        self.speed = parameters.parameters["litSpeed"]
+        self.speedDifference = parameters.parameters["litSpeedDifference"]
+        self.progress = parameters.parameters["litProgress"]
+        self.zonePos = 50
+        self.zoneLength = parameters.parameters["litZoneLength"]
         self.position = position
 
         self.imageProgLen = 300 # Width de la bar principale du miniJeu
