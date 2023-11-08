@@ -1,3 +1,5 @@
+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
+
 import pygame
 import Player
 import Pc
@@ -61,7 +63,7 @@ class GameManager():
         self.barGroup.add(self.sleepBar)
         self.barGroup.add(self.hungerBar)
 
-        # Liste des objets interactibles.
+        # Liste des objets interactibles
         self.interactibles = {
             "Pc": Pc.Pc(self, 50, 50, pygame.Vector2(500,100)),
             "Lit": Lit.Lit(self, 50, 50, pygame.Vector2(250,250))
