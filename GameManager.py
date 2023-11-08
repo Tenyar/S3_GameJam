@@ -52,8 +52,6 @@ class GameManager():
         self.treeShadow.set_alpha(100)
         bedBaseImage = pygame.image.load("Art/Lit_Base.png")
         self.bedBase = pygame.transform.scale(bedBaseImage, (84 * 5, 35 * 5))
-        tablesImage = pygame.image.load("Art/Tables.png")
-        self.tables = pygame.transform.scale(tablesImage, (140 * 5, 50 * 5))
 
         # Création d'un player
         self.player = Player.Player(50, 110, 300, 500, (255, 75, 25), parameters)
@@ -101,7 +99,6 @@ class GameManager():
         self.sleepBar.subProgress(0.01 * deltaTime)
 
         self.screen.blit(self.background, (0,0))
-        self.screen.blit(self.tables, (0, 0))
         self.playerGroup.draw(self.screen)
         self.interactibleGroup.draw(self.screen)
         self.tryInteraction(self.player.rect)
