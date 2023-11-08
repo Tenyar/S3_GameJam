@@ -3,6 +3,7 @@ import Player
 import Interactible
 import TaskManager
 import ProgressBar
+from pygame import mixer
 
 class GameManager():
     instance = None
@@ -15,6 +16,25 @@ class GameManager():
         self.taskManager = TaskManager.TaskManager(10, 0.5, 5, 10)
 
         self.screen = screen
+
+        # Instantie mixer
+        mixer.init()
+
+        # PlayList des musiques jouables en jeux
+        playList = {
+            "Transition": "Sound/Transition_Sound.wav",
+            "Pc": "Sound/Pc_Sound.wav",
+            "TaskDone": "Sound/TaskDone_Sound.wav",
+            "Bed": "Sound/Bed_Sound.wav",
+            "Social": "Sound/Social_Env_Sound.mp3",
+            "Error": "Sound/Error_Sound.wav"
+        }
+        # Charge le(s) fichier(s) audio
+        mixer.music.load("Sound/Transition_Sound.wav")
+        # Met le volume du gestionnaire de musique
+        mixer.music.set_volume(0.2)
+        # Joue la musique 
+        mixer.music.play()
 
         # Création du background et affichage de celui ci sur la fenêtre
         backgroundImage = pygame.image.load("Art/Background.png")
