@@ -1,6 +1,5 @@
 import pygame as pg
 import random
-from pygame.sprite import AbstractGroup
 
 class Interactible(pg.sprite.Sprite):
 
