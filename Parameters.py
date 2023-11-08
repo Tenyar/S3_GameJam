@@ -2,6 +2,8 @@ class Parameters:
     def __init__(self, argv : list[str]) -> None:
         self.parameters = {
             "playerSpeed": 0.45,
+            "socialBarSpeed": 0.005,
+            "sleepBarSpeed": 0.005,
             "tasksDifficulty": 2,
             "gamesDifficulty": 2,
 

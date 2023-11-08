@@ -17,6 +17,7 @@ class GameManager():
             raise Exception("instance already exists")
         GameManager.instance = self
         
+        self.parameters = parameters.parameters
         self.taskManager = TaskManager.TaskManager(5, 0.5, 5, 5, parameters)
 
         self.screen = screen
@@ -91,14 +92,15 @@ class GameManager():
 
     def isRunning(self):
         if self.sleepBar.getProg() <= 0 or self.socialBar.getProg() <= 0 or self.taskManager.isTaskTimeOut:
-            return False
+            #return False
+            print ("fin du jeu")
         return True
 
     def update(self, deltaTime):
         print(deltaTime)
 
-        self.socialBar.subProgress(0.01 * deltaTime)
-        self.sleepBar.subProgress(0.01 * deltaTime)
+        self.socialBar.subProgress(self.parameters["socialBarSpeed"] * deltaTime)
+        self.sleepBar.subProgress(self.parameters["sleepBarSpeed"] * deltaTime)
 
         self.screen.blit(self.background, (0,0))
         self.playerGroup.draw(self.screen)
