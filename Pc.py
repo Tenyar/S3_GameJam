@@ -54,7 +54,8 @@ class Pc(pg.sprite.Sprite):
         self.isActive = False
         self.currentKey = pg.K_ESCAPE
         self.oldKey = pg.K_ESCAPE
-        self.progressPerSuccess = 20
+        self.progressPerSuccess = parameters.parameters["tasksProgressPerSuccess"]
+        self.timeAfterError = parameters.parameters["tasksTimeAfterError"]
         self.timeBeforeNextTry = 0
 
 
@@ -99,7 +100,7 @@ class Pc(pg.sprite.Sprite):
                     print("End of interaction")
                     self.isActive = False
             else:
-                self.timeBeforeNextTry = 1000
+                self.timeBeforeNextTry = self.timeAfterError
             self.oldKey = self.currentKey
             self.currentKey = self.choseRandomKey()
         elif keys.count(True) == 0:

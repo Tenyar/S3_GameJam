@@ -15,10 +15,11 @@ class Social(pg.sprite.Sprite):
 
         self.isActive = False
         self.pos = [0.0]
-        self.zoneLength = 10
-        self.speed = 0.03
-        self.progress = 10
+        self.zoneLength = parameters.parameters["socialZoneLength"]
+        self.speed = parameters.parameters["socialSpeed"]
+        self.progress = parameters.parameters["socialProgress"]
         self.timeBeforeNextBar = random.randint(3000 * self.speed, 50000 * self.speed)
+        self.timeAfterError = parameters.parameters["socialTimeAfterError"]
         self.timeBeforeNextTry = 0
     
     def startInteraction(self):
@@ -39,7 +40,7 @@ class Social(pg.sprite.Sprite):
         self.timeBeforeNextBar -= dt
         if self.timeBeforeNextBar <= 0:
             self.pos.append(0.0)
-            self.timeBeforeNextBar = random.randint(100, 2000)
+            self.timeBeforeNextBar = random.randint(3000 * self.speed, 50000 * self.speed)
 
         for i in range(0, len(self.pos)):
             if i < len(self.pos):
@@ -55,7 +56,7 @@ class Social(pg.sprite.Sprite):
                         self.pos.pop(i)
                         self.social.addProgress(self.progress*dt)
                     else:
-                        self.timeBeforeNextTry = 1000
+                        self.timeBeforeNextTry = self.timeAfterError
                 
         print(self.pos)
 
