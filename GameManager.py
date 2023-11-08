@@ -129,11 +129,11 @@ class GameManager():
 
         # Création des barres de progressions
         self.sleepBar = ProgressBar.ProgressBar("SleepBar", 300, 15, pygame.Vector2(50,25), (0,0,200))
-        self.hungerBar = ProgressBar.ProgressBar("HungerBar", 300, 15, pygame.Vector2(50,50), (255,75,25))
+        self.socialBar = ProgressBar.ProgressBar("socialBar", 300, 15, pygame.Vector2(50,50), (255,25,50))
         # Group des barres de progression
         self.barGroup = pygame.sprite.Group()
         self.barGroup.add(self.sleepBar)
-        self.barGroup.add(self.hungerBar)
+        self.barGroup.add(self.socialBar)
 
         # Liste des objets interactibles
         self.interactibles = {
@@ -151,7 +151,7 @@ class GameManager():
         return True
 
     def update(self, deltaTime):
-        self.hungerBar.subProgress(0.1/deltaTime)
+        self.socialBar.subProgress(0.1/deltaTime)
         self.screen.blit(self.background, (0,0))
         self.playerGroup.draw(self.screen)
         self.interactibleGroup.draw(self.screen)
