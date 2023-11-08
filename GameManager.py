@@ -21,7 +21,7 @@ class GameManager():
         mixer.init()
 
         # PlayList des musiques jouables en jeux
-        playList = {
+        self.playList = {
             "Transition": "Sound/Transition_Sound.wav",
             "Pc": "Sound/Pc_Sound.wav",
             "TaskDone": "Sound/TaskDone_Sound.wav",
@@ -30,7 +30,7 @@ class GameManager():
             "Error": "Sound/Error_Sound.wav"
         }
         # Charge le(s) fichier(s) audio
-        mixer.music.load("Sound/Transition_Sound.wav")
+        # mixer.music.load("Sound/Transition_Sound.wav")
         # Met le volume du gestionnaire de musique
         mixer.music.set_volume(0.2)
         # Joue la musique 
