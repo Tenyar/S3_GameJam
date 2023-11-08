@@ -42,17 +42,18 @@ class GameManager():
 
         # Création du background et du foreground
         backgroundImage = pygame.image.load("Art/Background.png")
-        self.background = pygame.transform.scale(backgroundImage, (1280, 720))
+        self.background = pygame.transform.scale(backgroundImage, (256 * 5, 144 * 5))
         foregroundImage = pygame.image.load("Art/Foreground.png")
         self.foreground = pygame.transform.scale(foregroundImage, (1280, 720))
         treeImage = pygame.image.load("Art/Arbre.png")
-        self.tree = pygame.transform.scale(treeImage, (1280, 720))
+        self.tree = pygame.transform.scale(treeImage, (55 * 5, 40 * 5))
         treeShadowImage = pygame.image.load("Art/Arbre_Ombre.png")
-        self.treeShadow = pygame.transform.scale(treeShadowImage, (1280, 720))
+        self.treeShadow = pygame.transform.scale(treeShadowImage, (75 * 5, 60 * 5))
+        self.treeShadow.set_alpha(100)
         bedBaseImage = pygame.image.load("Art/Lit_Base.png")
-        self.bedBase = pygame.transform.scale(bedBaseImage, (1280, 720))
+        self.bedBase = pygame.transform.scale(bedBaseImage, (84 * 5, 35 * 5))
         tablesImage = pygame.image.load("Art/Tables.png")
-        self.tables = pygame.transform.scale(tablesImage, (1280, 720))
+        self.tables = pygame.transform.scale(tablesImage, (140 * 5, 50 * 5))
 
         # Création d'un player
         self.player = Player.Player(50, 110, 300, 500, (255, 75, 25), parameters)
@@ -94,21 +95,22 @@ class GameManager():
         return True
 
     def update(self, deltaTime):
+        print(deltaTime)
+
         self.socialBar.subProgress(0.01 * deltaTime)
         self.sleepBar.subProgress(0.01 * deltaTime)
 
         self.screen.blit(self.background, (0,0))
         self.screen.blit(self.tables, (0, 0))
-
         self.playerGroup.draw(self.screen)
         self.interactibleGroup.draw(self.screen)
         self.tryInteraction(self.player.rect)
         self.taskManager.update(deltaTime)
         self.player.update(deltaTime, self.interactibleGroup, pygame.Rect(150, 45, 980, 635))
 
-        self.screen.blit(self.bedBase, (0, 0))
-        self.screen.blit(self.treeShadow, (0, 0))
-        self.screen.blit(self.tree, (0, 0))
+        self.screen.blit(self.bedBase, (0, 720 - self.bedBase.get_height()))
+        self.screen.blit(self.treeShadow, (1280 - self.treeShadow.get_width(), 720 - self.treeShadow.get_height()))
+        self.screen.blit(self.tree, (1280 - self.tree.get_width(), 720 - self.tree.get_height()))
         self.screen.blit(self.foreground, (0,0))
 
         self.barGroup.update(self.screen)
