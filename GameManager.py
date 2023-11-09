@@ -59,14 +59,16 @@ class GameManager():
         self.interactibleGroup = pygame.sprite.Group()
 
         self.interactibleGroup.add(Pc.Pc(self, 180, 50, pygame.Vector2(440, 90), parameters))
-        self.interactibleGroup.add(Lit.Lit(self, 290, 110, pygame.Vector2(150,555), parameters))
+        self.interactibleGroup.add(Lit.Lit(self, 260, 110, pygame.Vector2(165,540), parameters))
         self.interactibleGroup.add(Social.Social(self, 70, 70, pygame.Vector2(950, 200), parameters))
 
         #Création des collisions
-        bedCollision = pygame.Rect(150, 585, 270, 110)
+        bedCollision = pygame.Rect(150, 585, 250, 110)
         socialCollision = pygame.Rect(950, 200, 50, 50)
         tablesCollision = pygame.Rect(0, 0, 650, 80)
         self.collisions = [bedCollision, socialCollision, tablesCollision]
+
+        self.isPlayerVisible = True
 
 
     def isRunning(self):
@@ -84,7 +86,8 @@ class GameManager():
 
         self.screen.blit(self.background, (0,0))
         self.screen.blit(self.stranger, (28 * 5, 18 * 5))
-        self.playerGroup.draw(self.screen)
+        if self.isPlayerVisible:
+            self.playerGroup.draw(self.screen)
         self.screen.blit(self.bedBase, (0, 720 - self.bedBase.get_height()))
         self.screen.blit(self.treeShadow, (1280 - self.treeShadow.get_width(), 720 - self.treeShadow.get_height()))
         self.screen.blit(self.tree, (1280 - self.tree.get_width(), 720 - self.tree.get_height()))
@@ -113,3 +116,6 @@ class GameManager():
                     item.startInteraction()
             elif item.isActive:
                 item.stopInteraction()
+
+    def setPlayerVisible(self, isVisible : bool):
+        self.isPlayerVisible = isVisible
