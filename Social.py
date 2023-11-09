@@ -70,10 +70,15 @@ class Social(pg.sprite.Sprite):
 
         keys = pg.key.get_pressed()
         # Action spaceBar enfoncé
+        # Si l'utilisateur n'a plus la touche spaceBar enfoncé et la retouche à nouveau
         if keys[pg.K_SPACE] and not keys[self.oldKey]:
+            # variable si success pour au moins une barre
             success = False
+            # Si l'utilisateur touche la spaceBar pour la première fois, on le sauvegarde pour empêcher le spam par frame
             self.oldKey = pg.K_SPACE
+            # Parcours des listes
             for i in range(0, len(self.pos)):
+                # Parcours de chaque bar pour chaque liste
                 for j in range(0, len(self.pos[i])):
                     if j < len(self.pos[i]):
                         # Interval de succès
@@ -81,8 +86,10 @@ class Social(pg.sprite.Sprite):
                             self.pos[i].pop(j)
                             self.social.addProgress(self.progress)
                             success = True
+            # Cooldown général si échec
             if not success:
                 self.timeBeforeNextTry = self.timeAfterError
+            # Si la spaceBar n'est plus enfoncé, reset la variable avec une touche par défaut
         elif not keys[pg.K_SPACE]:
             self.oldKey = pg.K_ESCAPE 
           
