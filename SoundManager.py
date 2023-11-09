@@ -26,22 +26,21 @@ class SoundManager:
     def fadeOutMusic(self, channel, amount) -> None:
        mixer.Channel(channel).fadeout(amount)
 
-    def playMusic(self, music_key : str, channel : int, numberOfLoop : int, volume, fadeInMs : int, fadeOutMs : int, implementFadeOut : bool) -> None:
-        # Créer une piste audio avec un numéro (layer) puis set son volume
+    def playMusic(self, music_key: str, channel: int, numberOfLoop: int, volume, fadeInMs) -> None:
+        # Create an audio track with a channel number and set its volume
         channelUse = mixer.Channel(channel)
         channelUse.set_volume(volume)
-        # Charge et joue la musique correspondant à la clé fournie
-        music_file = self.playList.get(music_key)
-        if music_file:
-            # load un fichier son pour le jouer sur une piste(channel)
-            sound = mixer.Sound(music_file)
-            # 0 loops signifie joué une fois et répété 0 fois
-            channelUse.play(sound, numberOfLoop, fade_ms=fadeInMs)
 
-        if implementFadeOut:
-            lenSoundInMs = sound.get_length() * 1000
-            print(lenSoundInMs)
-            mixer.fadeout(int(lenSoundInMs - fadeOutMs))
+        # Load and play the music corresponding to the provided key
+        music_file = self.playList.get(music_key)
+        sound = None  # Initialize sound variable outside the if block
+
+        if music_file:
+            # Load a sound file to play on a channel
+            sound = mixer.Sound(music_file)
+
+            # 0 loops mean played once and repeated 0 times
+            channelUse.play(sound, numberOfLoop, fade_ms=fadeInMs)
 
     def unlaodMusic(self) -> None:
         # libère les ressources pour le fichier audio
