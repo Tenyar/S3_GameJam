@@ -37,6 +37,10 @@ class Social(pg.sprite.Sprite):
             self.timeBeforeNextTry -= dt
             return
         
+        if self.isActive:
+            for item in self.pos:
+                pg.draw.rect(screen, ("green"), (500, item, 100, 15))
+        
         self.timeBeforeNextBar -= dt
         if self.timeBeforeNextBar <= 0:
             self.pos.append(0.0)

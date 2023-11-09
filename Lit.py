@@ -3,7 +3,7 @@ import Parameters
 import random
 
 class Lit(pg.sprite.Sprite):
-    def __init__(self, gameManager, width, height, position : pg.Vector2, screen, parameters:Parameters.Parameters) -> None:
+    def __init__(self, gameManager, width, height, position : pg.Vector2, parameters:Parameters.Parameters) -> None:
         super().__init__()
 
         self.width = width
@@ -12,8 +12,6 @@ class Lit(pg.sprite.Sprite):
         self.gameManager = gameManager
         self.sleep = self.gameManager.sleepBar
         
-        self.screenUser = screen
-
         self.isActive = False
         self.pos = 0
         self.speed = parameters.parameters["litSpeed"]
@@ -68,9 +66,9 @@ class Lit(pg.sprite.Sprite):
             self.rectPlayer = pg.Rect(self.imageProgLen + barPos, self.position.y - 80, 5, 30) # Height - 5(offset pour démarquer la barPlayer de l'ensemble des bar du miniJeu)
             self.imagePlayer.fill("white")
 
-            self.screenUser.blit(self.JeuUI, self.rectJeu)
-            self.screenUser.blit(self.imageSuccess, self.rectSuccess)
-            self.screenUser.blit(self.imagePlayer, self.rectPlayer)
+            self.gameManager.screen.blit(self.JeuUI, self.rectJeu)
+            self.gameManager.screen.blit(self.imageSuccess, self.rectSuccess)
+            self.gameManager.screen.blit(self.imagePlayer, self.rectPlayer)
 
         if not self.isActive:
             return

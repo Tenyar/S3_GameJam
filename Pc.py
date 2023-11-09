@@ -6,9 +6,8 @@ import SoundManager as sd
 
 class Pc(pg.sprite.Sprite):
 
-    def __init__(self, gameManager, width, height, position : pg.Vector2, screen, parameters:Parameters.Parameters) -> None:
+    def __init__(self, gameManager, width, height, position : pg.Vector2, parameters:Parameters.Parameters) -> None:
         super().__init__()
-        self.screenUser = screen
         self.gameManager = gameManager
         self.taskManager = self.gameManager.taskManager
         self.soundManager = sd.SoundManager()
@@ -87,7 +86,7 @@ class Pc(pg.sprite.Sprite):
             spriteOriginal = self.sprites.getSpriteAt(self.keyboard.index(self.oldKey), 1)
             spriteScaled = pg.transform.scale(spriteOriginal,(int(spriteOriginal.get_width() * 5), int(spriteOriginal.get_height() * 5)))
             # Affichage de la touche raté
-            self.screenUser.blit(spriteScaled, self.rectKey)
+            self.gameManager.screen.blit(spriteScaled, self.rectKey)
             return
         
         if self.isActive:
@@ -97,7 +96,7 @@ class Pc(pg.sprite.Sprite):
             spriteOriginal = self.sprites.getSpriteAt(self.keyboard.index(self.currentKey), 0)
             spriteScaled = pg.transform.scale(spriteOriginal,(int(spriteOriginal.get_width() * 5), int(spriteOriginal.get_height() * 5)))
             # Affichage du rectangle créée pour les touches si tâche activé
-            self.screenUser.blit(spriteScaled, self.rectKey)
+            self.gameManager.screen.blit(spriteScaled, self.rectKey)
 
         
         self.showKey(self.currentKey)
