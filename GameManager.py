@@ -10,7 +10,7 @@ import SoundManager
 
 class GameManager():
     instance = None
-    def __init__(self, screen : pygame.display, parameters:Parameters.Parameters) -> None:
+    def __init__(self, screen : pygame.display, parameters:Parameters.Parameters,) -> None:
 # simulation d'un singleton : Si on essaye de créer une nouvelle instance de GameManager, une exception est levée        
         if GameManager.instance != None : 
             raise Exception("instance already exists")
@@ -21,6 +21,8 @@ class GameManager():
         self.soundManager = SoundManager.SoundManager()
 
         self.screen = screen
+
+        self.score = 0
 
         # Création du background et du foreground
         backgroundImage = pygame.image.load("Art/Background.png")
@@ -76,6 +78,14 @@ class GameManager():
             #return False
             print ("fin du jeu")
         return True
+    
+    def draw_text(self,text, default_color, x, y, screen):
+        font = pygame.font.Font("Font/Quinquefive-ALoRM.ttf", 15)
+        text_surface = font.render(text, False, default_color)
+        text_rect = text_surface.get_rect()
+        # Met le centre du rectangle de text au centre de la fenêtre
+        text_rect.center = (x, y)
+        screen.blit(text_surface, text_rect)
 
     def update(self, deltaTime):
         #print(deltaTime)
@@ -92,6 +102,7 @@ class GameManager():
         self.screen.blit(self.treeShadow, (1280 - self.treeShadow.get_width(), 720 - self.treeShadow.get_height()))
         self.screen.blit(self.tree, (1280 - self.tree.get_width(), 720 - self.tree.get_height()))
         self.screen.blit(self.foreground, (0,0))
+        self.draw_text(str(self.score),(0,0,0),640,300,self.screen)
         self.interactibleGroup.draw(self.screen)
         self.taskManager.draw(self.screen)
         self.barGroup.update(self.screen)
@@ -116,6 +127,9 @@ class GameManager():
                     item.startInteraction()
             elif item.isActive:
                 item.stopInteraction()
+
+    def addScore(self):
+        self.score = self.taskManager.getCompteurPoints
 
     def setPlayerVisible(self, isVisible : bool):
         self.isPlayerVisible = isVisible

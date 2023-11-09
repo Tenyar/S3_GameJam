@@ -15,12 +15,12 @@ class TaskManager:
         self.parameters = parameters.parameters
 
         self.listTasks = [
-            ("SAE", 120, 1),
-            ("REVISION", 40, 2.5),
-            ("ORAL", 20, 5),
-            ("DM", 30, 5),
-            ("GAME JAM", 60, 1.25),
-            ("EXERCICE", 20, 4)
+            ("SAE", 30, 10, 10),
+            ("REVISION", 30, 10, 10),
+            ("ORAL", 30, 10, 30),
+            ("DM", 30, 10, 20),
+            ("GAME JAM", 30, 10, 40),
+            ("EXERCICE", 30, 10, 5)
         ]
 
         self.firstTask = []
@@ -31,12 +31,15 @@ class TaskManager:
         self.counterCurrentMax = self.parameters["startCounteurValue"]
         self.counterClampMin = self.parameters["counterClampMin"]
         self.maxTask = self.parameters["maxTask"]
+        
 
         self.isTaskTimeOut = False
 
         self.font = pygame.font.Font("Font/Quinquefive-ALoRM.ttf", 15)
 
-    
+        self.pointsCounter = 0
+
+
     def update(self, deltaTime):
 
         self.counter -= deltaTime * 0.001
@@ -56,6 +59,17 @@ class TaskManager:
 
     def getTaskAmount(self):
         return len(self.tasks)
+    
+    def getCurrentTaskScore(self):
+        return self.tasks[0].getTaskScore()
+
+
+    def addPoints(self):
+        points = self.getCurrentTaskScore()
+        self.pointsCounter += points
+
+    def getCompteurPoints(self):
+        return self.pointsCounter
 
     def progressCurrentTask(self, amount : float):
         self.tasks[0].addProgress(amount)
@@ -65,8 +79,8 @@ class TaskManager:
     
 
     def addTask(self):
-        title, time, amount = random.choice(self.listTasks)
-        self.tasks.append(Task.Task(title, time, amount))
+        title, time, amount ,points = random.choice(self.listTasks)
+        self.tasks.append(Task.Task(title, time, amount,points))
 
     def deleteCurrentTask(self):
             self.tasks.pop(0)
