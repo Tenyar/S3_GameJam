@@ -1,6 +1,7 @@
 import pygame as pg
 import Parameters
 import random
+import SpriteSheet
 
 class Lit(pg.sprite.Sprite):
     def __init__(self, gameManager, width, height, position : pg.Vector2, parameters:Parameters.Parameters) -> None:
@@ -25,6 +26,7 @@ class Lit(pg.sprite.Sprite):
 
         self.imageProgLen = 300 # Width de la bar principale du miniJeu
 
+
         # Création du rectangle principale du jeu
         # Chargement de l'image
         self.imageJeuUI = pg.image.load("Art/Bed_Bar.png").convert()
@@ -34,8 +36,15 @@ class Lit(pg.sprite.Sprite):
         self.rectJeu =  pg.Rect(self.imageProgLen -5, self.position.y - 80, self.width, self.height)
         
         # Creation des rectangles
-        self.image = pg.Surface([width,height])
-        self.rect = pg.Rect(position.x, position.y, width, height)
+        self.spriteSheet = SpriteSheet.SpriteSheet("Art/Bed_Spritesheet_Corrected.png",1,4,53,37)
+        self.image = self.spriteSheet.getSpriteAt(0, 0)
+        self.rect = pg.Rect(position.x, position.y - 10, width, height)
+
+        # vitesse de l'animation
+        self.animationSpeed = 2
+        #compteur de temps depuis le dernier changement de sprite
+        self.animationTime = 0
+
 
     def startInteraction(self):
         # Joue une musique marquant le début de la tâche
@@ -66,6 +75,10 @@ class Lit(pg.sprite.Sprite):
     
     def update(self, deltaTime):
 
+        pg.draw.lines(pg.display.get_surface(), (200, 55, 0), True,
+                [self.rect.topleft, self.rect.topright, self.rect.bottomright, self.rect.bottomleft])
+
+
         if self.isActive:
             # Création de la bar du joueur
             barPos = ((self.pos / 100) * self.imageProgLen)
@@ -78,6 +91,13 @@ class Lit(pg.sprite.Sprite):
             self.gameManager.screen.blit(self.imageSuccess, self.rectSuccess)
             self.gameManager.screen.blit(self.imagePlayer, self.rectPlayer)
 
+            self.gameManager.setPlayerVisible(False)
+        else:
+            self.image = self.spriteSheet.getSpriteAt(0,0)
+            self.image = pg.transform.scale(self.image,(53*5, 37*5))
+            self.gameManager.setPlayerVisible(True)
+            return
+
         # Cooldown
         if self.timeBeforeSound > 0:
             if (self.timeBeforeSound - deltaTime) < 0:
@@ -85,28 +105,36 @@ class Lit(pg.sprite.Sprite):
             else:
                 self.timeBeforeSound -= deltaTime
 
-        if not self.isActive:
-            return
-
         self.pos -= self.speed * deltaTime
         if(self.pos < 0):
             self.pos = 0
 
         keys = pg.key.get_pressed()
-        # augmente le score
+        # Avance vers la droite
         if keys[pg.K_SPACE]:
             self.pos += self.speed * self.speedDifference * deltaTime
             if(self.pos > 100):
                 self.pos = 100
 
         if self.zonePos - self.zoneLength/2 < self.pos < self.zonePos + self.zoneLength/2:
+            # Play animation
+            self.image = self.spriteSheet.getSpriteAt((int)(self.animationTime % 2.0) + 2, 0)
+            self.image = pg.transform.scale(self.image,(53*5, 37*5))
+
             # Ajout d'un montant de sommeil à la barre de progression 'sleep'
-            self.sleep.addProgress(self.progress * deltaTime * 0.01) #0.01 -> convertion en seconde de delta time pour cohérence si on demande en paramètre on peut donner une échelle de temps en seconde et non en milliseconde qui est plus dur à comprendre pour l'utilisateur
+            #0.001 -> convertion en seconde de delta time pour cohérence si on demande en paramètre on peut donner une échelle de temps en seconde et non en milliseconde qui est plus dur à comprendre pour l'utilisateur
+            self.sleep.addProgress(self.progress * deltaTime * 0.001)
             if self.sleep.getProg() == 100 and self.timeBeforeSound == 0:
                 self.gameManager.soundManager.playMusic("ProgBarFull", 2, 0, 1, 0)
                 self.timeBeforeSound = 2000 # 2 seconde
+        else:
+            self.image = self.spriteSheet.getSpriteAt(1, 0)
+            #(0, 720 - self.bedBase.get_height())
+            self.image = pg.transform.scale(self.image,(53*5, 37*5))
 
-        print(self.pos)
+        #print(self.pos)
+        self.animationTime += deltaTime * 0.001 * self.animationSpeed
+
 
 
 
