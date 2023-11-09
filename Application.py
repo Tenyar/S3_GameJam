@@ -26,6 +26,21 @@ class Application(object):
             # Gère les paramètres
             self.parameters = parameters
 
+    def startGame(self):
+    gameManager = GameManager.GameManager(self.screen, self.parameters)
+    pygame.display.set_caption("MainMenu")
+
+    while gameManager.isRunning():
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+        gameManager.update(self.deltaTime)
+        pygame.display.update() # Update les données sur la fenêtre
+        pygame.display.flip() # Met les "dessins" stocké dans le buffer à l'écran
+
+
 def draw_text(text, size, default_color, color_direction, color_speed, x, y, screen):
     font = pygame.font.Font("Font/Quinquefive-ALoRM.ttf", 15)
     text_surface = font.render(text, False, default_color)
@@ -44,19 +59,6 @@ def textColorChange(default_color, direction, speed , valueMin , valueMax):
         default_color[i] = max(valueMin, min(valueMax, default_color[i]))
         if default_color[i] >= valueMax or default_color[i] <= valueMin:
             direction[i] *= -1
-    def startGame(self):
-        gameManager = GameManager.GameManager(self.screen, self.parameters)
-        pygame.display.set_caption("MainMenu")
-
-        while gameManager.isRunning():
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-
-            gameManager.update(self.deltaTime)
-            pygame.display.update() # Update les données sur la fenêtre
-            pygame.display.flip() # Met les "dessins" stocké dans le buffer à l'écran
 
 
 
