@@ -11,6 +11,7 @@ class Pc(pg.sprite.Sprite):
         self.taskManager = self.gameManager.taskManager
 
         self.image = pg.Surface([width,height])
+        self.image.set_alpha(0)
         self.position = position
         self.rect = pg.Rect(position.x, position.y, width, height)
 

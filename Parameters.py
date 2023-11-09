@@ -11,14 +11,14 @@ class Parameters:
 
             "tasksProgressPerSuccessMin": 3,
             "tasksProgressPerSuccessMax": 5,
-            "tasksTimeAfterError": 1,       # Cooldown en cas d'erreur
-            "startCounteurValue": 20,
-            "counterDecreaseStep": 2,
-            "counterClampMin": 5,
+            "tasksTimeAfterError": 0.5,       # Cooldown en cas d'erreur
+            "startCounteurValue": 18,
+            "counterDecreaseStep": 0.5,
+            "counterClampMin": 10,
             "maxTask": 4,
 
-            "litSpeed": 0.03,
-            "litSpeedDifference": 4,
+            "litSpeed": 0.03,       # vitesse de descente de la bar
+            "litSpeedDifference": 3,    # vitesse à laquelle sa monte en fonction de lit speed
             "litSleepBarProgressPerSuccess": 10,
             "litZoneLength": 15,
 
