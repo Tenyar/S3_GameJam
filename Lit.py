@@ -47,7 +47,7 @@ class Lit(pg.sprite.Sprite):
 
     def startInteraction(self):
         # Joue une musique marquant le début de la tâche
-        self.gameManager.soundManager.playMusic("InBed", 1, 0, 1, 0)
+        self.gameManager.soundManager.playMusic("InBed", 1, 0, 0.3, 0)
 
         # Rend aléatoire la position de la bar succès dans un intervale entre [50 et 80] avec un pas de 10 pixel
         self.zonePos = random.randrange(30, 80, 10)
@@ -67,7 +67,7 @@ class Lit(pg.sprite.Sprite):
     
     def stopInteraction(self):
         # Joue une musique marquant la fin de la tâche
-        self.gameManager.soundManager.playMusic("OutBed", 1, 0, 1, 0)
+        self.gameManager.soundManager.playMusic("OutBed", 1, 0, 0.3, 0)
         #print("Fin de l'interaction")
         self.isActive = False
         self.pos=0
