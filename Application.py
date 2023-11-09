@@ -96,11 +96,11 @@ def mainMenu():
     while True:
         for event in pygame.event.get():
             # On regarde si l'évenement "quitter la fenêtre" est déclenché.
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 pygame.quit()
                 sys.exit()
             # On regarde si n'importe quel autre touche que Escape est enfoncé
-            elif event.type == pygame.KEYDOWN and not event.key == pygame.K_ESCAPE:
+            elif event.type == pygame.KEYDOWN and not event.key == pygame.K_ESCAPE and not event.key == pygame.K_LEFT and not event.key == pygame.K_RIGHT and not event.key == pygame.K_UP and not event.key == pygame.K_DOWN:
                 MainGame(app)
 
         # remplir la scène(fenêtre) à chaque fois qu'il change de position
@@ -109,6 +109,8 @@ def mainMenu():
 
         # Affichage consigne pour lancer la partie
         draw_text("Appuyez sur n'importe quel bouton pour lancer une partie", 15, default_color, color_direction, color_speed, app.screenWidth / 2, app.screenHeight / 1.25, app.screen)
+        # Affichage consigne pour quitter le menu
+        draw_text("Appuyez sur echap pour quitter", 15, default_color, color_direction, color_speed, app.screenWidth / 2, app.screenHeight / 1.15, app.screen)
         # Update les données sur la fenêtre
         pygame.display.update() 
         # Met les "dessins" stocké dans le buffer à l'écran
