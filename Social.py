@@ -8,6 +8,7 @@ class Social(pg.sprite.Sprite):
 
         self.gameManager = gameManager
         self.social = self.gameManager.socialBar
+        self.parameters = parameters.parameters
 
         self.image = pg.Surface([width,height])
         self.position = position
@@ -16,11 +17,11 @@ class Social(pg.sprite.Sprite):
         self.isActive = False
         #self.pos = [0.0]
         self.pos = [[], [], []]
-        self.zoneLength = parameters.parameters["socialZoneLength"]
-        self.speed = parameters.parameters["socialSpeed"]
-        self.progress = parameters.parameters["socialBarProgressPerSuccess"]
-        self.timeBeforeNextBar = random.uniform(3000 * self.speed, 50000 * self.speed)
-        self.timeAfterError = parameters.parameters["socialTimeAfterError"]
+        self.zoneLength = self.parameters["socialZoneLength"]
+        self.speed = self.parameters["socialSpeed"]
+        self.progress = self.parameters["socialBarProgressPerSuccess"]
+        self.timeBeforeNextBar = 0
+        self.timeAfterError = self.parameters["socialTimeAfterError"]
         self.timeBeforeNextTry = 0
     
     def startInteraction(self):
@@ -58,7 +59,7 @@ class Social(pg.sprite.Sprite):
         if self.timeBeforeNextBar <= 0:
             # Rend aléatoire l'affectation d'une nouvelle bar dans une des 3 liste (position sur l'écran)
             self.pos[random.randrange(0, 3, 1)].append(0.0)
-            self.timeBeforeNextBar = random.uniform(10000 * self.speed, 50000 * self.speed)
+            self.timeBeforeNextBar = random.uniform(self.parameters["socialBarMinTime"], self.parameters["socialBarMaxTime"])
 
         # Parcours des listes dans pos
         for i in range(0, len(self.pos)):

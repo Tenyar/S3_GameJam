@@ -3,7 +3,7 @@ class Parameters:
         self.parameters = {
             "playerSpeed": 0.45,
             "socialBarSpeed": 0.0015,
-            "sleepBarSpeed": 0.0015,
+            "sleepBarSpeed": 0.0012,
 
             "startCounteurValue": 0.5,
             "counterDecreaseStep": 0.5,
@@ -13,19 +13,21 @@ class Parameters:
             "tasksDifficulty": 2,
             "gamesDifficulty": 2,
 
-            "tasksSpeed": 0.15,
-            "tasksProgressPerSuccessMin": 5,
-            "tasksProgressPerSuccessMax": 10,
+            "tasksSpeed": 0.1,
+            "tasksProgressPerSuccessMin": 1,
+            "tasksProgressPerSuccessMax": 7,
             "tasksTimeAfterError": 1000,
 
-            "litSpeed": 0.08,
-            "litSpeedDifference": 3,
-            "litSleepBarProgressPerSuccess": 1.5,
-            "litZoneLength": 25,
+            "litSpeed": 0.03,
+            "litSpeedDifference": 4,
+            "litSleepBarProgressPerSuccess": 1,
+            "litZoneLength": 15,
 
             "socialZoneLength": 10,
             "socialSpeed": 0.05,
-            "socialBarProgressPerSuccess": 15,
+            "socialBarProgressPerSuccess": 10,
+            "socialBarMinTime": 300,
+            "socialBarMaxTime": 1000,
             "socialTimeAfterError": 1000
         }
 
