@@ -29,7 +29,7 @@ class Social(pg.sprite.Sprite):
         self.timeBeforeNextTry = 0
 
         # Interval de réussite pour le joueur
-        self.IndexInterval = 90
+        self.IndexInterval = 95
         self.intervalBegin = self.IndexInterval - 10/2
         self.intervalEnd = self.IndexInterval + 10/2
         # Multiplicateur du parcours en pixels des bar
