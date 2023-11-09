@@ -86,6 +86,11 @@ def mainMenu():
     # Création du singleton
     app = Application(WINDOW_WIDTH, WINDOW_HEIGHT, Parameters.Parameters(sys.argv))
 
+    # Chargement des images
+    foregroundImage = pygame.image.load("Art/Menu_Foreground.png")
+    foreground = pygame.transform.scale(foregroundImage, (256 * 5, 144 * 5))
+
+
     # variable de la font
     color_speed = 2
     color_direction = [1,1,1] # pas d'incrémentation
@@ -102,7 +107,7 @@ def mainMenu():
                 MainGame(app)
 
         # remplir la scène(fenêtre) à chaque fois qu'il change de position
-        app.screen.fill((25,50,200)) # Background du menu
+        app.screen.blit(foreground, (0,0))
         
 
         # Affichage consigne pour lancer la partie
