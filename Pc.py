@@ -96,7 +96,8 @@ class Pc(pg.sprite.Sprite):
             # Affichage du rectangle créée pour les touches si tâche activé
             self.gameManager.screen.blit(spriteScaled, self.rectKey)
 
-        
+        # Enlève un peu de % de sociabilité
+        self.gameManager.socialBar.subProgress(3*dt*0.001)
         self.showKey(self.currentKey)
         keys = pg.key.get_pressed()
         '''for event in pg.event.get():
@@ -109,8 +110,6 @@ class Pc(pg.sprite.Sprite):
                 # Play a sound of success
                 self.gameManager.soundManager.setVolume(0.3)
                 self.gameManager.soundManager.playMusic("TaskDone")
-                # Enlève un peu de % de sociabilité
-                self.gameManager.socialBar.subProgress(10)
                 # si le progrès de la tache est fini (100%)
                 if self.taskManager.progressCurrentTask(random.randrange(int(self.progressPerSuccessMin), int(self.progressPerSuccessMax), 1)):
                     print("End of interaction")

@@ -77,8 +77,6 @@ class GameManager():
 
     def update(self, deltaTime):
         #print(deltaTime)
-
-        self.socialBar.subProgress(self.parameters["socialBarSpeed"] * deltaTime)
         self.sleepBar.subProgress(self.parameters["sleepBarSpeed"] * deltaTime)
 
         self.tryInteraction(self.player.rect)
