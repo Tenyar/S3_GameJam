@@ -25,6 +25,8 @@ class GameManager():
         # Création du background et du foreground
         backgroundImage = pygame.image.load("Art/Background.png")
         self.background = pygame.transform.scale(backgroundImage, (256 * 5, 144 * 5))
+        strangerImage = pygame.image.load("Art/Stranger.png")
+        self.stranger = pygame.transform.scale(strangerImage, (18 * 5, 28 * 5))
         foregroundImage = pygame.image.load("Art/Foreground.png")
         self.foreground = pygame.transform.scale(foregroundImage, (1280, 720))
         treeImage = pygame.image.load("Art/Arbre.png")
@@ -83,6 +85,7 @@ class GameManager():
         self.taskManager.update(deltaTime)
 
         self.screen.blit(self.background, (0,0))
+        self.screen.blit(self.stranger, (28 * 5, 18 * 5))
         self.playerGroup.draw(self.screen)
         self.screen.blit(self.bedBase, (0, 720 - self.bedBase.get_height()))
         self.screen.blit(self.treeShadow, (1280 - self.treeShadow.get_width(), 720 - self.treeShadow.get_height()))
