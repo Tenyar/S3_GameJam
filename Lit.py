@@ -24,16 +24,15 @@ class Lit(pg.sprite.Sprite):
 
         self.timeBeforeSound = 0 # init à 0 seconde
 
-        self.imageProgLen = 300 # Width de la bar principale du miniJeu
-
-
+        # Load l'image qu'une fois à la création (performance)
+        self.imageProgLen = 200 # Width de la bar principale du miniJeu
         # Création du rectangle principale du jeu
         # Chargement de l'image
-        self.imageJeuUI = pg.image.load("Art/Bed_Bar.png").convert()
-        self.imageJeuUI.set_colorkey(0)
-        self.imageJeuUI = self.imageJeuUI.convert_alpha()
-        self.JeuUI = pg.transform.scale(self.imageJeuUI, ((self.imageJeuUI.get_width() * 5) + 5, self.imageJeuUI.get_height() * 5))
-        self.rectJeu =  pg.Rect(self.imageProgLen -5, self.position.y - 80, self.width, self.height)
+        self.imageJeuSurface = pg.image.load("Art/Bed_Bar.png").convert()
+        self.imageJeuSurface.set_colorkey(0)
+        self.imageJeuSurface = self.imageJeuSurface.convert_alpha()
+        self.JeuUI = pg.transform.scale(self.imageJeuSurface, ((self.imageJeuSurface.get_width() * 5) + 5, self.imageJeuSurface.get_height() * 5))
+        self.rectJeuUI =  pg.Rect(self.imageProgLen -5, self.position.y - 80, self.width, self.height)
         
         # Creation des rectangles
         self.spriteSheet = SpriteSheet.SpriteSheet("Art/Bed_Spritesheet_Corrected.png",1,4,53,37)
@@ -82,12 +81,12 @@ class Lit(pg.sprite.Sprite):
         if self.isActive:
             # Création de la bar du joueur
             barPos = ((self.pos / 100) * self.imageProgLen)
-            #print(barPos)
+            print(barPos)
             self.imagePlayer = pg.Surface([5,30])
             self.rectPlayer = pg.Rect(self.imageProgLen + barPos, self.position.y - 80, 5, 30) # Height - 5(offset pour démarquer la barPlayer de l'ensemble des bar du miniJeu)
             self.imagePlayer.fill("white")
 
-            self.gameManager.screen.blit(self.JeuUI, self.rectJeu)
+            self.gameManager.screen.blit(self.JeuUI, self.rectJeuUI)
             self.gameManager.screen.blit(self.imageSuccess, self.rectSuccess)
             self.gameManager.screen.blit(self.imagePlayer, self.rectPlayer)
 
