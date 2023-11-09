@@ -6,6 +6,7 @@ import Social
 import TaskManager
 import ProgressBar
 import Parameters
+import SoundManager
 
 class GameManager():
     instance = None
@@ -17,6 +18,7 @@ class GameManager():
         
         self.parameters = parameters.parameters
         self.taskManager = TaskManager.TaskManager(parameters)
+        self.soundManager = SoundManager.SoundManager()
 
         self.screen = screen
 
