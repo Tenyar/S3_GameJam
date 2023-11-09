@@ -86,7 +86,7 @@ class Pc(pg.sprite.Sprite):
         
         if self.timeBeforeNextTry > 0:
             self.timeBeforeNextTry -= dt * 0.001 # Cooldown en action à chaque boucle
-            self.drawKey(self.currentKeyId, 1)
+            self.drawKey(self.oldKeyId, 1)
             return
         
         self.drawKey(self.currentKeyId, 0)
