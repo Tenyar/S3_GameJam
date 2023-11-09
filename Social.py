@@ -94,10 +94,8 @@ class Social(pg.sprite.Sprite):
                             success = True
                             self.social.addProgress(self.progress)
                             if self.social.getProg() == 100:
-                                self.gameManager.soundManager.setVolume(1)
                                 self.gameManager.soundManager.playMusic("ProgBarFull", 2, 0, 1, 0)
                             else:
-                                self.gameManager.soundManager.setVolume(0.5)
                                 self.gameManager.soundManager.playMusic("TaskDone", 2, 0, 0.5, 0)
 
             # Cooldown général si échec

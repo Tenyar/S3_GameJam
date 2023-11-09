@@ -103,7 +103,6 @@ class Lit(pg.sprite.Sprite):
             # Ajout d'un montant de sommeil à la barre de progression 'sleep'
             self.sleep.addProgress(self.progress * deltaTime * 0.01) #0.01 -> convertion en seconde de delta time pour cohérence si on demande en paramètre on peut donner une échelle de temps en seconde et non en milliseconde qui est plus dur à comprendre pour l'utilisateur
             if self.sleep.getProg() == 100 and self.timeBeforeSound == 0:
-                self.gameManager.soundManager.setVolume(1)
                 self.gameManager.soundManager.playMusic("ProgBarFull", 2, 0, 1, 0)
                 self.timeBeforeSound = 2000 # 2 seconde
 
