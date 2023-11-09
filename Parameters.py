@@ -2,20 +2,20 @@ class Parameters:
     def __init__(self, argv : list[str]) -> None:
         self.parameters = {
             "playerSpeed": 0.45,
-            "socialBarSpeed": 0.005,
-            "sleepBarSpeed": 0.005,
+            "socialBarSpeed": 0.0025,
+            "sleepBarSpeed": 0.0025,
             "tasksDifficulty": 2,
             "gamesDifficulty": 2,
 
-            "tasksSpeed": 1,
+            "tasksSpeed": 0.01,
             "tasksProgressPerSuccessMin": 10,
             "tasksProgressPerSuccessMax": 20,
             "tasksTimeAfterError": 1000,
 
-            "litSpeed": 0.1,
+            "litSpeed": 0.08,
             "litSpeedDifference": 3,
-            "litSleepBarProgressPerSuccess": 0.2,
-            "litZoneLength": 10,
+            "litSleepBarProgressPerSuccess": 1.5,
+            "litZoneLength": 25,
 
             "socialZoneLength": 10,
             "socialSpeed": 0.03,

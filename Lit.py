@@ -86,9 +86,9 @@ class Lit(pg.sprite.Sprite):
             if(self.pos > 100):
                 self.pos = 100
 
-            if self.zonePos - self.zoneLength/2 < self.pos < self.zonePos + self.zoneLength/2:
-                # Ajout d'un montant de sommeil à la barre de progression 'sleep'
-                self.sleep.addProgress(self.progress*dt*0.01) #0.01 -> convertion en seconde de delta time pour cohérence si on demande en paramètre on peut donner une échelle de temps en seconde et non en milliseconde qui est plus dur à comprendre pour l'utilisateur
+        if self.zonePos - self.zoneLength/2 < self.pos < self.zonePos + self.zoneLength/2:
+            # Ajout d'un montant de sommeil à la barre de progression 'sleep'
+            self.sleep.addProgress(self.progress*dt*0.01) #0.01 -> convertion en seconde de delta time pour cohérence si on demande en paramètre on peut donner une échelle de temps en seconde et non en milliseconde qui est plus dur à comprendre pour l'utilisateur
         print(self.pos)
 
 
