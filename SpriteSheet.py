@@ -6,8 +6,8 @@ class SpriteSheet():
     # filename : Path to the sprite sheet file
     # spritePerline : number of sprites on each line
     # spriteperColumn : number of sprites on each column
-    # spriteWidth : largeur d'un sprite
-    # spriteHeight : hauteur d'un sprite
+    # spriteWidth : width of one sprite
+    # spriteHeight : height of one sprite
     # WARNING : This class will work correctly only if every sprite of the sprite sheet has the same dimensions, if there is the same number of sprites on every line and if every sprite is placed with the same offset on the sheet.
     def __init__(self,filename : str, spritePerLine : int , spritePerColumn : int , spriteWidth, spriteHeight):
         image = pygame.image.load(filename)
