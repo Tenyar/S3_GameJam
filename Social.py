@@ -54,7 +54,7 @@ class Social(pg.sprite.Sprite):
                 if i < len(self.pos):
                     if 85 - self.zoneLength/2 < self.pos[i] < 85 + self.zoneLength/2:
                         self.pos.pop(i)
-                        self.social.addProgress(self.progress*dt)
+                        self.social.addProgress(self.progress)
                     else:
                         self.timeBeforeNextTry = self.timeAfterError
                 
