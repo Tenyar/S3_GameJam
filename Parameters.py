@@ -8,7 +8,8 @@ class Parameters:
             "gamesDifficulty": 2,
 
             "tasksSpeed": 1,
-            "tasksProgressPerSuccess": 20,
+            "tasksProgressPerSuccessMin": 10,
+            "tasksProgressPerSuccessMax": 20,
             "tasksTimeAfterError": 1000,
 
             "litSpeed": 0.1,
@@ -37,7 +38,8 @@ class Parameters:
             self.parameters["tasksDifficulty"] = 0
         
         self.parameters["tasksSpeed"] *= self.parameters["tasksDifficulty"]/2
-        self.parameters["tasksProgressPerSuccess"] *= self.parameters["tasksDifficulty"]/2
+        self.parameters["tasksProgressPerSuccessMin"] *= self.parameters["tasksDifficulty"]/2
+        self.parameters["tasksProgressPerSuccessMax"] *= self.parameters["tasksDifficulty"]/2
         self.parameters["tasksTimeAfterError"] *= self.parameters["tasksDifficulty"]/2
 
         if self.parameters["gamesDifficulty"] > 5:
@@ -53,5 +55,3 @@ class Parameters:
         self.parameters["socialSpeed"] *= self.parameters["gamesDifficulty"]/2
         self.parameters["socialBarProgressPerSuccess"] *= self.parameters["gamesDifficulty"]/2
         self.parameters["socialTimeAfterError"] *= self.parameters["gamesDifficulty"]/2
-
-

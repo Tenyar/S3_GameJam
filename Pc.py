@@ -57,7 +57,8 @@ class Pc(pg.sprite.Sprite):
         self.isActive = False
         self.currentKey = pg.K_ESCAPE
         self.oldKey = pg.K_ESCAPE
-        self.progressPerSuccess = parameters.parameters["tasksProgressPerSuccess"]
+        self.progressPerSuccessMin = parameters.parameters["tasksProgressPerSuccessMin"]
+        self.progressPerSuccessMax = parameters.parameters["tasksProgressPerSuccessMax"]
         self.timeAfterError = parameters.parameters["tasksTimeAfterError"]
         self.timeBeforeNextTry = 0
 
@@ -111,7 +112,7 @@ class Pc(pg.sprite.Sprite):
                 # Play a sound of success
                 self.soundManager.playMusic("TaskDone")
                 # si le progrès de la tache est fini (100%)
-                if self.taskManager.progressCurrentTask(self.progressPerSuccess):
+                if self.taskManager.progressCurrentTask(random.randrange(int(self.progressPerSuccessMin), int(self.progressPerSuccessMax), 1)):
                     print("End of interaction")
                     self.isActive = False
             else:
