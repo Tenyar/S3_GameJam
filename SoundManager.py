@@ -25,11 +25,7 @@ class SoundManager:
     def fadeOutMusic(self, channel, amount) -> None:
        mixer.Channel(channel).fadeout(amount)
 
-    def setVolume(self, amount) -> None:
-        mixer.music.set_volume(amount)
-
     def playMusic(self, music_key : str, channel : int, numberOfLoop : int, volume : int, fadeIn : int) -> None:
-        
         # Créer une piste audio avec un numéro (layer) puis set son volume
         channelUse = mixer.Channel(channel)
         channelUse.set_volume(volume)
