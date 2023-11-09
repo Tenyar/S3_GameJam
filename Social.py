@@ -49,11 +49,11 @@ class Social(pg.sprite.Sprite):
         # Si pixel noir / transaprent (compte comme noir), considérer cette valeur comme transaprent pour le convert_alpha()
         SocialeSurface.set_colorkey(0)
         # Si pixel tranparent, les converties à l'affichage
-        print("SUS", self.intervalSuccess)
+        #print("SUS", self.intervalSuccess)
         SocialeSurface = SocialeSurface.convert_alpha()
         self.SocialeUI = pg.transform.scale(SocialeSurface, (SocialeSurface.get_width()*5, SocialeSurface.get_height()*5 )) #+ self.intervalSuccess - 5
-        print("TAILLE DE L'IMGAE: ", SocialeSurface.get_height()*5)
-        print("TAILLE DE L'IMGAE:  AVEC l'interval couver : ", SocialeSurface.get_height()*5 + self.intervalSuccess)
+        #print("TAILLE DE L'IMGAE: ", SocialeSurface.get_height()*5)
+        #print("TAILLE DE L'IMGAE:  AVEC l'interval couver : ", SocialeSurface.get_height()*5 + self.intervalSuccess)
         self.rectSocialeUI = SocialeSurface.get_rect(topleft=(self.barOffsetX, self.barSuccessOffsetY))
         #self.rectSocialeUI =  pg.Rect(self.barOffsetX, self.barSuccessOffsetY, SocialeSurface.get_width()*5, 10)
 
