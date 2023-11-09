@@ -140,7 +140,7 @@ class Social(pg.sprite.Sprite):
 
             # Cooldown général si échec
             if not success:
-                self.gameManager.soundManager.playMusic("Error", 2, 0, 0.5, 0, 0)
+                self.gameManager.soundManager.playMusic("Error", 2, 0, 0.5, 0)
                 self.timeBeforeNextTry = self.timeAfterError
             # Si la spaceBar n'est plus enfoncé, reset la variable avec une touche par défaut
         elif not keys[pg.K_SPACE]:

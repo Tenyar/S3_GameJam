@@ -30,7 +30,7 @@ class Application(object):
         gameManager = GameManager.GameManager(self.screen, self.parameters)
         pygame.display.set_caption("MainMenu")
 
-        gameManager.soundManager.playMusic("Background", 0, -1, 0.5, 4000, 144440, True) # boucle infinie
+        gameManager.soundManager.playMusic("Background", 0, -1, 0.5, 4000) # boucle infinie
         while gameManager.isRunning():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -44,7 +44,7 @@ class Application(object):
 
 
 def draw_text(text, size, default_color, color_direction, color_speed, x, y, screen):
-    font = pygame.font.Font("Font/Quinquefive-ALoRM.ttf", 15)
+    font = pygame.font.Font("Font/Quinquefive-ALoRM.ttf", size)
     text_surface = font.render(text, False, default_color)
     text_rect = text_surface.get_rect()
     # Met le centre du rectangle de text au centre de la fenêtre
@@ -108,7 +108,16 @@ def mainMenu():
 
         # remplir la scène(fenêtre) à chaque fois qu'il change de position
         app.screen.blit(foreground, (0,0))
-        
+
+        font = pygame.font.Font("Font/Quinquefive-ALoRM.ttf", 9)
+        line1 = font.render('La vie etudiante n’est pas facile, et l’INFO n’y fait pas exception.', True, (0,0,0))
+        app.screen.blit(line1, (60, 130))
+        line2 = font.render('DM, SAE, Revision, tout ca c’est sympa mais il faut aussi dormir, et parfois parler a des gens.', True, (0,0,0))
+        app.screen.blit(line2, (60, 150))
+        line3 = font.render('Dans ce jeu d’arcade les auteurs on voulu representer leur quotidien passionnant sous format video-ludique.', True, (0,0,0))
+        app.screen.blit(line3, (60, 170))
+        line4 = font.render('Combien de tache pourrez-vous faire avant de perdre votre sommeil ou vos amis…', True, (0,0,0))
+        app.screen.blit(line4, (60, 190))
 
         # Affichage consigne pour lancer la partie
         draw_text("Appuyez sur n'importe quel bouton pour lancer une partie", 15, default_color, color_direction, color_speed, app.screenWidth / 2, app.screenHeight / 1.25, app.screen)
