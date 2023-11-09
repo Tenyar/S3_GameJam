@@ -4,6 +4,12 @@ class Parameters:
             "playerSpeed": 0.45,
             "socialBarSpeed": 0.0015,
             "sleepBarSpeed": 0.0015,
+
+            "startCounteurValue": 0.5,
+            "counterDecreaseStep": 0.5,
+            "counterClampMin": 5,
+            "maxTask": 5,
+
             "tasksDifficulty": 2,
             "gamesDifficulty": 2,
 

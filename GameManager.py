@@ -16,7 +16,7 @@ class GameManager():
         GameManager.instance = self
         
         self.parameters = parameters.parameters
-        self.taskManager = TaskManager.TaskManager(5, 0.5, 5, 5, parameters)
+        self.taskManager = TaskManager.TaskManager(parameters)
 
         self.screen = screen
 
