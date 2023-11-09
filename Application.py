@@ -27,18 +27,18 @@ class Application(object):
             self.parameters = parameters
 
     def startGame(self):
-    gameManager = GameManager.GameManager(self.screen, self.parameters)
-    pygame.display.set_caption("MainMenu")
+        gameManager = GameManager.GameManager(self.screen, self.parameters)
+        pygame.display.set_caption("MainMenu")
 
-    while gameManager.isRunning():
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
+        while gameManager.isRunning():
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
 
-        gameManager.update(self.deltaTime)
-        pygame.display.update() # Update les données sur la fenêtre
-        pygame.display.flip() # Met les "dessins" stocké dans le buffer à l'écran
+            gameManager.update(self.deltaTime)
+            pygame.display.update() # Update les données sur la fenêtre
+            pygame.display.flip() # Met les "dessins" stocké dans le buffer à l'écran
 
 
 def draw_text(text, size, default_color, color_direction, color_speed, x, y, screen):
