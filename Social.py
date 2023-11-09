@@ -1,6 +1,7 @@
 import pygame as pg
 import random
 import Parameters
+import SpriteSheet
 
 class Social(pg.sprite.Sprite):
     def __init__(self, gameManager, width, height, position : pg.Vector2, parameters:Parameters.Parameters) -> None:
@@ -9,8 +10,11 @@ class Social(pg.sprite.Sprite):
         self.gameManager = gameManager
         self.social = self.gameManager.socialBar
         self.parameters = parameters.parameters
-
-        self.image = pg.Surface([width,height])
+        #52* 40
+        self.spriteSheet = SpriteSheet.SpriteSheet("Art/Social_Spritesheet.png",7,2,52,40)
+        self.image = self.spriteSheet.getSpriteAt(0,0)
+        self.animationTime = 0
+        self.animationSpeed = 1.5
         self.position = position
         self.rect = pg.Rect(position.x, position.y, width, height)
 
@@ -28,17 +32,19 @@ class Social(pg.sprite.Sprite):
         # Joue une musique marquant le début de la tâche
         self.gameManager.soundManager.playMusic("Social", 1, -1, 1, 1000)
         
-        print("Début de l'interaction")
+        #print("Début de l'interaction")
         self.isActive = True
         self.pos = [[], [], []]
     
     def stopInteraction(self):
         self.gameManager.soundManager.fadeOutMusic(1, 1000)
-        print("Fin de l'interaction")
+        #print("Fin de l'interaction")
         self.isActive = False
     
     def update(self, dt):
-
+        self.image = self.spriteSheet.getSpriteAt((int)(self.animationTime % self.spriteSheet.spritePerColumn),(int)(self.animationTime % self.spriteSheet.spritePerLine))
+        self.animationTime += dt * 0.001 * self.animationSpeed
+        self.image = pg.transform.scale(self.image,(52*5, 40*5))
         if not self.isActive:
             return
         intervalSuccess = (85 + self.zoneLength/2) - (85 - self.zoneLength/2)
@@ -105,31 +111,9 @@ class Social(pg.sprite.Sprite):
             # Si la spaceBar n'est plus enfoncé, reset la variable avec une touche par défaut
         elif not keys[pg.K_SPACE]:
             self.oldKey = pg.K_ESCAPE 
-        print(self.pos)
-
-
-
-
-
-if __name__ == "__main__":
-    import GameManager
-
-    pg.init
-    pg.font.init()
-    pg.display.set_caption("survie")
-    screen = pg.display.set_mode((1920,1080))
-    clock = pg.time.Clock()
-    dt = 0
-
-    social = Social(gameManager=GameManager.GameManager(screen), width=1, height=1, position=pg.Vector2(0, 0))
-    social.startInteraction()
-    while(social.isActive):
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                pg.quit()
+        #print(self.pos)
 
         
-        dt = clock.tick(60)
-        social.update(dt)
-        pg.display.flip()
-
+        
+        self.animationTime += dt * 0.001 * self.animationSpeed
+        
