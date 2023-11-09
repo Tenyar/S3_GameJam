@@ -4,6 +4,7 @@ import ProgressBar
 
 screen = pygame.display.set_mode((1920,1080))
 class Task (pygame.sprite.Sprite):
+    instance = 0
     def __init__(self,title : str) -> None:
         # initialise l'objet dont on hérite
         super().__init__()
@@ -30,7 +31,8 @@ class Task (pygame.sprite.Sprite):
         self.timer = ""
         # time when initialising the task
         #self.timeAtInit = pygame.time.get_ticks()*0.001
-        self.title = title     
+        self.title = title
+        Task.instance+=1  
 
 
     def addProgress(self, amount : float):

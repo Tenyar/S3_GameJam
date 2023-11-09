@@ -7,19 +7,20 @@ class TaskManager:
     instance = None
 
     #simulation d'un singleton : Si on essaye de créer une nouvelle instance de TaskManager, une exception est levée
-    def __init__(self, startCounteurValue, counterDecreaseStep, counterClampMin, maxTask, parameters:Parameters.Parameters) -> None:
+    def __init__(self,parameters:Parameters.Parameters) -> None:
         if TaskManager.instance != None :
             raise Exception("instance already exists")
         TaskManager.instance = self
     
         self.parameters = parameters.parameters
+        self.firstTask = []
         self.tasks = []
+        self.addTask("UNO")
         self.counter = self.parameters["startCounteurValue"]
         self.counterDecreaseStep = self.parameters["counterDecreaseStep"]
         self.counterCurrentMax = self.parameters["startCounteurValue"]
         self.counterClampMin = self.parameters["counterClampMin"]
         self.maxTask = self.parameters["maxTask"]
-        #self.firstTask = None
 
         self.isTaskTimeOut = False
 
@@ -56,17 +57,17 @@ class TaskManager:
     def addTask(self, title):
         self.tasks.append(Task.Task(title))
 
-    def deleteCurrentTask(self,screen):
+    def deleteCurrentTask(self):
             self.tasks.pop(0)
 
     def draw(self,screen : pygame.display,):
         currentTaskId = 0
-        #self.firstTask = self.tasks[0]
-        #task.draw(screen,self.font)
-        #self.tasks.pop(0)
+
         for task in self.tasks :
             task.position.y = currentTaskId * 95 + 180
             task.progressBar.posY = currentTaskId * 95 + 34 + 180
+            self.firstTask.append(self.tasks[0])
+            self.firstTask.pop(0)
             task.draw(screen, self.font)
             currentTaskId += 1
 
