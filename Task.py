@@ -23,13 +23,14 @@ class Task (pygame.sprite.Sprite):
         self.progressBarPosition = pygame.Vector2(self.rect.bottomleft)
         self.progressBarPosition.x += 1.5*4
         # on crée une barre de progression associée à la tâche
-        self.progressBar = ProgressBar.ProgressBar(title, 36*4, 2*4, self.progressBarPosition, (34, 177, 76),False)
+        self.progressBar = ProgressBar.ProgressBar(title, 36*4, 2*4, 0, self.progressBarPosition, (34, 177, 76),False)
 
         self.title = title
         self.limitTime = 20       
 
 
     def addProgress(self, amount : float):
+        self.progressBar.addProgress(amount)
         self.completionPercentage += amount
 
     def isFinished(self):
