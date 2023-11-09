@@ -13,10 +13,10 @@ class Parameters:
             "tasksDifficulty": 2,
             "gamesDifficulty": 2,
 
-            "tasksSpeed": 0.1,
-            "tasksProgressPerSuccessMin": 1,
-            "tasksProgressPerSuccessMax": 7,
-            "tasksTimeAfterError": 1,
+            #"tasksSpeed": 0.1,
+            "tasksProgressPerSuccessMin": 3,
+            "tasksProgressPerSuccessMax": 5,
+            "tasksTimeAfterError": 1,       # Cooldown en cas d'erreur
 
             "litSpeed": 0.03,
             "litSpeedDifference": 4,

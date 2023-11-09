@@ -5,7 +5,7 @@ import ProgressBar
 screen = pygame.display.set_mode((1920,1080))
 class Task (pygame.sprite.Sprite):
     instance = 0
-    def __init__(self,title : str) -> None:
+    def __init__(self,title : str, timerLenght, amountPerKey) -> None:
         # initialise l'objet dont on hérite
         super().__init__()
         # pourcentage de completion de la barre : utilisé pour l'affichage de l'avancement de la tâche
@@ -26,18 +26,19 @@ class Task (pygame.sprite.Sprite):
         # on crée une barre de progression associée à la tâche
         self.progressBar = ProgressBar.ProgressBar(title, 36*4, 2*4, 0, self.progressBarPosition, (34, 177, 76),False)
         # time remaining to do the task (in seconds)
-        self.remainingTime = 20
+        self.remainingTime = timerLenght
         # same as remainingTime but casted to int and then to string ( used to blit the timer on screen)
         self.timer = ""
         # time when initialising the task
         #self.timeAtInit = pygame.time.get_ticks()*0.001
         self.title = title
+        self.amountPerKey = amountPerKey
         Task.instance+=1  
 
 
     def addProgress(self, amount : float):
         self.progressBar.addProgress(amount)
-        self.completionPercentage += amount
+        self.completionPercentage += amount * self.amountPerKey
 
     def isFinished(self):
         return self.completionPercentage >= 100

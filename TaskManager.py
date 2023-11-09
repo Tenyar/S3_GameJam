@@ -55,7 +55,7 @@ class TaskManager:
     
 
     def addTask(self, title):
-        self.tasks.append(Task.Task(title))
+        self.tasks.append(Task.Task(title, 40))
 
     def deleteCurrentTask(self):
             self.tasks.pop(0)
