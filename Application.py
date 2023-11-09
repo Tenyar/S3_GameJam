@@ -55,7 +55,7 @@ def draw_text(text, size, default_color, color_direction, color_speed, x, y, scr
 
 def textColorChange(default_color, direction, speed , valueMin , valueMax):
     for i in range(3): # RGB
-        print(default_color)
+        #print(default_color)
         default_color[i] += speed * direction[i]
         default_color[i] = max(valueMin, min(valueMax, default_color[i]))
         if default_color[i] >= valueMax or default_color[i] <= valueMin:
