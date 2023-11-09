@@ -96,7 +96,7 @@ class Pc(pg.sprite.Sprite):
         self.gameManager.socialBar.subProgress(3*dt*0.001)
         keys = pg.key.get_pressed()
         
-        # Check si une autre touche que la touche précédente ou les flèches de déplacement est enfoncé.
+        # Si la touche qui à servit pour l'ancien test n'est plus enfoncé
         if keys.count(True) == 1 and (self.oldKeyId == -1 or not keys[self.possibleKeys[self.oldKeyId][0]]) \
             and not keys[pg.K_LEFT] and not keys[pg.K_RIGHT] and not keys[pg.K_UP] and not keys[pg.K_DOWN]:
 
