@@ -69,7 +69,7 @@ def MainGame(app : Application):
     # 2 méthodes pour mettre en FullScreen
     #pygame.display.toggle_fullscreen()
     #pygame.display.set_mode(flags=pygame.FULLSCREEN)
-
+    app.deltaTime = app.clock.tick(60)
     app.startGame()
 
     # pygame.quit()
