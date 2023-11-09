@@ -63,13 +63,13 @@ class Lit(pg.sprite.Sprite):
         self.rectSuccess = pg.Rect(self.imageProgLen + barPos, self.position.y - 75, barWidth, self.height)
         self.imageSuccess.fill((141,72,194))
 
-        print("Début de l'interaction")
+        #print("Début de l'interaction")
         self.isActive = True
     
     def stopInteraction(self):
         # Joue une musique marquant la fin de la tâche
         self.gameManager.soundManager.playMusic("OutBed", 1, 0, 1, 0)
-        print("Fin de l'interaction")
+        #print("Fin de l'interaction")
         self.isActive = False
         self.pos=0
     

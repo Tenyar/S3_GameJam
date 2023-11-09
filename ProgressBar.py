@@ -31,6 +31,11 @@ class ProgressBar(pygame.sprite.Sprite):
         elif self.progAmount < 100:
             self.progAmount += progAmount
 
+    def setProgress(self, progress):
+        self.progAmount = progress
+        if (self.progAmount) > 100:
+            self.progAmount = 100
+
     def subProgress(self, progAmount):
         # Si le retrait est inférieure à 0 on bride à 0 %
         if (self.progAmount + progAmount) < 0:

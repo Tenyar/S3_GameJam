@@ -37,8 +37,8 @@ class Task (pygame.sprite.Sprite):
 
 
     def addProgress(self, amount : float):
-        self.progressBar.addProgress(amount)
         self.completionPercentage += amount * self.amountPerKey
+        self.progressBar.setProgress(self.completionPercentage)
 
     def isFinished(self):
         return self.completionPercentage >= 100
@@ -50,8 +50,8 @@ class Task (pygame.sprite.Sprite):
         self.remainingTime -= deltaTime*0.001
         self.timer = str(int(self.remainingTime+1))
         pygame.time.delay
-        print("remainingTime = " + str(self.remainingTime))
-        print("timer = " + self.timer)
+        #print("remainingTime = " + str(self.remainingTime))
+        #print("timer = " + self.timer)
 
     def draw(self,screen : pygame.display, font : pygame.font.Font):
         # dessin du fond de la tâche

@@ -5,11 +5,6 @@ class Parameters:
             "socialBarSpeed": 0.0015,
             "sleepBarSpeed": 0.0012,
 
-            "startCounteurValue": 30,
-            "counterDecreaseStep": 2,
-            "counterClampMin": 5,
-            "maxTask": 4,
-
             "globalDifficulty": 2,
             "tasksDifficulty": 2,
             "gamesDifficulty": 2,
@@ -17,6 +12,10 @@ class Parameters:
             "tasksProgressPerSuccessMin": 3,
             "tasksProgressPerSuccessMax": 5,
             "tasksTimeAfterError": 1,       # Cooldown en cas d'erreur
+            "startCounteurValue": 20,
+            "counterDecreaseStep": 2,
+            "counterClampMin": 5,
+            "maxTask": 4,
 
             "litSpeed": 0.03,
             "litSpeedDifference": 4,

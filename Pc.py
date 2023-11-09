@@ -68,13 +68,13 @@ class Pc(pg.sprite.Sprite):
         
         if len(self.taskManager.tasks) == 0:
             return
-        print("Début de l'interaction")
+        #print("Début de l'interaction")
         self.isActive = True
         self.currentKeyId = self.choseRandomKey()
         # self.showKey(self.currentKey)
     
     def stopInteraction(self):
-        print("Fin de l'interaction")
+        #print("Fin de l'interaction")
         self.isActive = False
         
     def update(self, dt):
@@ -104,7 +104,7 @@ class Pc(pg.sprite.Sprite):
                 self.gameManager.soundManager.playMusic("TaskDone", 2, 0, 0.2, 0)
                 # si le progrès de la tache est fini (100%)
                 if self.taskManager.progressCurrentTask(random.randrange(int(self.progressPerSuccessMin), int(self.progressPerSuccessMax), 1)):
-                    print("End of interaction")
+                    #print("End of interaction")
                     self.isActive = False
             else:
                 # Play a sound of Error
