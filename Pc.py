@@ -107,7 +107,10 @@ class Pc(pg.sprite.Sprite):
         if keys.count(True) == 1 and not keys[self.oldKey] and not keys[pg.K_LEFT] and not keys[pg.K_RIGHT] and not keys[pg.K_UP] and not keys[pg.K_DOWN]:
             if keys[self.currentKey]:
                 # Play a sound of success
+                self.gameManager.soundManager.setVolume(0.3)
                 self.gameManager.soundManager.playMusic("TaskDone")
+                # Enlève un peu de % de sociabilité
+                self.gameManager.socialBar.subProgress(10)
                 # si le progrès de la tache est fini (100%)
                 if self.taskManager.progressCurrentTask(random.randrange(int(self.progressPerSuccessMin), int(self.progressPerSuccessMax), 1)):
                     print("End of interaction")

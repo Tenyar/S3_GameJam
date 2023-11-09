@@ -21,6 +21,8 @@ class Lit(pg.sprite.Sprite):
         self.zoneLength = parameters.parameters["litZoneLength"]
         self.position = position
 
+        self.timeBeforeSound = 0 # init à 0 seconde
+
         self.imageProgLen = 300 # Width de la bar principale du miniJeu
 
         # Création du rectangle principale du jeu
@@ -57,7 +59,8 @@ class Lit(pg.sprite.Sprite):
         self.isActive = False
         self.pos=0
     
-    def update(self, dt):
+    def update(self, deltaTime):
+
         if self.isActive:
             # Création de la bar du joueur
             barPos = ((self.pos / 100) * self.imageProgLen)
@@ -70,23 +73,35 @@ class Lit(pg.sprite.Sprite):
             self.gameManager.screen.blit(self.imageSuccess, self.rectSuccess)
             self.gameManager.screen.blit(self.imagePlayer, self.rectPlayer)
 
+        # Cooldown
+        if self.timeBeforeSound > 0:
+            if (self.timeBeforeSound - deltaTime) < 0:
+                self.timeBeforeSound = 0
+            else:
+                self.timeBeforeSound -= deltaTime
+
         if not self.isActive:
             return
 
-        self.pos -= self.speed * dt
+        self.pos -= self.speed * deltaTime
         if(self.pos < 0):
             self.pos = 0
 
         keys = pg.key.get_pressed()
         # augmente le score
         if keys[pg.K_SPACE]:
-            self.pos += self.speed * self.speedDifference * dt
+            self.pos += self.speed * self.speedDifference * deltaTime
             if(self.pos > 100):
                 self.pos = 100
 
         if self.zonePos - self.zoneLength/2 < self.pos < self.zonePos + self.zoneLength/2:
             # Ajout d'un montant de sommeil à la barre de progression 'sleep'
-            self.sleep.addProgress(self.progress*dt*0.01) #0.01 -> convertion en seconde de delta time pour cohérence si on demande en paramètre on peut donner une échelle de temps en seconde et non en milliseconde qui est plus dur à comprendre pour l'utilisateur
+            self.sleep.addProgress(self.progress * deltaTime * 0.01) #0.01 -> convertion en seconde de delta time pour cohérence si on demande en paramètre on peut donner une échelle de temps en seconde et non en milliseconde qui est plus dur à comprendre pour l'utilisateur
+            if self.sleep.getProg() == 100 and self.timeBeforeSound == 0:
+                self.gameManager.soundManager.setVolume(1)
+                self.gameManager.soundManager.playMusic("ProgBarFull")
+                self.timeBeforeSound = 2000 # 2 seconde
+
         print(self.pos)
 
 
@@ -101,7 +116,7 @@ if __name__ == "__main__":
     pg.display.set_caption("survie")
     screen = pg.display.set_mode((1920,1080))
     clock = pg.time.Clock()
-    dt = 0
+    deltaTime = 0
 
     lit = Lit(gameManager=GameManager.GameManager(screen), width=1, height=1, position=pg.Vector2(0, 0))
     lit.startInteraction()
@@ -111,6 +126,6 @@ if __name__ == "__main__":
                 pg.quit()
 
         
-        dt = clock.tick(60)
-        lit.update(dt)
+        deltaTime = clock.tick(60)
+        lit.update(deltaTime)
         pg.display.flip()

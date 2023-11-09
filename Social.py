@@ -85,10 +85,16 @@ class Social(pg.sprite.Sprite):
                     if j < len(self.pos[i]):
                         # Interval de succès
                         if 85 - self.zoneLength/2 < self.pos[i][j] < 85 + self.zoneLength/2:
-                            self.gameManager.soundManager.playMusic("TaskDone")
+                            # Si tâche à 100% après un succès jouer un autre son.
                             self.pos[i].pop(j)
-                            self.social.addProgress(self.progress)
                             success = True
+                            self.social.addProgress(self.progress)
+                            if self.social.getProg() == 100:
+                                self.gameManager.soundManager.setVolume(1)
+                                self.gameManager.soundManager.playMusic("ProgBarFull")
+                            else:
+                                self.gameManager.soundManager.playMusic("TaskDone")
+
             # Cooldown général si échec
             if not success:
                 self.gameManager.soundManager.playMusic("Error")
@@ -96,7 +102,6 @@ class Social(pg.sprite.Sprite):
             # Si la spaceBar n'est plus enfoncé, reset la variable avec une touche par défaut
         elif not keys[pg.K_SPACE]:
             self.oldKey = pg.K_ESCAPE 
-          
         print(self.pos)
 
 
