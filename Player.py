@@ -9,7 +9,7 @@ class Player(pygame.sprite.Sprite):
     # pos_x/pos_y sont les coordonées de ce player(sprite)
     def __init__(self, width, height, pos_x, pos_y, color, parameters:Parameters.Parameters):
         # vitesse de l'animation
-        self.animationSpeed = 3
+        self.animationSpeed = 5
         #compteur de temps depuis le dernier changement de sprite
         self.animationTime = 0
         # Création des attributs de l'instance
