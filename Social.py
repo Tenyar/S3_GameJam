@@ -25,11 +25,15 @@ class Social(pg.sprite.Sprite):
         self.timeBeforeNextTry = 0
     
     def startInteraction(self):
+        # Joue une musique marquant le début de la tâche
+        self.gameManager.soundManager.playMusic("Social", 1, -1, 1, 1000)
+        
         print("Début de l'interaction")
         self.isActive = True
         self.pos = [[], [], []]
     
     def stopInteraction(self):
+        self.gameManager.soundManager.fadeOutMusic(1, 1000)
         print("Fin de l'interaction")
         self.isActive = False
     
@@ -91,13 +95,14 @@ class Social(pg.sprite.Sprite):
                             self.social.addProgress(self.progress)
                             if self.social.getProg() == 100:
                                 self.gameManager.soundManager.setVolume(1)
-                                self.gameManager.soundManager.playMusic("ProgBarFull")
+                                self.gameManager.soundManager.playMusic("ProgBarFull", 2, 0, 1, 0)
                             else:
-                                self.gameManager.soundManager.playMusic("TaskDone")
+                                self.gameManager.soundManager.setVolume(0.5)
+                                self.gameManager.soundManager.playMusic("TaskDone", 2, 0, 0.5, 0)
 
             # Cooldown général si échec
             if not success:
-                self.gameManager.soundManager.playMusic("Error")
+                self.gameManager.soundManager.playMusic("Error", 2, 0, 0.5, 0)
                 self.timeBeforeNextTry = self.timeAfterError
             # Si la spaceBar n'est plus enfoncé, reset la variable avec une touche par défaut
         elif not keys[pg.K_SPACE]:
