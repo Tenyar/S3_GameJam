@@ -178,7 +178,7 @@ class Player(pygame.sprite.Sprite):
 
         if self.rect.clipline((765, 0), (765, 1000)) or self.rect.clipline((0, 360), (765, 360)):
             if not self.isDoingComicTransition:
-                self.soundManager.playMusic("Transition", 3, 0, 0.2, 0)
+                self.soundManager.playMusic("Transition", 3, 0, 0.2, 0, 0, False)
                 self.isDoingComicTransition = True
         else:
             self.isDoingComicTransition = False

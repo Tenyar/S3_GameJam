@@ -15,7 +15,8 @@ class SoundManager:
             "Social": "Sound/Social_Env_Sound.mp3",
             "ProgBarFull": "Sound/BarProg_Full.mp3",
             "GameOver": "Sound/GameOver",
-            "Error": "Sound/Error_Sound.wav"
+            "Error": "Sound/Error_Sound.wav",
+            "Background": "Sound/Background_Sound.wav"
         }
         # Création de différent channel(piste) de son (8 channel différent par défaut)
         self.channelBackground = mixer.Channel(0) # musique de fond du jeu
@@ -25,7 +26,7 @@ class SoundManager:
     def fadeOutMusic(self, channel, amount) -> None:
        mixer.Channel(channel).fadeout(amount)
 
-    def playMusic(self, music_key : str, channel : int, numberOfLoop : int, volume : int, fadeIn : int) -> None:
+    def playMusic(self, music_key : str, channel : int, numberOfLoop : int, volume, fadeInMs : int, fadeOutMs : int, implementFadeOut : bool) -> None:
         # Créer une piste audio avec un numéro (layer) puis set son volume
         channelUse = mixer.Channel(channel)
         channelUse.set_volume(volume)
@@ -35,7 +36,12 @@ class SoundManager:
             # load un fichier son pour le jouer sur une piste(channel)
             sound = mixer.Sound(music_file)
             # 0 loops signifie joué une fois et répété 0 fois
-            channelUse.play(sound, numberOfLoop, fade_ms=fadeIn)
+            channelUse.play(sound, numberOfLoop, fade_ms=fadeInMs)
+
+        if implementFadeOut:
+            lenSoundInMs = sound.get_length() * 1000
+            print(lenSoundInMs)
+            mixer.fadeout(int(lenSoundInMs - fadeOutMs))
 
     def unlaodMusic(self) -> None:
         # libère les ressources pour le fichier audio

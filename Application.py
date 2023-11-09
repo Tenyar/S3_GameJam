@@ -30,6 +30,7 @@ class Application(object):
         gameManager = GameManager.GameManager(self.screen, self.parameters)
         pygame.display.set_caption("MainMenu")
 
+        gameManager.soundManager.playMusic("Background", 0, -1, 0.5, 4000, 144440, True) # boucle infinie
         while gameManager.isRunning():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -61,9 +62,6 @@ def textColorChange(default_color, direction, speed , valueMin , valueMax):
         if default_color[i] >= valueMax or default_color[i] <= valueMin:
             direction[i] *= -1
 
-
-
-
 def MainGame(app : Application):
 
     # 2 méthodes pour mettre en FullScreen
@@ -88,6 +86,11 @@ def mainMenu():
     # Création du singleton
     app = Application(WINDOW_WIDTH, WINDOW_HEIGHT, Parameters.Parameters(sys.argv))
 
+    # Chargement des images
+    foregroundImage = pygame.image.load("Art/Menu_Foreground.png")
+    foreground = pygame.transform.scale(foregroundImage, (256 * 5, 144 * 5))
+
+
     # variable de la font
     color_speed = 2
     color_direction = [1,1,1] # pas d'incrémentation
@@ -104,7 +107,7 @@ def mainMenu():
                 MainGame(app)
 
         # remplir la scène(fenêtre) à chaque fois qu'il change de position
-        app.screen.fill((25,50,200)) # Background du menu
+        app.screen.blit(foreground, (0,0))
         
 
         # Affichage consigne pour lancer la partie
