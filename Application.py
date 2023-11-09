@@ -30,6 +30,7 @@ class Application(object):
         gameManager = GameManager.GameManager(self.screen, self.parameters)
         pygame.display.set_caption("MainMenu")
 
+        gameManager.soundManager.playMusic("Background", 0, -1, 0.5, 4000, 144440, True) # boucle infinie
         while gameManager.isRunning():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -60,9 +61,6 @@ def textColorChange(default_color, direction, speed , valueMin , valueMax):
         default_color[i] = max(valueMin, min(valueMax, default_color[i]))
         if default_color[i] >= valueMax or default_color[i] <= valueMin:
             direction[i] *= -1
-
-
-
 
 def MainGame(app : Application):
 
