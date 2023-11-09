@@ -15,12 +15,12 @@ class TaskManager:
         self.parameters = parameters.parameters
 
         self.listTasks = [
-            ("SAE", 30, 10, 10),
-            ("REVISION", 30, 10, 10),
-            ("ORAL", 30, 10, 30),
-            ("DM", 30, 10, 20),
-            ("GAME JAM", 30, 10, 40),
-            ("EXERCICE", 30, 10, 5)
+            ("SAE", 120, 1, 10),
+            ("REVISION", 40, 2.5, 10),
+            ("ORAL", 20, 5, 30),
+            ("DM", 30, 5, 20),
+            ("GAME JAM", 60, 1.25, 40),
+            ("EXERCICE", 20, 4, 5)
         ]
 
         self.firstTask = []
