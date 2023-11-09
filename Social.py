@@ -29,7 +29,7 @@ class Social(pg.sprite.Sprite):
         self.timeBeforeNextTry = 0
 
         # Interval de réussite pour le joueur
-        self.IndexInterval = 80
+        self.IndexInterval = 90
         self.intervalBegin = self.IndexInterval - 10/2
         self.intervalEnd = self.IndexInterval + 10/2
         # Multiplicateur du parcours en pixels des bar
@@ -37,12 +37,12 @@ class Social(pg.sprite.Sprite):
         self.distAffichage = 2
         # Offset qui détermine la position du jeu dans la fenêtre
         self.barOffsetX = 830
-        self.barOffsetY = 40
+        self.barOffsetY = 100
         # Size des barres défilantes
         self.barWidth = 100
         self.barHeigt = 5
         # 200 = offset de toutes les barres du miniJeu de l'axe Y; ((85*2)-10) = position de l'interval de réussite
-        self.barSuccessOffsetY = 40 + ((self.IndexInterval*2) -10) 
+        self.barSuccessOffsetY = self.barOffsetY + ((self.IndexInterval*2) -10) 
         # Load l'image qu'une fois à la création (performance)
         # Image (contour de la barre sociale)
         SocialeSurface = pg.image.load("Art/Social_Bar.png")
