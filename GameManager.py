@@ -62,11 +62,11 @@ class GameManager():
 
         self.interactibleGroup.add(Pc.Pc(self, 180, 50, pygame.Vector2(440, 90), parameters))
         self.interactibleGroup.add(Lit.Lit(self, 260, 110, pygame.Vector2(165,540), parameters))
-        self.interactibleGroup.add(Social.Social(self, 70, 70, pygame.Vector2(950, 200), parameters))
+        self.interactibleGroup.add(Social.Social(self, 200, 100, pygame.Vector2(870, 100), parameters))
 
         #Création des collisions
         bedCollision = pygame.Rect(150, 585, 250, 110)
-        socialCollision = pygame.Rect(950, 200, 50, 50)
+        socialCollision = pygame.Rect(870, 100, 300, 70)
         tablesCollision = pygame.Rect(0, 0, 650, 80)
         self.collisions = [bedCollision, socialCollision, tablesCollision]
 
@@ -98,21 +98,18 @@ class GameManager():
 
         self.screen.blit(self.background, (0,0))
         self.screen.blit(self.stranger, (28 * 5, 18 * 5))
+        self.interactibleGroup.draw(self.screen)
         if self.isPlayerVisible:
             self.playerGroup.draw(self.screen)
-        self.screen.blit(self.bedBase, (0, 720 - self.bedBase.get_height()))
+        #self.screen.blit(self.bedBase, (0, 720 - self.bedBase.get_height()))
         self.screen.blit(self.treeShadow, (1280 - self.treeShadow.get_width(), 720 - self.treeShadow.get_height()))
         self.screen.blit(self.tree, (1280 - self.tree.get_width(), 720 - self.tree.get_height()))
         self.screen.blit(self.foreground, (0,0))
         self.draw_text(str(self.score),(0,0,0),640,300,self.screen)
-        self.interactibleGroup.draw(self.screen)
         self.taskManager.draw(self.screen)
         self.barGroup.update(self.screen)
 
         self.player.update(deltaTime, self.collisions, pygame.Rect(150, 45, 980, 635))
-
-        #Rect dedebugging
-        #pygame.draw.rect(self.foreground, (100,0,0), pygame.Rect(150, 45, 980, 635))
 
         for item in self.interactibleGroup.sprites():
             item.update(deltaTime)
