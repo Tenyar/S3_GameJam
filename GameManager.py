@@ -71,10 +71,10 @@ class GameManager():
         self.collisions = [bedCollision, socialCollision, tablesCollision]
 
         self.isPlayerVisible = True
-
+        self.nbErrorLeft = 3
 
     def isRunning(self):
-        if self.sleepBar.getProg() <= 0 or self.socialBar.getProg() <= 0 or self.taskManager.isTaskTimeOut:
+        if self.sleepBar.getProg() <= 0 or self.socialBar.getProg() <= 0 or self.nbErrorLeft == 0:
             #return False
             print ("fin du jeu")
         return True
@@ -93,6 +93,8 @@ class GameManager():
 
         self.tryInteraction(self.player.rect)
         self.taskManager.update(deltaTime)
+        if self.taskManager.isTaskTimedOut():
+            self.nbErrorLeft -= 1
 
         self.screen.blit(self.background, (0,0))
         self.screen.blit(self.stranger, (28 * 5, 18 * 5))

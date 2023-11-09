@@ -31,9 +31,6 @@ class TaskManager:
         self.counterCurrentMax = self.parameters["startCounteurValue"]
         self.counterClampMin = self.parameters["counterClampMin"]
         self.maxTask = self.parameters["maxTask"]
-        
-
-        self.isTaskTimeOut = False
 
         self.font = pygame.font.Font("Font/Quinquefive-ALoRM.ttf", 15)
 
@@ -52,10 +49,13 @@ class TaskManager:
 
         if self.getTaskAmount() > 0:
             self.tasks[0].update(deltaTime)
-            if self.tasks[0].hasNoTimeRemaining():
-                self.deleteCurrentTask()
-               
 
+
+    def isTaskTimedOut(self):
+        if self.getTaskAmount() > 0 and self.tasks[0].hasNoTimeRemaining():
+            self.deleteCurrentTask()
+            return True
+        return False
 
     def getTaskAmount(self):
         return len(self.tasks)
