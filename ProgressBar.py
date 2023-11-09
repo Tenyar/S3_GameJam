@@ -24,7 +24,7 @@ class ProgressBar(pygame.sprite.Sprite):
     def getProg(self):
         return self.progAmount
 
-    def addProgress(self, progAmount):
+    def addProgress(self, progAmount) -> None:
         # Si l'ajout est supérieure à 100 on bride à 100 %
         if (self.progAmount + progAmount) > 100:
             self.progAmount = 100
