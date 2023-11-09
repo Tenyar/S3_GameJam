@@ -14,7 +14,8 @@ class Social(pg.sprite.Sprite):
         self.rect = pg.Rect(position.x, position.y, width, height)
 
         self.isActive = False
-        self.pos = [0.0]
+        #self.pos = [0.0]
+        self.pos = [[], [], []]
         self.zoneLength = parameters.parameters["socialZoneLength"]
         self.speed = parameters.parameters["socialSpeed"]
         self.progress = parameters.parameters["socialBarProgressPerSuccess"]
@@ -31,37 +32,55 @@ class Social(pg.sprite.Sprite):
         self.isActive = False
     
     def update(self, dt):
+
         if not self.isActive:
             return
+        intervalSuccess = (85 + self.zoneLength/2) - (85 - self.zoneLength/2)
+        barHeight = 200 + ((85*2) -6) # 200 = offset de toutes les bar du miniJeu, 85 = distance maximal parcourue par les bar colorées
+        pg.draw.rect(self.gameManager.screen, ("gray"), (800, barHeight, 300, intervalSuccess + 4))
+        
+        # Boucle pour les 3 listes
+        for item in self.pos:
+            # boucle pour les éléments dans les 3 listes
+            for i in item:
+                if i in self.pos[0]:
+                    pg.draw.rect(self.gameManager.screen, ("green"), (800, i*2 + 200, 100, 5))
+                elif i in self.pos[1]:
+                    pg.draw.rect(self.gameManager.screen, ((255,255,100)), (800 + 100, i*2 + 200, 100, 5)) # i*2 = plus de parcours sur y à l'écran
+                elif i in self.pos[2]:
+                    pg.draw.rect(self.gameManager.screen, ("orange"), (800 + 200, i*2 + 200, 100, 5))
         if self.timeBeforeNextTry > 0:
             self.timeBeforeNextTry -= dt
             return
         
-        if self.isActive:
-            for item in self.pos:
-                pg.draw.rect(screen, ("green"), (500, item, 100, 15))
-        
         self.timeBeforeNextBar -= dt
         if self.timeBeforeNextBar <= 0:
-            self.pos.append(0.0)
-            self.timeBeforeNextBar = random.uniform(3000 * self.speed, 50000 * self.speed)
+            # Rend aléatoire l'affectation d'une nouvelle bar dans une des 3 liste (position sur l'écran)
+            self.pos[random.randrange(0, 3, 1)].append(0.0)
+            self.timeBeforeNextBar = random.uniform(10000 * self.speed, 50000 * self.speed)
 
+        # Parcours des listes dans pos
         for i in range(0, len(self.pos)):
-            if i < len(self.pos):
-                self.pos[i] += self.speed * dt
-                if self.pos[i] > 100:
-                    self.pos.pop(i)
+            # Parcours des "barre" / "pos" dans une des liste
+            for j in range(0, len(self.pos[i])):
+                if j < len(self.pos[i]):
+                    self.pos[i][j] += self.speed * dt
+                    if self.pos[i][j] > 100:
+                        self.pos[i].pop(j)
 
         keys = pg.key.get_pressed()
+        # Action spaceBar enfoncé
         if keys[pg.K_SPACE]:
             for i in range(0, len(self.pos)):
-                if i < len(self.pos):
-                    if 85 - self.zoneLength/2 < self.pos[i] < 85 + self.zoneLength/2:
-                        self.pos.pop(i)
-                        self.social.addProgress(self.progress)
-                    else:
-                        self.timeBeforeNextTry = self.timeAfterError
-                
+                for j in range(0, len(self.pos[i])):
+                    if j < len(self.pos[i]):
+                        # Interval de succès
+                        if 85 - self.zoneLength/2 < self.pos[i][j] < 85 + self.zoneLength/2:
+                            self.pos[i].pop(j)
+                            self.social.addProgress(self.progress)
+                        else:
+                            self.timeBeforeNextTry = self.timeAfterError
+                    
         print(self.pos)
 
 
