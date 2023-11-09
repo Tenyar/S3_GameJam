@@ -7,9 +7,9 @@ class Parameters:
             "tasksDifficulty": 2,
             "gamesDifficulty": 2,
 
-            "tasksSpeed": 1,
-            "tasksProgressPerSuccessMin": 10,
-            "tasksProgressPerSuccessMax": 20,
+            "tasksSpeed": 0.15,
+            "tasksProgressPerSuccessMin": 5,
+            "tasksProgressPerSuccessMax": 10,
             "tasksTimeAfterError": 1000,
 
             "litSpeed": 0.08,
