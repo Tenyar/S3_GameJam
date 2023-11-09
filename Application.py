@@ -35,7 +35,8 @@ class Application(object):
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-
+            # 60 FPS
+            self.deltaTime = self.clock.tick(60)
             gameManager.update(self.deltaTime)
             pygame.display.update() # Update les données sur la fenêtre
             pygame.display.flip() # Met les "dessins" stocké dans le buffer à l'écran
@@ -104,8 +105,7 @@ def mainMenu():
 
         # remplir la scène(fenêtre) à chaque fois qu'il change de position
         app.screen.fill((25,50,200)) # Background du menu
-        # 60 FPS
-        app.deltaTime = app.clock.tick(60)
+        
 
         # Affichage consigne pour lancer la partie
         draw_text("Appuyez sur n'importe quel bouton pour lancer une partie", 15, default_color, color_direction, color_speed, app.screenWidth / 2, app.screenHeight / 1.25, app.screen)
