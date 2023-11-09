@@ -14,13 +14,14 @@ class TaskManager:
         TaskManager.instance = self
         self.parameters = parameters.parameters
 
+        self.tasksDifficulty = self.parameters["tasksDifficulty"]/2
         self.listTasks = [
-            ("SAE", 120, 1, 80),
-            ("REVISION", 40, 2.5, 35),
-            ("ORAL", 20, 5, 30),
-            ("DM", 30, 5, 20),
-            ("GAME JAM", 60, 1.25, 55),
-            ("EXERCICE", 20, 7, 5)
+            ("SAE", 120, 1, 80*self.tasksDifficulty),
+            ("REVISION", 40, 2.5, 35*self.tasksDifficulty),
+            ("ORAL", 20, 5, 30*self.tasksDifficulty),
+            ("DM", 30, 5, 20*self.tasksDifficulty),
+            ("GAME JAM", 60, 1.25, 55*self.tasksDifficulty),
+            ("EXERCICE", 20, 7, 5*self.tasksDifficulty)
         ]
 
         self.firstTask = []
