@@ -9,7 +9,7 @@ class SpriteSheet():
     # spriteWidth : width of one sprite
     # spriteHeight : height of one sprite
     # WARNING : This class will work correctly only if every sprite of the sprite sheet has the same dimensions, if there is the same number of sprites on every line and if every sprite is placed with the same offset on the sheet.
-    def __init__(self,filename : str, spritePerLine : int , spritePerColumn : int , spriteWidth, spriteHeight):
+    def __init__(self,filename : str, spritePerLine : int , spritePerColumn : int , spriteWidth, spriteHeight,offset = 0):
         image = pygame.image.load(filename)
         #total number of sprite
         NumberOfSprites = spritePerLine*spritePerColumn
@@ -36,7 +36,7 @@ class SpriteSheet():
             # top : vertical coordinate ("y") of the new surface
             # width : width of the new surface
             # height : height of the new surface
-            self.sprites[currentLine,currentColumn] = image.subsurface((currentLine)*spriteWidth,(currentColumn)*spriteHeight,spriteWidth,spriteHeight)
+            self.sprites[currentLine,currentColumn] = image.subsurface (((currentLine*spriteWidth)+offset),(currentColumn*spriteHeight)+offset,spriteWidth,spriteHeight)
             print(self.sprites[currentLine,currentColumn])
 
     # return the sprite at the position given in the parameters

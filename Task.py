@@ -24,9 +24,13 @@ class Task (pygame.sprite.Sprite):
         self.progressBarPosition.x += 1.5*4
         # on crée une barre de progression associée à la tâche
         self.progressBar = ProgressBar.ProgressBar(title, 36*4, 2*4, 0, self.progressBarPosition, (34, 177, 76),False)
-
-        self.title = title
-        self.limitTime = 20       
+        # time remaining to do the task (in seconds)
+        self.remainingTime = 20
+        # same as remainingTime but casted to int and then to string ( used to blit the timer on screen)
+        self.timer = ""
+        # time when initialising the task
+        #self.timeAtInit = pygame.time.get_ticks()*0.001
+        self.title = title     
 
 
     def addProgress(self, amount : float):
@@ -35,6 +39,16 @@ class Task (pygame.sprite.Sprite):
 
     def isFinished(self):
         return self.completionPercentage >= 100
+    
+    def hasNoTimeRemaining(self):
+        return self.remainingTime <= -1
+    
+    def update(self,deltaTime):
+        self.remainingTime -= deltaTime*0.001
+        self.timer = str(int(self.remainingTime+1))
+        pygame.time.delay
+        print("remainingTime = " + str(self.remainingTime))
+        print("timer = " + self.timer)
 
     def draw(self,screen : pygame.display, font : pygame.font.Font):
         # dessin du fond de la tâche
@@ -44,3 +58,14 @@ class Task (pygame.sprite.Sprite):
         # dessing de font
         text = font.render(self.title, False, (0,0,0))
         screen.blit(text, (self.position.x + 10, self.position.y + 10))
+
+        if self.remainingTime >0.0 and self.remainingTime < 6.0:
+            timer = font.render(self.timer,False,(255,0,0))
+        elif self.remainingTime >= 6.0:
+            timer = font.render(self.timer,False,(0,0,0))
+        elif self.progressBar.getProg == 100:
+            timer = font.render("REUSSITE",False,(0,255,0))
+        else:
+            timer = font.render("ECHEC",False,(255,0,0))  
+
+        screen.blit(timer, (self.position.x + 40, self.position.y + 50))
