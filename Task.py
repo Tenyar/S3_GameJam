@@ -5,7 +5,7 @@ import ProgressBar
 screen = pygame.display.set_mode((1920,1080))
 class Task (pygame.sprite.Sprite):
     instance = 0
-    def __init__(self,title : str, timerLenght, amountPerKey) -> None:
+    def __init__(self,title : str, timerLenght, amountPerKey,pointPerSuccess) -> None:
         # initialise l'objet dont on hérite
         super().__init__()
         # pourcentage de completion de la barre : utilisé pour l'affichage de l'avancement de la tâche
@@ -33,23 +33,33 @@ class Task (pygame.sprite.Sprite):
         #self.timeAtInit = pygame.time.get_ticks()*0.001
         self.title = title
         self.amountPerKey = amountPerKey
-        Task.instance+=1  
-
+        self.pointPerSuccess = pointPerSuccess
+          
 
     def addProgress(self, amount : float):
         self.completionPercentage += amount * self.amountPerKey
         self.progressBar.addProgress(amount * self.amountPerKey)
 
-    def isFinished(self):
-        return self.completionPercentage >= 100
     
+    def hasTimeRemaining(self):
+        return self.remainingTime > -1
+
     def hasNoTimeRemaining(self):
         return self.remainingTime <= -1
+    
+    def isFinished(self):
+        return self.completionPercentage >= 100 and self.hasTimeRemaining
+    
+    def isMissed(self):
+        return self.hasNoTimeRemaining() and not self.isFinished()
+    
+    def getTaskScore(self):
+        return self.pointPerSuccess
     
     def update(self,deltaTime):
         self.remainingTime -= deltaTime*0.001
         self.timer = str(int(self.remainingTime+1))
-        pygame.time.delay
+        
         #print("remainingTime = " + str(self.remainingTime))
         #print("timer = " + self.timer)
 
@@ -62,7 +72,7 @@ class Task (pygame.sprite.Sprite):
         text = font.render(self.title, False, (0,0,0))
         screen.blit(text, (self.position.x + 10, self.position.y + 10))
 
-        if self.remainingTime >0.0 and self.remainingTime < 6.0:
+        if self.remainingTime > 0.0 and self.remainingTime < 6.0:
             timer = font.render(self.timer,False,(255,0,0))
         elif self.remainingTime >= 6.0:
             timer = font.render(self.timer,False,(0,0,0))
