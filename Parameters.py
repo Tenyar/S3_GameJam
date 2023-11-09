@@ -20,7 +20,7 @@ class Parameters:
 
             "litSpeed": 0.03,
             "litSpeedDifference": 4,
-            "litSleepBarProgressPerSuccess": 0.1,
+            "litSleepBarProgressPerSuccess": 10,
             "litZoneLength": 15,
 
             "socialZoneLength": 10,
