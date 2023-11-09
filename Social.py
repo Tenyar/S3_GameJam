@@ -56,10 +56,10 @@ class Social(pg.sprite.Sprite):
                 elif i in self.pos[2]:
                     pg.draw.rect(self.gameManager.screen, ("orange"), (800 + 200, i*2 + 200, 100, 5))
         if self.timeBeforeNextTry > 0:
-            self.timeBeforeNextTry -= dt
+            self.timeBeforeNextTry -= dt*0.001
             return
         
-        self.timeBeforeNextBar -= dt
+        self.timeBeforeNextBar -= dt*0.001
         if self.timeBeforeNextBar <= 0:
             # Rend aléatoire l'affectation d'une nouvelle bar dans une des 3 liste (position sur l'écran)
             self.pos[random.randrange(0, 3, 1)].append(0.0)

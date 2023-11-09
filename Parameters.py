@@ -5,7 +5,7 @@ class Parameters:
             "socialBarSpeed": 0.0015,
             "sleepBarSpeed": 0.0012,
 
-            "startCounteurValue": 0.5,
+            "startCounteurValue": 5,
             "counterDecreaseStep": 0.5,
             "counterClampMin": 5,
             "maxTask": 5,
@@ -16,7 +16,7 @@ class Parameters:
             "tasksSpeed": 0.1,
             "tasksProgressPerSuccessMin": 1,
             "tasksProgressPerSuccessMax": 7,
-            "tasksTimeAfterError": 1000,
+            "tasksTimeAfterError": 1,
 
             "litSpeed": 0.03,
             "litSpeedDifference": 4,
@@ -25,10 +25,10 @@ class Parameters:
 
             "socialZoneLength": 10,
             "socialSpeed": 0.05,
-            "socialBarProgressPerSuccess": 10,
-            "socialBarMinTime": 300,
-            "socialBarMaxTime": 1000,
-            "socialTimeAfterError": 1000
+            "socialBarProgressPerSuccess": 7,
+            "socialBarMinTime": 0.3,
+            "socialBarMaxTime": 1,
+            "socialTimeAfterError": 1
         }
 
         for text in argv[1:]:
@@ -45,7 +45,7 @@ class Parameters:
         elif self.parameters["tasksDifficulty"] < 0:
             self.parameters["tasksDifficulty"] = 0
         
-        self.parameters["tasksSpeed"] *= self.parameters["tasksDifficulty"]/2
+        '''self.parameters["tasksSpeed"] *= self.parameters["tasksDifficulty"]/2
         self.parameters["tasksProgressPerSuccessMin"] *= self.parameters["tasksDifficulty"]/2
         self.parameters["tasksProgressPerSuccessMax"] *= self.parameters["tasksDifficulty"]/2
         self.parameters["tasksTimeAfterError"] *= self.parameters["tasksDifficulty"]/2
@@ -62,4 +62,4 @@ class Parameters:
         self.parameters["socialZoneLength"] *= self.parameters["gamesDifficulty"]/2
         self.parameters["socialSpeed"] *= self.parameters["gamesDifficulty"]/2
         self.parameters["socialBarProgressPerSuccess"] *= self.parameters["gamesDifficulty"]/2
-        self.parameters["socialTimeAfterError"] *= self.parameters["gamesDifficulty"]/2
+        self.parameters["socialTimeAfterError"] *= self.parameters["gamesDifficulty"]/2'''
