@@ -70,7 +70,9 @@ class Social(pg.sprite.Sprite):
 
         keys = pg.key.get_pressed()
         # Action spaceBar enfoncé
-        if keys[pg.K_SPACE]:
+        if keys[pg.K_SPACE] and not keys[self.oldKey]:
+            success = False
+            self.oldKey = pg.K_SPACE
             for i in range(0, len(self.pos)):
                 for j in range(0, len(self.pos[i])):
                     if j < len(self.pos[i]):
@@ -78,9 +80,12 @@ class Social(pg.sprite.Sprite):
                         if 85 - self.zoneLength/2 < self.pos[i][j] < 85 + self.zoneLength/2:
                             self.pos[i].pop(j)
                             self.social.addProgress(self.progress)
-                        else:
-                            self.timeBeforeNextTry = self.timeAfterError
-                    
+                            success = True
+            if not success:
+                self.timeBeforeNextTry = self.timeAfterError
+        elif not keys[pg.K_SPACE]:
+            self.oldKey = pg.K_ESCAPE 
+          
         print(self.pos)
 
 
