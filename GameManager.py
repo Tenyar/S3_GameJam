@@ -34,7 +34,7 @@ class GameManager():
         self.bedBase = pygame.transform.scale(bedBaseImage, (84 * 5, 35 * 5))
 
         # Création d'un player
-        self.player = Player.Player(50, 110, 300, 450, (255, 75, 25), parameters)
+        self.player = Player.Player(50, 110, 300, 350, (255, 75, 25), parameters)
         # Group du joueur
         self.playerGroup = pygame.sprite.Group()
         self.playerGroup.add(self.player)
@@ -51,23 +51,19 @@ class GameManager():
         self.barGroup.add(self.sleepBar)
         self.barGroup.add(self.socialBar)
 
-        # Liste des objets interactibles
-        self.interactibles = {
-            "Pc": Pc.Pc(self, 180, 50, pygame.Vector2(440,131), self.screen, parameters),
-            "Lit": Lit.Lit(self, 270, 110, pygame.Vector2(150,580), self.screen, parameters),
-            "Social": Social.Social(self, 50, 50, pygame.Vector2(950, 200), parameters)
-        }
         # On ajoute chaque objet dans un groupe
         self.interactibleGroup = pygame.sprite.Group()
-        for key in self.interactibles:
-            self.interactibleGroup.add(self.interactibles[key])
 
-        #Ajout de collisions supplémentaires
-        collisionTables = pygame.sprite.Sprite()
-        collisionTables.rect = pygame.Rect(0, 0, 650, 180)
-        collisionTables.image = pygame.Surface((0,0))
-        collisionTables.image.set_alpha(0)
-        self.interactibleGroup.add(collisionTables)
+        self.interactibleGroup.add(Pc.Pc(self, 180, 50, pygame.Vector2(440, 90), parameters))
+        self.interactibleGroup.add(Lit.Lit(self, 290, 110, pygame.Vector2(150,555), parameters))
+        self.interactibleGroup.add(Social.Social(self, 70, 70, pygame.Vector2(950, 200), parameters))
+
+        #Création des collisions
+        bedCollision = pygame.Rect(150, 585, 270, 110)
+        socialCollision = pygame.Rect(950, 200, 50, 50)
+        tablesCollision = pygame.Rect(0, 0, 650, 80)
+        self.collisions = [bedCollision, socialCollision, tablesCollision]
+
 
     def isRunning(self):
         if self.sleepBar.getProg() <= 0 or self.socialBar.getProg() <= 0 or self.taskManager.isTaskTimeOut:
@@ -83,7 +79,6 @@ class GameManager():
 
         self.tryInteraction(self.player.rect)
         self.taskManager.update(deltaTime)
-        self.player.update(deltaTime, self.interactibleGroup, pygame.Rect(150, 45, 980, 635))
 
         self.screen.blit(self.background, (0,0))
         self.playerGroup.draw(self.screen)
@@ -95,19 +90,20 @@ class GameManager():
         self.taskManager.draw(self.screen)
         self.barGroup.update(self.screen)
 
+        self.player.update(deltaTime, self.collisions, pygame.Rect(150, 45, 980, 635))
 
         #Rect dedebugging
         #pygame.draw.rect(self.foreground, (100,0,0), pygame.Rect(150, 45, 980, 635))
 
-        for item in self.interactibles.values():
+        for item in self.interactibleGroup.sprites():
             item.update(deltaTime)
         
     def stopInteractions(self):
-        for item in self.interactibles.values():
+        for item in self.interactibleGroup.sprites():
             item.stopInteraction()
 
     def tryInteraction(self, position : pygame.Rect):
-        for item in self.interactibles.values(): # .values() qui accède via la clé à la valeur, l'objet en l'occurence
+        for item in self.interactibleGroup.sprites(): # .values() qui accède via la clé à la valeur, l'objet en l'occurence
             if item.rect.colliderect(position):
                 if not item.isActive:
                     #print("interaction avec ", item)
