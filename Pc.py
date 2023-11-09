@@ -126,7 +126,7 @@ class Pc(pg.sprite.Sprite):
         # Récupère l'index(position) de la touche dans la liste (parcours implicite)
         # self.keyIndex = self.possibleKeys[self.currentKeyId][1]
         # Transformation pour mettre une touche de 16 pixel à 5 fois sa taille d'origine
-        spriteOriginal = self.spritesSheet.getSpriteAt(self.possibleKeys[self.currentKeyId][1], columnId)
+        spriteOriginal = self.spritesSheet.getSpriteAt(self.possibleKeys[keyValue][1], columnId)
         spriteScaled = pg.transform.scale(spriteOriginal,(int(spriteOriginal.get_width() * 5), int(spriteOriginal.get_height() * 5)))
         # Affichage du rectangle créée pour les touches si tâche activé
         self.gameManager.screen.blit(spriteScaled, self.rectKey)
