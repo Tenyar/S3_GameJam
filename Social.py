@@ -26,6 +26,7 @@ class Social(pg.sprite.Sprite):
     def startInteraction(self):
         print("Début de l'interaction")
         self.isActive = True
+        self.pos = [[], [], []]
     
     def stopInteraction(self):
         print("Fin de l'interaction")
