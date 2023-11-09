@@ -11,14 +11,15 @@ class TaskManager:
         if TaskManager.instance != None :
             raise Exception("instance already exists")
         TaskManager.instance = self
-
+    
         self.parameters = parameters.parameters
         self.tasks = []
-        self.counter = startCounteurValue
-        self.counterDecreaseStep = counterDecreaseStep
-        self.counterCurrentMax = startCounteurValue
-        self.counterClampMin = counterClampMin
-        self.maxTask = maxTask
+        self.counter = self.parameters["startCounteurValue"]
+        self.counterDecreaseStep = self.parameters["counterDecreaseStep"]
+        self.counterCurrentMax = self.parameters["startCounteurValue"]
+        self.counterClampMin = self.parameters["counterClampMin"]
+        self.maxTask = self.parameters["maxTask"]
+        #self.firstTask = None
 
         self.isTaskTimeOut = False
 
@@ -33,13 +34,11 @@ class TaskManager:
             self.counterCurrentMax = max(self.counterCurrentMax - self.counterDecreaseStep, self.counterClampMin)
             self.counter = self.counterCurrentMax
             self.addTask("Test")
-        
-        for task in self.tasks:
-            self.isTaskTimeOut = task.update(deltaTime)
+
 
         if self.getTaskAmount() > 0:
-            self.tasks[0].limitTime -= deltaTime * 0.001
-            if self.tasks[0].limitTime <= 0:
+            self.tasks[0].update(deltaTime)
+            if self.tasks[0].hasNoTimeRemaining():
                 self.deleteCurrentTask()
                
 
@@ -57,11 +56,14 @@ class TaskManager:
     def addTask(self, title):
         self.tasks.append(Task.Task(title))
 
-    def deleteCurrentTask(self):
+    def deleteCurrentTask(self,screen):
             self.tasks.pop(0)
 
     def draw(self,screen : pygame.display,):
         currentTaskId = 0
+        #self.firstTask = self.tasks[0]
+        #task.draw(screen,self.font)
+        #self.tasks.pop(0)
         for task in self.tasks :
             task.position.y = currentTaskId * 95 + 180
             task.progressBar.posY = currentTaskId * 95 + 34 + 180
