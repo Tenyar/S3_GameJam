@@ -13,21 +13,21 @@ class Parameters:
             "tasksProgressPerSuccessMax": 5,
             "tasksTimeAfterError": 0.5,       # Cooldown en cas d'erreur
             "startCounteurValue": 18,
-            "counterDecreaseStep": 0.5,
+            "counterDecreaseStep": 0.25,
             "counterClampMin": 10,
             "maxTask": 4,
 
-            "litSpeed": 0.03,       # vitesse de descente de la bar
+            "litSpeed": 0.035,       # vitesse de descente de la bar
             "litSpeedDifference": 3,    # vitesse à laquelle sa monte en fonction de lit speed
             "litSleepBarProgressPerSuccess": 10,
             "litZoneLength": 15,
 
             "socialZoneLength": 10,
-            "socialSpeed": 0.05,
-            "socialBarProgressPerSuccess": 7,
+            "socialSpeed": 0.09,
+            "socialBarProgressPerSuccess": 5,
             "socialBarMinTime": 0.3,
             "socialBarMaxTime": 1,
-            "socialTimeAfterError": 1
+            "socialTimeAfterError": 0.5
         }
 
         for text in argv[1:]:
