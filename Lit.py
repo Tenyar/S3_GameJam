@@ -82,7 +82,7 @@ class Lit(pg.sprite.Sprite):
         if self.isActive:
             # Création de la bar du joueur
             barPos = ((self.pos / 100) * self.imageProgLen)
-            print(barPos)
+            #print(barPos)
             self.imagePlayer = pg.Surface([5,30])
             self.rectPlayer = pg.Rect(self.imageProgLen + barPos, self.position.y - 80, 5, 30) # Height - 5(offset pour démarquer la barPlayer de l'ensemble des bar du miniJeu)
             self.imagePlayer.fill("white")
