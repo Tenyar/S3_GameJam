@@ -38,6 +38,9 @@ class Lit(pg.sprite.Sprite):
         self.rect = pg.Rect(position.x, position.y, width, height)
 
     def startInteraction(self):
+        # Joue une musique marquant le début de la tâche
+        self.gameManager.soundManager.playMusic("InBed", 1, 0, 1, 0)
+
         # Rend aléatoire la position de la bar succès dans un intervale entre [50 et 80] avec un pas de 10 pixel
         self.zonePos = random.randrange(30, 80, 10)
 
@@ -55,6 +58,8 @@ class Lit(pg.sprite.Sprite):
         self.isActive = True
     
     def stopInteraction(self):
+        # Joue une musique marquant la fin de la tâche
+        self.gameManager.soundManager.playMusic("OutBed", 1, 0, 1, 0)
         print("Fin de l'interaction")
         self.isActive = False
         self.pos=0
@@ -99,7 +104,7 @@ class Lit(pg.sprite.Sprite):
             self.sleep.addProgress(self.progress * deltaTime * 0.01) #0.01 -> convertion en seconde de delta time pour cohérence si on demande en paramètre on peut donner une échelle de temps en seconde et non en milliseconde qui est plus dur à comprendre pour l'utilisateur
             if self.sleep.getProg() == 100 and self.timeBeforeSound == 0:
                 self.gameManager.soundManager.setVolume(1)
-                self.gameManager.soundManager.playMusic("ProgBarFull")
+                self.gameManager.soundManager.playMusic("ProgBarFull", 2, 0, 1, 0)
                 self.timeBeforeSound = 2000 # 2 seconde
 
         print(self.pos)

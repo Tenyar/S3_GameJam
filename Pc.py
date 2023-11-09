@@ -61,6 +61,11 @@ class Pc(pg.sprite.Sprite):
 
 
     def startInteraction(self):
+        if self.gameManager.taskManager.getTaskAmount() == 0:
+            return
+        # Joue une musique marquant le début de la tâche
+        self.gameManager.soundManager.playMusic("Pc", 1, 0, 1, 0)
+        
         if len(self.taskManager.tasks) == 0:
             return
         print("Début de l'interaction")
@@ -109,14 +114,14 @@ class Pc(pg.sprite.Sprite):
             if keys[self.currentKey]:
                 # Play a sound of success
                 self.gameManager.soundManager.setVolume(0.3)
-                self.gameManager.soundManager.playMusic("TaskDone")
+                self.gameManager.soundManager.playMusic("TaskDone", 2, 0, 0.5, 0)
                 # si le progrès de la tache est fini (100%)
                 if self.taskManager.progressCurrentTask(random.randrange(int(self.progressPerSuccessMin), int(self.progressPerSuccessMax), 1)):
                     print("End of interaction")
                     self.isActive = False
             else:
                 # Play a sound of Error
-                self.gameManager.soundManager.playMusic("Error")
+                self.gameManager.soundManager.playMusic("Error", 2, 0, 0.5, 0)
 
                 # Ajout de seconde de 'cooldown' si c'est un raté.
                 self.timeBeforeNextTry = self.timeAfterError
