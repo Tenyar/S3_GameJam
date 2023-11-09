@@ -2,7 +2,6 @@ import pygame as pg
 import random
 import Parameters
 import SpriteSheet
-import SoundManager as sd
 
 class Pc(pg.sprite.Sprite):
 
@@ -10,7 +9,6 @@ class Pc(pg.sprite.Sprite):
         super().__init__()
         self.gameManager = gameManager
         self.taskManager = self.gameManager.taskManager
-        self.soundManager = sd.SoundManager()
 
         self.image = pg.Surface([width,height])
         self.position = position
@@ -109,14 +107,14 @@ class Pc(pg.sprite.Sprite):
         if keys.count(True) == 1 and not keys[self.oldKey] and not keys[pg.K_LEFT] and not keys[pg.K_RIGHT] and not keys[pg.K_UP] and not keys[pg.K_DOWN]:
             if keys[self.currentKey]:
                 # Play a sound of success
-                self.soundManager.playMusic("TaskDone")
+                self.gameManager.soundManager.playMusic("TaskDone")
                 # si le progrès de la tache est fini (100%)
                 if self.taskManager.progressCurrentTask(random.randrange(int(self.progressPerSuccessMin), int(self.progressPerSuccessMax), 1)):
                     print("End of interaction")
                     self.isActive = False
             else:
                 # Play a sound of Error
-                self.soundManager.playMusic("Error")
+                self.gameManager.soundManager.playMusic("Error")
 
                 # Ajout de seconde de 'cooldown' si c'est un raté.
                 self.timeBeforeNextTry = self.timeAfterError
