@@ -19,6 +19,7 @@ class Player(pygame.sprite.Sprite):
         self.color = color
         self.parameters = parameters.parameters
         self.soundManager = soundManager
+        self.lastKey = pygame.K_DOWN
 
         self.sprite_sheet = SpriteSheet.SpriteSheet("Art/joueur_spriteSheet.png",3,4,20,30)
         self.image = self.sprite_sheet.getSpriteAt(0,0)
@@ -41,6 +42,7 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, deltaTime, collisionGroup : list[pygame.Rect], backgroundRect : pygame.Rect):
 
+        key_typed = False
         # Prise d'informations sur les touches saisit.
         keys = pygame.key.get_pressed()
 
@@ -57,6 +59,8 @@ class Player(pygame.sprite.Sprite):
             # Si il dépasse à gauche 
             #if self.pos_x < (self.screenWidth - (self.width)):
             #    self.pos_x = (self.screenWidth - (self.width))
+            self.lastKey = pygame.K_LEFT
+            key_typed = True
 
         if keys[pygame.K_RIGHT]:
             #if not doesContactRight: # Prise de la taille de la fenêtre et du joueur en compte
@@ -66,6 +70,8 @@ class Player(pygame.sprite.Sprite):
             self.image = pygame.transform.scale(self.image,(20*5, 30*5))
             #if self.pos_x > (self.screenWidth - (self.width)):
             #    self.pos_x = (self.screenWidth - (self.width))
+            self.lastKey = pygame.K_RIGHT
+            key_typed = True
 
         if keys[pygame.K_DOWN]:
             #if not doesContactBottom:
@@ -74,7 +80,9 @@ class Player(pygame.sprite.Sprite):
             self.image = self.sprite_sheet.getSpriteAt(0, (int)(self.animationTime % 2.0) + 1)
             self.image = pygame.transform.scale(self.image,(20*5, 30*5))
             #if self.pos_y > (self.screenHeight - (self.height)):
-            #    self.pos_y = (self.screenHeight - (self.height))     
+            #    self.pos_y = (self.screenHeight - (self.height))
+            self.lastKey = pygame.K_DOWN
+            key_typed = True    
 
         if keys[pygame.K_UP]:
             #if not doesContactTop:
@@ -84,6 +92,23 @@ class Player(pygame.sprite.Sprite):
             self.image = pygame.transform.scale(self.image,(20*5, 30*5))
             #if self.pos_y < (self.screenHeight - (self.height)):
             #    self.pos_y = (self.screenHeight - (self.height))
+            self.lastKey = pygame.K_UP
+            key_typed = True
+
+        if not key_typed:
+            if self.lastKey == pygame.K_LEFT:
+                self.image = self.sprite_sheet.getSpriteAt(2,0)
+                self.image = pygame.transform.scale(self.image,(20*5, 30*5))
+            if self.lastKey == pygame.K_RIGHT:
+                self.image = self.sprite_sheet.getSpriteAt(3,0)
+                self.image = pygame.transform.scale(self.image,(20*5, 30*5))
+            if self.lastKey == pygame.K_DOWN:
+                self.image = self.sprite_sheet.getSpriteAt(0,0)
+                self.image = pygame.transform.scale(self.image,(20*5, 30*5))
+            if self.lastKey == pygame.K_UP:
+                self.image = self.sprite_sheet.getSpriteAt(1,0)
+                self.image = pygame.transform.scale(self.image,(20*5, 30*5))
+
 
         if translation.length() != 0:
             translation.normalize_ip()
