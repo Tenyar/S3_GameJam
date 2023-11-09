@@ -10,7 +10,7 @@ class Social(pg.sprite.Sprite):
         self.gameManager = gameManager
         self.social = self.gameManager.socialBar
         self.parameters = parameters.parameters
-        #52* 40
+        # 52* 40
         self.spriteSheet = SpriteSheet.SpriteSheet("Art/Social_Spritesheet.png",7,2,52,40)
         self.image = self.spriteSheet.getSpriteAt(0,0)
         self.animationTime = 0
@@ -19,7 +19,7 @@ class Social(pg.sprite.Sprite):
         self.rect = pg.Rect(position.x, position.y, width, height)
 
         self.isActive = False
-        #self.pos = [0.0]
+        # self.pos = [0.0]
         self.pos = [[], [], []]
         self.zoneLength = self.parameters["socialZoneLength"]
         self.speed = self.parameters["socialSpeed"]
@@ -27,11 +27,41 @@ class Social(pg.sprite.Sprite):
         self.timeBeforeNextBar = 0
         self.timeAfterError = self.parameters["socialTimeAfterError"]
         self.timeBeforeNextTry = 0
+
+        # Interval de réussite pour le joueur
+        self.IndexInterval = 75
+        self.intervalBegin = self.IndexInterval - 15/2
+        self.intervalEnd = self.IndexInterval + 15/2
+        # Multiplicateur du parcours en pixels des bar
+        self.intervalSuccess = (self.intervalEnd) - (self.intervalBegin)
+        self.distAffichage = 2
+        # Offset qui détermine la position du jeu dans la fenêtre
+        self.barOffsetX = 800
+        self.barOffsetY = 200
+        # Size des barres défilantes
+        self.barWidth = 100
+        self.barHeigt = 5
+        # 200 = offset de toutes les barres du miniJeu de l'axe Y; ((85*2)-10) = position de l'interval de réussite
+        self.barSuccessOffsetY = 200 + ((self.IndexInterval*2) -10) 
+        # Load l'image qu'une fois à la création (performance)
+        # Image (contour de la barre sociale)
+        SocialeSurface = pg.image.load("Art/Social_Bar.png")
+        # Si pixel noir / transaprent (compte comme noir), considérer cette valeur comme transaprent pour le convert_alpha()
+        SocialeSurface.set_colorkey(0)
+        # Si pixel tranparent, les converties à l'affichage
+        print("SUS", self.intervalSuccess)
+        SocialeSurface = SocialeSurface.convert_alpha()
+        self.SocialeUI = pg.transform.scale(SocialeSurface, (SocialeSurface.get_width()*5, SocialeSurface.get_height()*5 + self.intervalSuccess - 5))
+        print("TAILLE DE L'IMGAE: ", SocialeSurface.get_height()*5)
+        print("TAILLE DE L'IMGAE:  AVEC l'interval couver : ", SocialeSurface.get_height()*5 + self.intervalSuccess)
+        self.rectSocialeUI = SocialeSurface.get_rect(topleft=(self.barOffsetX, self.barSuccessOffsetY))
+        #self.rectSocialeUI =  pg.Rect(self.barOffsetX, self.barSuccessOffsetY, SocialeSurface.get_width()*5, 10)
+
     
     def startInteraction(self):
         # Joue une musique marquant le début de la tâche
         self.gameManager.soundManager.playMusic("Social", 1, -1, 1, 1000)
-        
+
         #print("Début de l'interaction")
         self.isActive = True
         self.pos = [[], [], []]
@@ -42,25 +72,28 @@ class Social(pg.sprite.Sprite):
         self.isActive = False
     
     def update(self, dt):
+
         self.image = self.spriteSheet.getSpriteAt((int)(self.animationTime % self.spriteSheet.spritePerColumn),(int)(self.animationTime % self.spriteSheet.spritePerLine))
         self.animationTime += dt * 0.001 * self.animationSpeed
         self.image = pg.transform.scale(self.image,(52*5, 40*5))
+
         if not self.isActive:
             return
-        intervalSuccess = (85 + self.zoneLength/2) - (85 - self.zoneLength/2)
-        barHeight = 200 + ((85*2) -6) # 200 = offset de toutes les bar du miniJeu, 85 = distance maximal parcourue par les bar colorées
-        pg.draw.rect(self.gameManager.screen, ("gray"), (800, barHeight, 300, intervalSuccess + 4))
+
+        # Dessin du background de la barre à succès
+        pg.draw.rect(self.gameManager.screen, ("gray"), (self.barOffsetX, self.barSuccessOffsetY, self.barWidth*3, self.intervalSuccess + 10))
+        self.gameManager.screen.blit(self.SocialeUI, self.rectSocialeUI)
         
-        # Boucle pour les 3 listes
+        # Boucle pour les 3 listes(Barres)
         for item in self.pos:
-            # boucle pour les éléments dans les 3 listes
-            for i in item:
-                if i in self.pos[0]:
-                    pg.draw.rect(self.gameManager.screen, ("green"), (800, i*2 + 200, 100, 5))
-                elif i in self.pos[1]:
-                    pg.draw.rect(self.gameManager.screen, ((255,255,100)), (800 + 100, i*2 + 200, 100, 5)) # i*2 = plus de parcours sur y à l'écran
-                elif i in self.pos[2]:
-                    pg.draw.rect(self.gameManager.screen, ("orange"), (800 + 200, i*2 + 200, 100, 5))
+            # Pour toute les position des barres dans chaque liste sur l'axe Y
+            for posY in item:
+                if posY in self.pos[0]:
+                    pg.draw.rect(self.gameManager.screen, ((82,192,38)), (self.barOffsetX, (posY * self.distAffichage) + self.barOffsetY, self.barWidth, self.barHeigt)) # posY = combien de pixel il parcours sur Y (chiffre croissant)
+                elif posY in self.pos[1]:
+                    pg.draw.rect(self.gameManager.screen, ((37,187,237)), (self.barOffsetX + 100, (posY * self.distAffichage) + self.barOffsetY, self.barWidth, self.barHeigt))
+                elif posY in self.pos[2]:
+                    pg.draw.rect(self.gameManager.screen, ((239,187,66)), (self.barOffsetX + 200, (posY * self.distAffichage) + self.barOffsetY, self.barWidth, self.barHeigt))
         if self.timeBeforeNextTry > 0:
             self.timeBeforeNextTry -= dt*0.001
             return
@@ -76,6 +109,7 @@ class Social(pg.sprite.Sprite):
             # Parcours des "barre" / "pos" dans une des liste
             for j in range(0, len(self.pos[i])):
                 if j < len(self.pos[i]):
+                    # Incrémente la position en pixel
                     self.pos[i][j] += self.speed * dt
                     if self.pos[i][j] > 100:
                         self.pos[i].pop(j)
@@ -93,12 +127,15 @@ class Social(pg.sprite.Sprite):
                 # Parcours de chaque bar pour chaque liste
                 for j in range(0, len(self.pos[i])):
                     if j < len(self.pos[i]):
-                        # Interval de succès
-                        if 85 - self.zoneLength/2 < self.pos[i][j] < 85 + self.zoneLength/2:
-                            # Si tâche à 100% après un succès jouer un autre son.
+                        print("HEIGHT DE L'INTERVAL : ", self.intervalSuccess)
+                        print("HEIGHT DE L'INTERVAL BACKEND : ", self.intervalBegin)
+                        print("HEIGHT DE L'INTERVAL BACKEND : ", self.intervalEnd)
+                        # Regarde si la position de la barre est dans l'interval de réussite
+                        if  self.intervalBegin < self.pos[i][j] < self.intervalEnd:
                             self.pos[i].pop(j)
                             success = True
                             self.social.addProgress(self.progress)
+                            # Si barre sociale à 100% après un succès jouer un autre son.
                             if self.social.getProg() == 100:
                                 self.gameManager.soundManager.playMusic("ProgBarFull", 2, 0, 1, 0)
                             else:
