@@ -41,6 +41,7 @@ class Player(pygame.sprite.Sprite):
         doesContactLeft = False
         doesContactRight = False
 
+        # Check collisions entre player et la map
         if self.rect.clipline(backgroundRect.topleft, backgroundRect.topright):
             doesContactTop = True
         if self.rect.clipline(backgroundRect.bottomleft, backgroundRect.bottomright):
@@ -50,6 +51,7 @@ class Player(pygame.sprite.Sprite):
         if self.rect.clipline(backgroundRect.topright, backgroundRect.bottomright):
             doesContactRight = True
 
+        # Check collisions entre player et tout les sprites
         for sprite in interactibleGroup:
             if sprite.rect.clipline(self.rect.topleft, self.rect.topright):
                 doesContactTop = True
