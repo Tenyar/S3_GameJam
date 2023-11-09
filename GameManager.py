@@ -105,7 +105,7 @@ class GameManager():
         self.screen.blit(self.treeShadow, (1280 - self.treeShadow.get_width(), 720 - self.treeShadow.get_height()))
         self.screen.blit(self.tree, (1280 - self.tree.get_width(), 720 - self.tree.get_height()))
         self.screen.blit(self.foreground, (0,0))
-        self.draw_text("Score : " + str(self.score),(0,0,0),640,300,self.screen)
+        self.draw_text("Score : " + str(self.score),(0,0,0),660,670,self.screen)
         self.taskManager.draw(self.screen)
         self.barGroup.update(self.screen)
 
