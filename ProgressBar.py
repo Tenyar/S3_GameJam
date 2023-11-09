@@ -2,7 +2,7 @@ import pygame
 
 class ProgressBar(pygame.sprite.Sprite):
 
-    def __init__(self, title : str, width, height, pos : pygame.Vector2, color, withBackground : bool):
+    def __init__(self, title : str, width, height, progInitiale : int,pos : pygame.Vector2, color, withBackground : bool):
 
         # constructeur du sprite
         super().__init__()
@@ -15,7 +15,7 @@ class ProgressBar(pygame.sprite.Sprite):
         self.posX = pos.x
         self.posY = pos.y
         # montant de la progression
-        self.progAmount = 100
+        self.progAmount = progInitiale
         # couleur de la bar
         self.color = color
 

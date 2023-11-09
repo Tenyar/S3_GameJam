@@ -6,8 +6,6 @@ import Social
 import TaskManager
 import ProgressBar
 import Parameters
-from pygame import mixer
-
 
 class GameManager():
     instance = None
@@ -21,25 +19,6 @@ class GameManager():
         self.taskManager = TaskManager.TaskManager(5, 0.5, 5, 5, parameters)
 
         self.screen = screen
-
-        # Instantie mixer
-        mixer.init()
-
-        # PlayList des musiques jouables en jeux
-        self.playList = {
-            "Transition": "Sound/Transition_Sound.wav",
-            "Pc": "Sound/Pc_Sound.wav",
-            "TaskDone": "Sound/TaskDone_Sound.wav",
-            "Bed": "Sound/Bed_Sound.wav",
-            "Social": "Sound/Social_Env_Sound.mp3",
-            "Error": "Sound/Error_Sound.wav"
-        }
-        # Charge le(s) fichier(s) audio
-        mixer.music.load("Sound/Transition_Sound.wav")
-        # Met le volume du gestionnaire de musique
-        mixer.music.set_volume(0.2)
-        # Joue la musique 
-        mixer.music.play()
 
         # Création du background et du foreground
         backgroundImage = pygame.image.load("Art/Background.png")
@@ -65,8 +44,8 @@ class GameManager():
         self.sleep = 100
 
         # Création des barres de progressions
-        self.socialBar = ProgressBar.ProgressBar("SocialBar", 300, 15, pygame.Vector2(50,50), (255,25,50), True)
-        self.sleepBar = ProgressBar.ProgressBar("SleepBar", 300, 15, pygame.Vector2(50,25), (0,0,200), True)
+        self.socialBar = ProgressBar.ProgressBar("SocialBar", 300, 15, 100, pygame.Vector2(50,50), (255,25,50), True)
+        self.sleepBar = ProgressBar.ProgressBar("SleepBar", 300, 15, 100, pygame.Vector2(50,25), (0,0,200), True)
         # Group des barres de progression
         self.barGroup = pygame.sprite.Group()
         self.barGroup.add(self.sleepBar)
@@ -97,7 +76,7 @@ class GameManager():
         return True
 
     def update(self, deltaTime):
-        print(deltaTime)
+        #print(deltaTime)
 
         self.socialBar.subProgress(self.parameters["socialBarSpeed"] * deltaTime)
         self.sleepBar.subProgress(self.parameters["sleepBarSpeed"] * deltaTime)
