@@ -38,7 +38,7 @@ class Task (pygame.sprite.Sprite):
 
     def addProgress(self, amount : float):
         self.completionPercentage += amount * self.amountPerKey
-        self.progressBar.setProgress(self.completionPercentage)
+        self.progressBar.addProgress(amount * self.amountPerKey)
 
     def isFinished(self):
         return self.completionPercentage >= 100
