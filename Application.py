@@ -89,7 +89,7 @@ def mainMenu():
     app = Application(WINDOW_WIDTH, WINDOW_HEIGHT, Parameters.Parameters(sys.argv))
 
     # variable de la font
-    color_speed = 3
+    color_speed = 2
     color_direction = [1,1,1] # pas d'incrémentation
     default_color = [0,0,0] # couleur par défaut
 
