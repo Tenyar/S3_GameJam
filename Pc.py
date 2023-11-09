@@ -15,45 +15,45 @@ class Pc(pg.sprite.Sprite):
         self.rect = pg.Rect(position.x, position.y, width, height)
 
         # Création de la spriteSheet
-        self.sprites = SpriteSheet.SpriteSheet("Art/Spritesheet_Keyboard.png", 2, 26, 16, 16)
+        self.spritesSheet = SpriteSheet.SpriteSheet("Art/Spritesheet_Keyboard.png", 2, 26, 16, 16)
 
         # Création du rectangle qui prendra les images des touches.
         self.rectKey = pg.Rect(position.x, position.y -50, 16*5, 16*5)
 
         # Liste des touches du clavier
-        self.keyboard = [
-            pg.K_a,
-            pg.K_b,
-            pg.K_c,
-            pg.K_d,
-            pg.K_e,
-            pg.K_f,
-            pg.K_g,
-            pg.K_h,
-            pg.K_i,
-            pg.K_j,
-            pg.K_k,
-            pg.K_l,
-            pg.K_m,
-            pg.K_n,
-            pg.K_o,
-            pg.K_p,
-            pg.K_q,
-            pg.K_r,
-            pg.K_s,
-            pg.K_t,
-            pg.K_u,
-            pg.K_v,
-            pg.K_w,
-            pg.K_x,
-            pg.K_y,
-            pg.K_z
+        self.possibleKeys = [
+            (pg.K_a, 0),
+            #pg.K_b,
+            #pg.K_c,
+            (pg.K_d, 3),
+            (pg.K_e, 4),
+            #pg.K_f,
+            #pg.K_g,
+            #pg.K_h,
+            #pg.K_i,
+            #pg.K_j,
+            #pg.K_k,
+            #pg.K_l,
+            #pg.K_m,
+            #pg.K_n,
+            #pg.K_o,
+            #pg.K_p,
+            (pg.K_q, 16),
+            #(pg.K_r, 17),
+            (pg.K_s, 18),
+            #(pg.K_t, 19),
+            #pg.K_u,
+            #pg.K_v,
+            #pg.K_w,
+            #pg.K_x,
+            #pg.K_y,
+            (pg.K_z, 25)
         ]
 
         # Attributs conditionnel
         self.isActive = False
-        self.currentKey = pg.K_ESCAPE
-        self.oldKey = pg.K_ESCAPE
+        self.currentKeyId = -1
+        self.oldKeyId = -1
         self.progressPerSuccessMin = parameters.parameters["tasksProgressPerSuccessMin"]
         self.progressPerSuccessMax = parameters.parameters["tasksProgressPerSuccessMax"]
         self.timeAfterError = parameters.parameters["tasksTimeAfterError"]
@@ -70,8 +70,8 @@ class Pc(pg.sprite.Sprite):
             return
         print("Début de l'interaction")
         self.isActive = True
-        self.currentKey = self.choseRandomKey()
-        self.showKey(self.currentKey)
+        self.currentKeyId = self.choseRandomKey()
+        # self.showKey(self.currentKey)
     
     def stopInteraction(self):
         print("Fin de l'interaction")
@@ -83,37 +83,25 @@ class Pc(pg.sprite.Sprite):
             return
         if len(self.taskManager.tasks) == 0:
             return
+        
         if self.timeBeforeNextTry > 0:
-            self.timeBeforeNextTry -= dt # Cooldown en action à chaque boucle
-            # Transformation pour mettre une touche de 16 pixel à 5 fois sa taille d'origine
-            spriteOriginal = self.sprites.getSpriteAt(self.keyboard.index(self.oldKey), 1)
-            spriteScaled = pg.transform.scale(spriteOriginal,(int(spriteOriginal.get_width() * 5), int(spriteOriginal.get_height() * 5)))
-            # Affichage de la touche raté
-            self.gameManager.screen.blit(spriteScaled, self.rectKey)
+            self.timeBeforeNextTry -= dt * 0.001 # Cooldown en action à chaque boucle
+            self.drawKey(self.currentKeyId, 1)
             return
         
-        if self.isActive:
-            # Récupère l'index(position) de la touche dans la liste (parcours implicite)
-            self.result = self.keyboard.index(self.currentKey)
-            # Transformation pour mettre une touche de 16 pixel à 5 fois sa taille d'origine
-            spriteOriginal = self.sprites.getSpriteAt(self.keyboard.index(self.currentKey), 0)
-            spriteScaled = pg.transform.scale(spriteOriginal,(int(spriteOriginal.get_width() * 5), int(spriteOriginal.get_height() * 5)))
-            # Affichage du rectangle créée pour les touches si tâche activé
-            self.gameManager.screen.blit(spriteScaled, self.rectKey)
+        self.drawKey(self.currentKeyId, 0)
 
         # Enlève un peu de % de sociabilité
         self.gameManager.socialBar.subProgress(3*dt*0.001)
-        self.showKey(self.currentKey)
         keys = pg.key.get_pressed()
-        '''for event in pg.event.get():
-                if event.type == pg.KEYDOWN:
-                    keys = pg.key.get_pressed()
-                    self.oldKey = event.key'''
-        # Check si une touche autre que les flèches de déplacement sont enfoncé.
-        if keys.count(True) == 1 and not keys[self.oldKey] and not keys[pg.K_LEFT] and not keys[pg.K_RIGHT] and not keys[pg.K_UP] and not keys[pg.K_DOWN]:
-            if keys[self.currentKey]:
+        
+        # Check si une autre touche que la touche précédente ou les flèches de déplacement est enfoncé.
+        if keys.count(True) == 1 and (self.oldKeyId == -1 or not keys[self.possibleKeys[self.oldKeyId][0]]) \
+            and not keys[pg.K_LEFT] and not keys[pg.K_RIGHT] and not keys[pg.K_UP] and not keys[pg.K_DOWN]:
+
+            if keys[self.possibleKeys[self.currentKeyId][0]]:
                 # Play a sound of success
-                self.gameManager.soundManager.playMusic("TaskDone", 2, 0, 0.5, 0)
+                self.gameManager.soundManager.playMusic("TaskDone", 2, 0, 0.2, 0)
                 # si le progrès de la tache est fini (100%)
                 if self.taskManager.progressCurrentTask(random.randrange(int(self.progressPerSuccessMin), int(self.progressPerSuccessMax), 1)):
                     print("End of interaction")
@@ -125,17 +113,24 @@ class Pc(pg.sprite.Sprite):
                 # Ajout de seconde de 'cooldown' si c'est un raté.
                 self.timeBeforeNextTry = self.timeAfterError
 
-            self.oldKey = self.currentKey
-            self.currentKey = self.choseRandomKey()
+            self.oldKeyId = self.currentKeyId
+            self.currentKeyId = self.choseRandomKey()
 
         elif keys.count(True) == 0:
-            self.oldKey = pg.K_ESCAPE
+            self.oldKeyId = -1
 
     def choseRandomKey(self) -> int:
-        return random.choice([pg.K_a, pg.K_b, pg.K_c, pg.K_d, pg.K_e, pg.K_f, pg.K_g, pg.K_h, pg.K_i, pg.K_j, pg.K_k, pg.K_l, pg.K_m, pg.K_n, pg.K_o, pg.K_p, pg.K_q, pg.K_r, pg.K_s, pg.K_t, pg.K_u, pg.K_v, pg.K_w, pg.K_x, pg.K_y, pg.K_z])
+        return random.randint(0, len(self.possibleKeys) - 1)
 
-    def showKey(self, keyValue):
-        print("Appuyez sur : ", pg.key.name(keyValue))
+    def drawKey(self, keyValue, columnId):
+        # Récupère l'index(position) de la touche dans la liste (parcours implicite)
+        # self.keyIndex = self.possibleKeys[self.currentKeyId][1]
+        # Transformation pour mettre une touche de 16 pixel à 5 fois sa taille d'origine
+        spriteOriginal = self.spritesSheet.getSpriteAt(self.possibleKeys[self.currentKeyId][1], columnId)
+        spriteScaled = pg.transform.scale(spriteOriginal,(int(spriteOriginal.get_width() * 5), int(spriteOriginal.get_height() * 5)))
+        # Affichage du rectangle créée pour les touches si tâche activé
+        self.gameManager.screen.blit(spriteScaled, self.rectKey)
+
 
 
 #    if __name__ == "__main__":

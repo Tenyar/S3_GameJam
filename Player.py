@@ -1,36 +1,43 @@
 import pygame
 import Parameters
 import SpriteSheet
+import SoundManager
 
 class Player(pygame.sprite.Sprite):
 # Déclaration des variables de cette classe.
 
-    # Constructeur de la classe
-    # pos_x/pos_y sont les coordonées de ce player(sprite)
-    def __init__(self, width, height, posX, posY, color, parameters:Parameters.Parameters):
-        # vitesse de l'animation
-        self.animationSpeed = 5
-        #compteur de temps depuis le dernier changement de sprite
-        self.animationTime = 0
+    def __init__(self, width, height, posX, posY, color,
+        parameters:Parameters.Parameters, soundManager : SoundManager.SoundManager):
+
+        # Initialise l'objet qu'on hérite
+        super().__init__()
+
         # Création des attributs de l'instance
-        self.parameters = parameters.parameters
         self.width = width
         self.height = height
         self.position = pygame.Vector2(posX, posY)
         self.color = color
+        self.parameters = parameters.parameters
+        self.soundManager = soundManager
 
-        self.speed = parameters.parameters["playerSpeed"]
-
-        self.screenWidth = pygame.display.get_surface().get_width()
-        self.screenHeight = pygame.display.get_surface().get_height()
-
-        # Initialise l'objet qu'on hérite
-        super().__init__()
         self.sprite_sheet = SpriteSheet.SpriteSheet("Art/joueur_spriteSheet.png",3,4,20,30)
         self.image = self.sprite_sheet.getSpriteAt(0,0)
         self.image = pygame.transform.scale(self.image,(20*5, 30*5))
         # Dessine un rectangle autour de l'image qui prendra comme grandeur la width et height de l'image
         self.rect = self.image.get_rect()
+
+        self.speed = parameters.parameters["playerSpeed"]
+
+        # vitesse de l'animation
+        self.animationSpeed = 5
+        #compteur de temps depuis le dernier changement de sprite
+        self.animationTime = 0
+
+        self.screenWidth = pygame.display.get_surface().get_width()
+        self.screenHeight = pygame.display.get_surface().get_height()
+
+        self.isDoingComicTransition = False
+
 
     def update(self, deltaTime, collisionGroup : list[pygame.Rect], backgroundRect : pygame.Rect):
 
@@ -136,3 +143,16 @@ class Player(pygame.sprite.Sprite):
         
         self.animationTime += deltaTime * 0.001 * self.animationSpeed  
         self.rect.topleft = (self.position) # définit la position du player dans la scène # Set the top-left position of the player's rect
+
+        self.checkComicTransition()
+
+    def checkComicTransition(self):
+        pygame.draw.lines(pygame.display.get_surface(), (255, 0, 0), True, [(765, 0), (765, 1000)])
+        pygame.draw.lines(pygame.display.get_surface(), (255, 0, 0), True, [(0, 360), (765, 360)])
+
+        if self.rect.clipline((765, 0), (765, 1000)) or self.rect.clipline((0, 360), (765, 360)):
+            if not self.isDoingComicTransition:
+                self.soundManager.playMusic("Transition", 3, 0, 0.2, 0)
+                self.isDoingComicTransition = True
+        else:
+            self.isDoingComicTransition = False

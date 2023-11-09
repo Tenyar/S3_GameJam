@@ -38,7 +38,7 @@ class GameManager():
         self.bedBase = pygame.transform.scale(bedBaseImage, (84 * 5, 35 * 5))
 
         # Création d'un player
-        self.player = Player.Player(50, 110, 300, 350, (255, 75, 25), parameters)
+        self.player = Player.Player(50, 110, 300, 350, (255, 75, 25), parameters, self.soundManager)
         # Group du joueur
         self.playerGroup = pygame.sprite.Group()
         self.playerGroup.add(self.player)
