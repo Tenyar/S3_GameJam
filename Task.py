@@ -45,15 +45,15 @@ class Task (pygame.sprite.Sprite):
         return self.remainingTime > -1
 
     def hasNoTimeRemaining(self):
-        return self.remainingTime <= -1
+        return not self.hasTimeRemaining()
     
     def isFinished(self):
-        return self.completionPercentage >= 100 and self.hasTimeRemaining
+        return self.completionPercentage >= 100 and self.hasTimeRemaining()
     
     def isMissed(self):
         return self.hasNoTimeRemaining() and not self.isFinished()
     
-    def getTaskScore(self):
+    def getTaskScore(self)->int:
         return self.pointPerSuccess
     
     def update(self,deltaTime):

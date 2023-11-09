@@ -15,12 +15,12 @@ class TaskManager:
         self.parameters = parameters.parameters
 
         self.listTasks = [
-            ("SAE", 120, 1, 10),
-            ("REVISION", 40, 2.5, 10),
+            ("SAE", 120, 1, 80),
+            ("REVISION", 40, 2.5, 35),
             ("ORAL", 20, 5, 30),
             ("DM", 30, 5, 20),
-            ("GAME JAM", 60, 1.25, 40),
-            ("EXERCICE", 20, 4, 5)
+            ("GAME JAM", 60, 1.25, 55),
+            ("EXERCICE", 20, 7, 5)
         ]
 
         self.firstTask = []
@@ -68,12 +68,13 @@ class TaskManager:
         points = self.getCurrentTaskScore()
         self.pointsCounter += points
 
-    def getCompteurPoints(self):
+    def getCompteurPoints(self) -> int:
         return self.pointsCounter
 
     def progressCurrentTask(self, amount : float):
         self.tasks[0].addProgress(amount)
         if self.tasks[0].isFinished():
+            self.addPoints()
             self.deleteCurrentTask()
             return True
     
