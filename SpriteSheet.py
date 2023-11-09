@@ -37,7 +37,6 @@ class SpriteSheet():
             # width : width of the new surface
             # height : height of the new surface
             self.sprites[currentLine,currentColumn] = image.subsurface (((currentLine*spriteWidth)+offset),(currentColumn*spriteHeight)+offset,spriteWidth,spriteHeight)
-            print(self.sprites[currentLine,currentColumn])
 
     # return the sprite at the position given in the parameters
     def getSpriteAt(self, column : int, line : int) -> pygame.surface:
