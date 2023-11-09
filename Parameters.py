@@ -5,22 +5,22 @@ class Parameters:
             "socialBarSpeed": 0.0015,
             "sleepBarSpeed": 0.0012,
 
-            "startCounteurValue": 5,
-            "counterDecreaseStep": 0.5,
+            "startCounteurValue": 30,
+            "counterDecreaseStep": 2,
             "counterClampMin": 5,
-            "maxTask": 5,
+            "maxTask": 4,
 
+            "globalDifficulty": 2,
             "tasksDifficulty": 2,
             "gamesDifficulty": 2,
 
-            #"tasksSpeed": 0.1,
             "tasksProgressPerSuccessMin": 3,
             "tasksProgressPerSuccessMax": 5,
             "tasksTimeAfterError": 1,       # Cooldown en cas d'erreur
 
             "litSpeed": 0.03,
             "litSpeedDifference": 4,
-            "litSleepBarProgressPerSuccess": 1,
+            "litSleepBarProgressPerSuccess": 0.1,
             "litZoneLength": 15,
 
             "socialZoneLength": 10,
@@ -35,31 +35,53 @@ class Parameters:
             try:
                 key, strvalue = text.split('=')
                 value = float(strvalue)
+                if key in self.parameters and value != None:
+                    self.parameters[key] = value
             except:
                 pass
-            if key in self.parameters and value != None:
-                self.parameters[key] = value
 
-        if self.parameters["tasksDifficulty"] > 5:
-            self.parameters["tasksDifficulty"] = 5
-        elif self.parameters["tasksDifficulty"] < 0:
-            self.parameters["tasksDifficulty"] = 0
+        if self.parameters["globalDifficulty"] > 4:
+            self.parameters["globalDifficulty"] = 4
+        elif self.parameters["globalDifficulty"] < 1:
+            self.parameters["globalDifficulty"] = 1
         
-        '''self.parameters["tasksSpeed"] *= self.parameters["tasksDifficulty"]/2
-        self.parameters["tasksProgressPerSuccessMin"] *= self.parameters["tasksDifficulty"]/2
-        self.parameters["tasksProgressPerSuccessMax"] *= self.parameters["tasksDifficulty"]/2
-        self.parameters["tasksTimeAfterError"] *= self.parameters["tasksDifficulty"]/2
+        self.parameters["tasksDifficulty"] = self.parameters["globalDifficulty"]
+        self.parameters["gamesDifficulty"] = self.parameters["globalDifficulty"]
 
-        if self.parameters["gamesDifficulty"] > 5:
-            self.parameters["gamesDifficulty"] = 5
-        elif self.parameters["gamesDifficulty"] < 0:
-            self.parameters["gamesDifficulty"] = 0
+        #self.parameters["playerSpeed"] /= self.parameters["globalDifficulty"]/2
+        self.parameters["socialBarSpeed"] *= self.parameters["globalDifficulty"]/2
+        self.parameters["sleepBarSpeed"] *= self.parameters["globalDifficulty"]/2
+
+
+
+        if self.parameters["tasksDifficulty"] > 4:
+            self.parameters["tasksDifficulty"] = 4
+        elif self.parameters["tasksDifficulty"] < 1:
+            self.parameters["tasksDifficulty"] = 1
+        
+        self.parameters["tasksProgressPerSuccessMin"] /= self.parameters["tasksDifficulty"]/2
+        self.parameters["tasksProgressPerSuccessMax"] /= self.parameters["tasksDifficulty"]/2
+        self.parameters["tasksTimeAfterError"] *= self.parameters["tasksDifficulty"]/2
+        self.parameters["startCounteurValue"] /= self.parameters["tasksDifficulty"]/2
+        self.parameters["counterDecreaseStep"] *= self.parameters["tasksDifficulty"]/2
+        self.parameters["counterClampMin"] /= self.parameters["tasksDifficulty"]/2
+        self.parameters["maxTask"] *= self.parameters["tasksDifficulty"]/2
+
+
+
+        if self.parameters["gamesDifficulty"] > 4:
+            self.parameters["gamesDifficulty"] = 4
+        elif self.parameters["gamesDifficulty"] < 1:
+            self.parameters["gamesDifficulty"] = 1
         
         self.parameters["litSpeed"] *= self.parameters["gamesDifficulty"]/2
         self.parameters["litSpeedDifference"] *= self.parameters["gamesDifficulty"]/2
         self.parameters["litSleepBarProgressPerSuccess"] *= self.parameters["gamesDifficulty"]/2
         self.parameters["litZoneLength"] *= self.parameters["gamesDifficulty"]/2
+
         self.parameters["socialZoneLength"] *= self.parameters["gamesDifficulty"]/2
         self.parameters["socialSpeed"] *= self.parameters["gamesDifficulty"]/2
         self.parameters["socialBarProgressPerSuccess"] *= self.parameters["gamesDifficulty"]/2
-        self.parameters["socialTimeAfterError"] *= self.parameters["gamesDifficulty"]/2'''
+        self.parameters["socialBarMinTime"] *= self.parameters["gamesDifficulty"]/2
+        self.parameters["socialBarMaxTime"] *= self.parameters["gamesDifficulty"]/2
+        self.parameters["socialTimeAfterError"] *= self.parameters["gamesDifficulty"]/2

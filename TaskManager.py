@@ -1,6 +1,7 @@
 import Task
 import pygame
 import Parameters
+import random
 
 class TaskManager:
 
@@ -11,11 +12,20 @@ class TaskManager:
         if TaskManager.instance != None :
             raise Exception("instance already exists")
         TaskManager.instance = self
-    
         self.parameters = parameters.parameters
+
+        self.listTasks = [
+            ("SAE", 120, 1),
+            ("REVISION", 40, 2.5),
+            ("ORAL", 20, 5),
+            ("DM", 30, 5),
+            ("GAME JAM", 60, 1.25),
+            ("EXERCICE", 20, 4)
+        ]
+
         self.firstTask = []
         self.tasks = []
-        self.addTask("UNO")
+        self.addTask()
         self.counter = self.parameters["startCounteurValue"]
         self.counterDecreaseStep = self.parameters["counterDecreaseStep"]
         self.counterCurrentMax = self.parameters["startCounteurValue"]
@@ -34,7 +44,7 @@ class TaskManager:
         if(self.counter <= 0 and self.getTaskAmount() < self.maxTask):
             self.counterCurrentMax = max(self.counterCurrentMax - self.counterDecreaseStep, self.counterClampMin)
             self.counter = self.counterCurrentMax
-            self.addTask("Test")
+            self.addTask()
 
 
         if self.getTaskAmount() > 0:
@@ -54,8 +64,9 @@ class TaskManager:
             return True
     
 
-    def addTask(self, title):
-        self.tasks.append(Task.Task(title, 40, 1))
+    def addTask(self):
+        title, time, amount = random.choice(self.listTasks)
+        self.tasks.append(Task.Task(title, time, amount))
 
     def deleteCurrentTask(self):
             self.tasks.pop(0)
