@@ -30,7 +30,7 @@ class Application(object):
         gameManager = GameManager.GameManager(self.screen, self.parameters)
         pygame.display.set_caption("MainMenu")
 
-        gameManager.soundManager.playMusic("Background", 0, -1, 0.5, 4000) # boucle infinie
+        gameManager.soundManager.playMusic("Background", 0, -1, 0.35, 4000) # boucle infinie
         while gameManager.isRunning():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -119,6 +119,14 @@ def mainMenu():
         app.screen.blit(line3, (60, 170))
         line4 = font.render('Combien de tache pourrez-vous faire avant de perdre votre sommeil ou vos amis…', True, (0,0,0))
         app.screen.blit(line4, (60, 190))
+
+        fontCredit = pygame.font.Font("Font/Quinquefive-ALoRM.ttf", 5)
+        credit1 = fontCredit.render("Fait avec PyGame dans le cadre d'une game jam pour l'IUT2 Grenoble", True, (150,150,150))
+        app.screen.blit(credit1, (30, 650))
+        credit2 = fontCredit.render('Sons : onlinesound.net/8bit-sfx-generator et pixabay.com', True, (150,150,150))
+        app.screen.blit(credit2, (30, 665))
+        credit3 = fontCredit.render('Police : Quinque Five Font by GGBotNet', True, (150,150,150))
+        app.screen.blit(credit3, (30, 680))
 
         # Affichage consigne pour lancer la partie
         draw_text("Appuyez sur n'importe quel bouton pour lancer une partie", 15, default_color, color_direction, color_speed, app.screenWidth / 2, app.screenHeight / 1.25, app.screen)

@@ -79,11 +79,11 @@ class GameManager():
         self.collisions = [bedCollision, socialCollision, tablesCollision]
 
         self.isPlayerVisible = True
-        self.nbHeart = 2
+        self.nbHeart = 3
         self.nbHeartLeft = self.nbHeart
         self.lifeImage = pygame.image.load("Art/heart.png")
         self.lifeImageRescaled = pygame.transform.scale(self.lifeImage,(10*5,9*5))
-        self.heartOffset = 50/self.nbHeart
+        self.heartOffset = 50
         #self.Lives = []
 
     def isRunning(self):
@@ -118,14 +118,14 @@ class GameManager():
         self.screen.blit(self.treeShadow, (1280 - self.treeShadow.get_width(), 720 - self.treeShadow.get_height()))
         self.screen.blit(self.tree, (1280 - self.tree.get_width(), 720 - self.tree.get_height()))
         self.screen.blit(self.foreground, (0,0))
-        self.draw_text("Score : " + str(int(self.score)),(0,0,0),560.5,660,self.screen)
+        self.draw_text("Score : " + str(int(self.score)),(0,0,0),563,660,self.screen)
         self.taskManager.draw(self.screen)
         self.barGroup.update(self.screen)
 
         self.player.update(deltaTime, self.collisions, pygame.Rect(150, 45, 980, 635))
         for index in range(self.nbHeartLeft):
-            self.lifeImageRescaled = pygame.transform.scale(self.lifeImage,((10/self.nbHeart)*5,(9/self.nbHeart)*5))
-            self.screen.blit(self.lifeImageRescaled,(810 + self.heartOffset*index,657.5))
+            self.lifeImageRescaled = pygame.transform.scale(self.lifeImage,((10)*5,(9)*5))
+            self.screen.blit(self.lifeImageRescaled,(790 + self.heartOffset*index, 645))
 
         for item in self.interactibleGroup.sprites():
             item.update(deltaTime)
