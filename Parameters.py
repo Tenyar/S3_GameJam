@@ -19,15 +19,15 @@ class Parameters:
 
             "sleepSpeed": 0.035,       # vitesse de descente de la bar
             "sleepSpeedDifference": 3,    # vitesse à laquelle sa monte en fonction de lit speed
-            "sleepSleepBarProgressPerSuccess": 10,
+            "sleepBarProgressPerSuccess": 10,
             "sleepZoneLength": 15,
 
-            "socialZoneLength": 10,
             "socialSpeed": 0.09,
             "socialBarProgressPerSuccess": 5,
             "socialBarMinTime": 0.3,
             "socialBarMaxTime": 1,
-            "socialTimeAfterError": 0.5
+            "socialTimeAfterError": 0.5,
+            "socialZoneLength": 10
         }
 
         for text in argv[1:]:
@@ -75,7 +75,7 @@ class Parameters:
         
         self.parameters["sleepSpeed"] *= self.parameters["gamesDifficulty"]/2
         self.parameters["sleepSpeedDifference"] *= self.parameters["gamesDifficulty"]/2
-        self.parameters["sleepSleepBarProgressPerSuccess"] *= self.parameters["gamesDifficulty"]/2
+        self.parameters["sleepBarProgressPerSuccess"] *= self.parameters["gamesDifficulty"]/2
         self.parameters["sleepZoneLength"] *= self.parameters["gamesDifficulty"]/2
 
         self.parameters["socialZoneLength"] *= self.parameters["gamesDifficulty"]/2
