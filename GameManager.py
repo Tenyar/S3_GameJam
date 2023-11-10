@@ -121,6 +121,7 @@ class GameManager():
         self.draw_text("Score : " + str(int(self.score)),(0,0,0),563,660,self.screen)
         self.taskManager.draw(self.screen)
         self.barGroup.update(self.screen)
+        self.screen.blit(self.iconeBarUI, self.rectIconeBarUI)
 
         self.player.update(deltaTime, self.collisions, pygame.Rect(150, 45, 980, 635))
         for index in range(self.nbHeartLeft):
