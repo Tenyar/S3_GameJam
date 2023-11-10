@@ -134,6 +134,8 @@ def mainMenu():
         app.screen.blit(line4, (60, 190))
         line5 = font.render('           Mouvement du joueur      |      Travaux sur l’ordinateur      |      Autres mini-jeu', True, (0,0,0))
         app.screen.blit(line5, (60, 490))
+        line5 = font.render('                                    |                                    |', True, (0,0,0))
+        app.screen.blit(line5, (60, 500))
         line6 = font.render('         fleches directionnelles    |      touches A, Z, E, Q, S, D      |      barre d’espace', True, (0,0,0))
         app.screen.blit(line6, (60, 510))
 
