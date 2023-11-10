@@ -12,7 +12,7 @@ class Parameters:
             "tasksProgressPerSuccessMin": 3,
             "tasksProgressPerSuccessMax": 5,
             "tasksTimeAfterError": 0.5,       # Cooldown en cas d'erreur
-            "startCounteurValue": 18,
+            "startCounterValue": 18,
             "counterDecreaseStep": 0.25,
             "counterClampMin": 10,
             "maxTask": 4,
@@ -61,7 +61,7 @@ class Parameters:
         self.parameters["tasksProgressPerSuccessMin"] /= self.parameters["tasksDifficulty"]/2
         self.parameters["tasksProgressPerSuccessMax"] /= self.parameters["tasksDifficulty"]/2
         self.parameters["tasksTimeAfterError"] *= self.parameters["tasksDifficulty"]/2
-        self.parameters["startCounteurValue"] /= self.parameters["tasksDifficulty"]/2
+        self.parameters["startCounterValue"] /= self.parameters["tasksDifficulty"]/2
         self.parameters["counterDecreaseStep"] *= self.parameters["tasksDifficulty"]/2
         self.parameters["counterClampMin"] /= self.parameters["tasksDifficulty"]/2
         self.parameters["maxTask"] *= self.parameters["tasksDifficulty"]/2
