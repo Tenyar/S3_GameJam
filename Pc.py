@@ -123,6 +123,7 @@ class Pc(pg.sprite.Sprite):
     def choseRandomKey(self) -> int:
         
         selectedKey = random.randint(0, len(self.possibleKeys) - 1)
+        # On s'assure que chaque nouvelle touche sera forcément différente de l'ancienne
         while selectedKey == self.currentKeyId:
             selectedKey = random.randint(0, len(self.possibleKeys) - 1)
         return selectedKey
