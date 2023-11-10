@@ -41,6 +41,7 @@ class Application(object):
             gameManager.update(self.deltaTime)
             pygame.display.update() # Update les données sur la fenêtre
             pygame.display.flip() # Met les "dessins" stocké dans le buffer à l'écran
+        gameManager.deleteInstance()
 
 
 def draw_text(text, size, default_color, color_direction, color_speed, x, y, screen):

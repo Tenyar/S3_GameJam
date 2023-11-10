@@ -98,6 +98,6 @@ class TaskManager:
             task.draw(screen, self.font)
             currentTaskId += 1
 
-
-
+    def deleteInstance(self):
+        TaskManager.instance = None
 
