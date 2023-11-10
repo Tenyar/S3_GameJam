@@ -150,3 +150,7 @@ class GameManager():
 
     def setPlayerVisible(self, isVisible : bool):
         self.isPlayerVisible = isVisible
+    
+    def deleteInstance(self):
+        self.taskManager.deleteInstance()
+        GameManager.instance = None

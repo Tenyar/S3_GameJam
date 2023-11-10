@@ -36,7 +36,6 @@ class Parameters:
             try:
                 key, strvalue = text.split('=')
                 value = float(strvalue)
-                key = key[1:]
                 if key in self.parameters and value != None:
                     self.parameters[key] = value
             except:
