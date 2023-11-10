@@ -26,7 +26,7 @@ class Application(object):
             # Gère les paramètres
             self.parameters = parameters
 
-    def startGame(self):
+    def startGame(self, score : int, isScore : bool):
         gameManager = GameManager.GameManager(self.screen, self.parameters)
         pygame.display.set_caption("MainMenu")
 
@@ -41,7 +41,10 @@ class Application(object):
             gameManager.update(self.deltaTime)
             pygame.display.update() # Update les données sur la fenêtre
             pygame.display.flip() # Met les "dessins" stocké dans le buffer à l'écran
+        score = gameManager.taskManager.getCompteurPoints()
+        isScore = True
         gameManager.deleteInstance()
+        return score, isScore
 
 
 def draw_text(text, size, default_color, color_direction, color_speed, x, y, screen):
@@ -68,8 +71,12 @@ def MainGame(app : Application):
     # 2 méthodes pour mettre en FullScreen
     #pygame.display.toggle_fullscreen()
     #pygame.display.set_mode(flags=pygame.FULLSCREEN)
+    score = 0
+    isScore = False
+    
     app.deltaTime = app.clock.tick(60)
-    app.startGame()
+    score, isScore = app.startGame(score, isScore)
+    return score, isScore, 5000
 
     # pygame.quit()
     # sys.exit()
@@ -86,6 +93,9 @@ def mainMenu():
 
     # Création du singleton
     app = Application(WINDOW_WIDTH, WINDOW_HEIGHT, Parameters.Parameters(sys.argv))
+    scoreFinal = 0
+    isScore = False
+    timeBeforeNextGame = 0
 
     # Chargement des images
     foregroundImage = pygame.image.load("Art/Menu_Foreground.png")
@@ -98,14 +108,17 @@ def mainMenu():
     default_color = [0,0,0] # couleur par défaut
 
     while True:
-        for event in pygame.event.get():
-            # On regarde si l'évenement "quitter la fenêtre" est déclenché.
-            if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                pygame.quit()
-                sys.exit()
-            # On regarde si n'importe quel autre touche que Escape est enfoncé
-            elif event.type == pygame.KEYDOWN and not event.key == pygame.K_ESCAPE and not event.key == pygame.K_LEFT and not event.key == pygame.K_RIGHT and not event.key == pygame.K_UP and not event.key == pygame.K_DOWN:
-                MainGame(app)
+        app.deltaTime = app.clock.tick(60)
+        timeBeforeNextGame -= app.deltaTime
+        if timeBeforeNextGame <= 0:
+            for event in pygame.event.get():
+                # On regarde si l'évenement "quitter la fenêtre" est déclenché.
+                if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
+                # On regarde si n'importe quel autre touche que Escape est enfoncé
+                elif event.type == pygame.KEYDOWN and not event.key == pygame.K_ESCAPE and not event.key == pygame.K_LEFT and not event.key == pygame.K_RIGHT and not event.key == pygame.K_UP and not event.key == pygame.K_DOWN:
+                        scoreFinal, isScore, timeBeforeNextGame = MainGame(app)
 
         # remplir la scène(fenêtre) à chaque fois qu'il change de position
         app.screen.blit(foreground, (0,0))
@@ -119,19 +132,33 @@ def mainMenu():
         app.screen.blit(line3, (60, 170))
         line4 = font.render('Combien de tache pourrez-vous faire avant de perdre votre sommeil ou vos amis…', True, (0,0,0))
         app.screen.blit(line4, (60, 190))
+        line5 = font.render('           Mouvement du joueur      |      Travaux sur l’ordinateur      |      Autres mini-jeu', True, (0,0,0))
+        app.screen.blit(line5, (60, 490))
+        line6 = font.render('         fleches directionnelles    |      touches A, Z, E, Q, S, D      |      barre d’espace', True, (0,0,0))
+        app.screen.blit(line6, (60, 510))
+
+        if isScore:
+            # Nouvelle font pour score
+            fontScore = pygame.font.Font("Font/Quinquefive-ALoRM.ttf", 15)
+            line7 = fontScore.render('score de partie : ' + str(int(scoreFinal)), True, (0,0,0))
+            app.screen.blit(line7, (app.screen.get_width() / 2 - line7.get_width() / 2, 570))
 
         fontCredit = pygame.font.Font("Font/Quinquefive-ALoRM.ttf", 5)
-        credit1 = fontCredit.render("Fait avec PyGame dans le cadre d'une game jam pour l'IUT2 Grenoble", True, (150,150,150))
-        app.screen.blit(credit1, (30, 650))
-        credit2 = fontCredit.render('Sons : onlinesound.net/8bit-sfx-generator et pixabay.com', True, (150,150,150))
-        app.screen.blit(credit2, (30, 665))
+        credit1 = fontCredit.render("Fait avec PyGame dans le cadre d'une game jam", True, (150,150,150))
+        app.screen.blit(credit1, (30, 645))
+        credit1 = fontCredit.render("au sein de l'IUT2 Grenoble", True, (150,150,150))
+        app.screen.blit(credit1, (30, 655))
+        credit2 = fontCredit.render('Sons : onlinesound.net/8bit-sfx-generator et', True, (150,150,150))
+        app.screen.blit(credit2, (30, 670))
+        credit2 = fontCredit.render('       pixabay.com', True, (150,150,150))
+        app.screen.blit(credit2, (30, 680))
         credit3 = fontCredit.render('Police : Quinque Five Font by GGBotNet', True, (150,150,150))
-        app.screen.blit(credit3, (30, 680))
+        app.screen.blit(credit3, (30, 695))
 
         # Affichage consigne pour lancer la partie
-        draw_text("Appuyez sur n'importe quel bouton pour lancer une partie", 15, default_color, color_direction, color_speed, app.screenWidth / 2, app.screenHeight / 1.25, app.screen)
+        draw_text("Appuyez sur n'importe quel bouton pour lancer une partie", 15, default_color, color_direction, color_speed, app.screenWidth / 2, app.screenHeight / 1.15, app.screen)
         # Affichage consigne pour quitter le menu
-        draw_text("Appuyez sur echap pour quitter", 15, default_color, color_direction, color_speed, app.screenWidth / 2, app.screenHeight / 1.15, app.screen)
+        draw_text("Appuyez sur echap pour quitter", 15, default_color, color_direction, color_speed, app.screenWidth / 2, app.screenHeight / 1.10, app.screen)
         # Update les données sur la fenêtre
         pygame.display.update() 
         # Met les "dessins" stocké dans le buffer à l'écran
