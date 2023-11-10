@@ -43,7 +43,7 @@ class Application(object):
             pygame.display.flip() # Met les "dessins" stocké dans le buffer à l'écran
         score = gameManager.taskManager.getPointsCounter()
         isScore = True
-        gameManager.soundManager.playMusic("GameOver", 0, 0.2, 0)
+        gameManager.soundManager.playMusic("GameOver", 0, 0, 0.4, 0)
         gameManager.deleteInstance()
         return score, isScore
 
