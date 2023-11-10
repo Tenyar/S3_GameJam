@@ -43,14 +43,14 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, deltaTime, collisionGroup : list[pygame.Rect], backgroundRect : pygame.Rect):
 
-        # Check si le player sort de la map, le remet au centre
+        # Check si le player sort de la map, si oui, le remet au centre
         if self.position.x < backgroundRect.left or self.position.x > backgroundRect.right:
             self.position.x = backgroundRect.width / 2
         if self.position.y <  backgroundRect.top or self.position.y > backgroundRect.bottom:
             self.position.y = backgroundRect.height / 2
 
         key_typed = False
-        # Prise d'informations sur les touches saisit.
+        # Prise d'informations sur les touches saisies.
         keys = pygame.key.get_pressed()
 
         translation = pygame.Vector2(0,0)
@@ -102,6 +102,14 @@ class Player(pygame.sprite.Sprite):
             self.lastKeyTyped = pygame.K_UP
             key_typed = True
 
+        if  keys[pygame.K_LEFT] and keys[pygame.K_RIGHT]:
+            self.image = self.sprite_sheet.getSpriteAt(0,0)
+            self.image = pygame.transform.scale(self.image,(20*5, 30*5))
+        if  keys[pygame.K_UP] and keys[pygame.K_DOWN]:
+            self.image = self.sprite_sheet.getSpriteAt(0,0)
+            self.image = pygame.transform.scale(self.image,(20*5, 30*5))
+
+        # différents tests pour afficher le sprite correspondant au personnage immobile dans la direction de la dernière touche tapée
         if not key_typed:
             if self.lastKeyTyped == pygame.K_LEFT:
                 self.image = self.sprite_sheet.getSpriteAt(2,0)

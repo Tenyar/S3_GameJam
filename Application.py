@@ -95,7 +95,7 @@ def mainMenu():
     app = Application(WINDOW_WIDTH, WINDOW_HEIGHT, Parameters.Parameters(sys.argv))
     scoreFinal = 0
     isScore = False
-    timeBeforeNextGame = 0
+    timeBeforeNextGame = 3000
 
     # Chargement des images
     foregroundImage = pygame.image.load("Art/Menu_Foreground.png")
@@ -109,16 +109,21 @@ def mainMenu():
 
     while True:
         app.deltaTime = app.clock.tick(60)
-        timeBeforeNextGame -= app.deltaTime
-        if timeBeforeNextGame <= 0:
-            for event in pygame.event.get():
-                # On regarde si l'évenement "quitter la fenêtre" est déclenché.
-                if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+        if timeBeforeNextGame > 0:
+            timeBeforeNextGame -= app.deltaTime
+        print(timeBeforeNextGame)
+        for event in pygame.event.get():
+            # On regarde si l'évenement "quitter la fenêtre" est déclenché.
+            if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                if timeBeforeNextGame <= 0:
                     pygame.quit()
                     sys.exit()
-                # On regarde si n'importe quel autre touche que Escape est enfoncé
-                elif event.type == pygame.KEYDOWN and not event.key == pygame.K_ESCAPE and not event.key == pygame.K_LEFT and not event.key == pygame.K_RIGHT and not event.key == pygame.K_UP and not event.key == pygame.K_DOWN:
-                        scoreFinal, isScore, timeBeforeNextGame = MainGame(app)
+
+            # On regarde si n'importe quel autre touche que Escape est enfoncé
+            elif event.type == pygame.KEYDOWN and not event.key == pygame.K_ESCAPE and not event.key == pygame.K_LEFT and not event.key == pygame.K_RIGHT and not event.key == pygame.K_UP and not event.key == pygame.K_DOWN:
+                if timeBeforeNextGame <= 0: 
+                    scoreFinal, isScore, timeBeforeNextGame = MainGame(app)
+
 
         # remplir la scène(fenêtre) à chaque fois qu'il change de position
         app.screen.blit(foreground, (0,0))
@@ -143,22 +148,32 @@ def mainMenu():
             # Nouvelle font pour score
             fontScore = pygame.font.Font("Font/Quinquefive-ALoRM.ttf", 15)
             line7 = fontScore.render('score de partie : ' + str(int(scoreFinal)), True, (0,0,0))
-            app.screen.blit(line7, (app.screen.get_width() / 2 - line7.get_width() / 2, 570))
+            app.screen.blit(line7, (app.screen.get_width() / 2 - line7.get_width() / 2, 565))
 
         fontCredit = pygame.font.Font("Font/Quinquefive-ALoRM.ttf", 5)
+        # En bas à gauche
         credit1 = fontCredit.render("Fait avec PyGame dans le cadre d'une game jam", True, (150,150,150))
-        app.screen.blit(credit1, (30, 645))
+        app.screen.blit(credit1, (980, 645))
         credit1 = fontCredit.render("au sein de l'IUT2 Grenoble", True, (150,150,150))
-        app.screen.blit(credit1, (30, 655))
+        app.screen.blit(credit1, (980, 655))
         credit2 = fontCredit.render('Sons : onlinesound.net/8bit-sfx-generator et', True, (150,150,150))
-        app.screen.blit(credit2, (30, 670))
+        app.screen.blit(credit2, (980, 670))
         credit2 = fontCredit.render('       pixabay.com', True, (150,150,150))
-        app.screen.blit(credit2, (30, 680))
+        app.screen.blit(credit2, (980, 680))
         credit3 = fontCredit.render('Police : Quinque Five Font by GGBotNet', True, (150,150,150))
-        app.screen.blit(credit3, (30, 695))
+        app.screen.blit(credit3, (980, 695))
+        # En bas à droite
+        credit4 = fontCredit.render('Paul Maget : Lead / HitBox developer & Graphic designer', True, (150,150,150))
+        app.screen.blit(credit4, (30, 665))
+        credit5 = fontCredit.render('Arnaud Kersual : Sound / UI / Player Developer', True, (150,150,150))
+        app.screen.blit(credit5, (30, 675))
+        credit6 = fontCredit.render('Mathieu Bucket : Mini games / life management / parameters developer', True, (150,150,150))
+        app.screen.blit(credit6, (30, 685))
+        credit7 = fontCredit.render('Quentin Estienne : Sprite Sheet / Score / Task developer', True, (150,150,150))
+        app.screen.blit(credit7, (30, 695))
 
         # Affichage consigne pour lancer la partie
-        draw_text("Appuyez sur n'importe quel bouton pour lancer une partie", 15, default_color, color_direction, color_speed, app.screenWidth / 2, app.screenHeight / 1.15, app.screen)
+        draw_text("Appuyez sur n'importe quel bouton pour lancer une partie", 15, default_color, color_direction, color_speed, app.screenWidth / 2, app.screenHeight / 1.175, app.screen)
         # Affichage consigne pour quitter le menu
         draw_text("Appuyez sur echap pour quitter", 15, default_color, color_direction, color_speed, app.screenWidth / 2, app.screenHeight / 1.10, app.screen)
         # Update les données sur la fenêtre
