@@ -13,7 +13,7 @@ class SoundManager:
         outBedSound = mixer.Sound("Sound/Out_Bed.wav")
         socialSound = mixer.Sound("Sound/Social_Env_Sound.mp3")
         progBarFullSound = mixer.Sound("Sound/BarProg_Full.mp3")
-        #gameOverSound = mixer.Sound("Sound/GameOver")
+        gameOverSound = mixer.Sound("Sound/GameOver.mp3")
         errorSound = mixer.Sound("Sound/Error_Sound.wav")
         backgroundSound = mixer.Sound("Sound/Background_Sound.wav")
 
@@ -26,7 +26,7 @@ class SoundManager:
             "OutBed": outBedSound,
             "Social": socialSound,
             "ProgBarFull": progBarFullSound,
-            #"GameOver": gameOverSound,
+            "GameOver": gameOverSound,
             "Error": errorSound,
             "Background": backgroundSound
         }
