@@ -29,7 +29,7 @@ class TaskManager:
         self.addTask()
         self.counter = self.parameters["startCounterValue"]
         self.counterDecreaseStep = self.parameters["counterDecreaseStep"]
-        self.counterCurrentMax = self.parameters["startCounteurValue"]
+        self.counterCurrentMax = self.parameters["startCounterValue"]
         self.counterClampMin = self.parameters["counterClampMin"]
         self.maxTask = self.parameters["maxTask"]
 
