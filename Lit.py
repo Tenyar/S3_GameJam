@@ -15,11 +15,11 @@ class Lit(pg.sprite.Sprite):
         
         self.isActive = False
         self.pos = 0
-        self.speed = parameters.parameters["litSpeed"]
-        self.speedDifference = parameters.parameters["litSpeedDifference"]
-        self.progress = parameters.parameters["litSleepBarProgressPerSuccess"]
+        self.speed = parameters.parameters["sleepSpeed"]
+        self.speedDifference = parameters.parameters["sleepSpeedDifference"]
+        self.progress = parameters.parameters["sleepSleepBarProgressPerSuccess"]
         self.zonePos = 50
-        self.zoneLength = parameters.parameters["litZoneLength"]
+        self.zoneLength = parameters.parameters["sleepZoneLength"]
         self.position = position
 
         self.timeBeforeSound = 0 # init à 0 seconde

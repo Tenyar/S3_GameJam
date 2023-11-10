@@ -17,10 +17,10 @@ class Parameters:
             "counterClampMin": 10,
             "maxTask": 4,
 
-            "litSpeed": 0.035,       # vitesse de descente de la bar
-            "litSpeedDifference": 3,    # vitesse à laquelle sa monte en fonction de lit speed
-            "litSleepBarProgressPerSuccess": 10,
-            "litZoneLength": 15,
+            "sleepSpeed": 0.035,       # vitesse de descente de la bar
+            "sleepSpeedDifference": 3,    # vitesse à laquelle sa monte en fonction de lit speed
+            "sleepSleepBarProgressPerSuccess": 10,
+            "sleepZoneLength": 15,
 
             "socialZoneLength": 10,
             "socialSpeed": 0.09,
@@ -73,10 +73,10 @@ class Parameters:
         elif self.parameters["gamesDifficulty"] < 1:
             self.parameters["gamesDifficulty"] = 1
         
-        self.parameters["litSpeed"] *= self.parameters["gamesDifficulty"]/2
-        self.parameters["litSpeedDifference"] *= self.parameters["gamesDifficulty"]/2
-        self.parameters["litSleepBarProgressPerSuccess"] *= self.parameters["gamesDifficulty"]/2
-        self.parameters["litZoneLength"] *= self.parameters["gamesDifficulty"]/2
+        self.parameters["sleepSpeed"] *= self.parameters["gamesDifficulty"]/2
+        self.parameters["sleepSpeedDifference"] *= self.parameters["gamesDifficulty"]/2
+        self.parameters["sleepSleepBarProgressPerSuccess"] *= self.parameters["gamesDifficulty"]/2
+        self.parameters["sleepZoneLength"] *= self.parameters["gamesDifficulty"]/2
 
         self.parameters["socialZoneLength"] *= self.parameters["gamesDifficulty"]/2
         self.parameters["socialSpeed"] *= self.parameters["gamesDifficulty"]/2
