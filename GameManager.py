@@ -71,10 +71,15 @@ class GameManager():
         self.collisions = [bedCollision, socialCollision, tablesCollision]
 
         self.isPlayerVisible = True
-        self.nbErrorLeft = 3
+        self.nbHeart = 2
+        self.nbHeartLeft = self.nbHeart
+        self.lifeImage = pygame.image.load("Art/heart.png")
+        self.lifeImageRescaled = pygame.transform.scale(self.lifeImage,(10*5,9*5))
+        self.heartOffset = 50/self.nbHeart
+        #self.Lives = []
 
     def isRunning(self):
-        if self.sleepBar.getProg() <= 0 or self.socialBar.getProg() <= 0 or self.nbErrorLeft == 0:
+        if self.sleepBar.getProg() <= 0 or self.socialBar.getProg() <= 0 or self.nbHeartLeft == 0:
             return False
             #print ("fin du jeu")
         return True
@@ -84,7 +89,7 @@ class GameManager():
         text_surface = font.render(text, False, default_color)
         text_rect = text_surface.get_rect()
         # Met le centre du rectangle de text au centre de la fenêtre
-        text_rect.center = (x, y)
+        text_rect.topleft = (x, y)
         screen.blit(text_surface, text_rect)
 
     def update(self, deltaTime):
@@ -94,7 +99,7 @@ class GameManager():
         self.tryInteraction(self.player.rect)
         self.taskManager.update(deltaTime)
         if self.taskManager.isTaskTimedOut():
-            self.nbErrorLeft -= 1
+            self.nbHeartLeft -= 1
 
         self.screen.blit(self.background, (0,0))
         self.screen.blit(self.stranger, (28 * 5, 18 * 5))
@@ -105,11 +110,14 @@ class GameManager():
         self.screen.blit(self.treeShadow, (1280 - self.treeShadow.get_width(), 720 - self.treeShadow.get_height()))
         self.screen.blit(self.tree, (1280 - self.tree.get_width(), 720 - self.tree.get_height()))
         self.screen.blit(self.foreground, (0,0))
-        self.draw_text("Score : " + str(self.score),(0,0,0),660,670,self.screen)
+        self.draw_text("Score : " + str(int(self.score)),(0,0,0),560.5,660,self.screen)
         self.taskManager.draw(self.screen)
         self.barGroup.update(self.screen)
 
         self.player.update(deltaTime, self.collisions, pygame.Rect(150, 45, 980, 635))
+        for index in range(self.nbHeartLeft):
+            self.lifeImageRescaled = pygame.transform.scale(self.lifeImage,((10/self.nbHeart)*5,(9/self.nbHeart)*5))
+            self.screen.blit(self.lifeImageRescaled,(810 + self.heartOffset*index,657.5))
 
         for item in self.interactibleGroup.sprites():
             item.update(deltaTime)
