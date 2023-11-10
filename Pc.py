@@ -65,7 +65,7 @@ class Pc(pg.sprite.Sprite):
         if self.gameManager.taskManager.getTaskAmount() == 0:
             return
         # Joue une musique marquant le début de la tâche
-        self.gameManager.soundManager.playMusic("Pc", 1, 0, 1, 0)
+        self.gameManager.soundManager.playMusic("Pc", 1, 0, 0.5, 0)
         
         if len(self.taskManager.tasks) == 0:
             return
@@ -121,7 +121,11 @@ class Pc(pg.sprite.Sprite):
             self.oldKeyId = -1
 
     def choseRandomKey(self) -> int:
-        return random.randint(0, len(self.possibleKeys) - 1)
+        
+        selectedKey = random.randint(0, len(self.possibleKeys) - 1)
+        while selectedKey == self.currentKeyId:
+            selectedKey = random.randint(0, len(self.possibleKeys) - 1)
+        return selectedKey
 
     def drawKey(self, keyValue, columnId):
         # Récupère l'index(position) de la touche dans la liste (parcours implicite)
