@@ -43,6 +43,12 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, deltaTime, collisionGroup : list[pygame.Rect], backgroundRect : pygame.Rect):
 
+        # Check si le player sort de la map, le remet au centre
+        if self.position.x < backgroundRect.left or self.position.x > backgroundRect.right:
+            self.position.x = backgroundRect.width / 2
+        if self.position.y <  backgroundRect.top or self.position.y > backgroundRect.bottom:
+            self.position.y = backgroundRect.height / 2
+
         key_typed = False
         # Prise d'informations sur les touches saisit.
         keys = pygame.key.get_pressed()
@@ -142,7 +148,7 @@ class Player(pygame.sprite.Sprite):
                 translationDirectionChecks[i] = False
                 if self.parameters["isDebug"] == 1:
                     pygame.draw.lines(pygame.display.get_surface(), (255, 0, 0), True, [backgroundRect.topright, backgroundRect.bottomright])
-
+        
             # Check collisions entre player et tout les sprites
             for collisionRect in collisionGroup:
                 #if sprite.rect.clipline(translatedRect.topleft, translatedRect.topright):
