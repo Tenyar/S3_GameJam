@@ -134,13 +134,13 @@ class Social(pg.sprite.Sprite):
                             self.social.addProgress(self.progress)
                             # Si barre sociale à 100% après un succès jouer un autre son.
                             if self.social.getProg() == 100:
-                                self.gameManager.soundManager.playMusic("ProgBarFull", 2, 0, 1, 0)
+                                self.gameManager.soundManager.playMusic("ProgBarFull", 2, 0, 4, 0)
                             else:
                                 self.gameManager.soundManager.playMusic("TaskDone", 2, 0, 0.5, 0)
 
             # Cooldown général si échec
             if not success:
-                self.gameManager.soundManager.playMusic("Error", 2, 0, 0.5, 0)
+                self.gameManager.soundManager.playMusic("Error", 2, 0, 0.8, 0)
                 self.timeBeforeNextTry = self.timeAfterError
             # Si la spaceBar n'est plus enfoncé, reset la variable avec une touche par défaut
         elif not keys[pg.K_SPACE]:

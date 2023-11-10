@@ -5,18 +5,30 @@ class SoundManager:
     def __init__(self):
         # PlayList des musiques jouables en jeux
         # Raison de performance on ne parcours pas de dossier (paramétrage arbitraire)
+        transitionSound = mixer.Sound("Sound/Transition_Sound.wav")
+        pcSound = mixer.Sound("Sound/Pc_Sound.wav")
+        taskDoneSound = mixer.Sound("Sound/TaskDone_Sound.wav")
+        taskSucessSound = mixer.Sound("Sound/Task_Success.mp3")
+        inBedSound = mixer.Sound("Sound/Jump_Bed.mp3")
+        outBedSound = mixer.Sound("Sound/Out_Bed.wav")
+        socialSound = mixer.Sound("Sound/Social_Env_Sound.mp3")
+        progBarFullSound = mixer.Sound("Sound/BarProg_Full.mp3")
+        #gameOverSound = mixer.Sound("Sound/GameOver")
+        errorSound = mixer.Sound("Sound/Error_Sound.wav")
+        backgroundSound = mixer.Sound("Sound/Background_Sound.wav")
+
         self.playList = {
-            "Transition": "Sound/Transition_Sound.wav",
-            "Pc": "Sound/Pc_Sound.wav",
-            "TaskDone": "Sound/TaskDone_Sound.wav",
-            "TaskSuccess": "Sound/Task_Success.mp3",
-            "InBed": "Sound/Jump_Bed.mp3",
-            "OutBed": "Sound/Out_Bed.wav",
-            "Social": "Sound/Social_Env_Sound.mp3",
-            "ProgBarFull": "Sound/BarProg_Full.mp3",
-            "GameOver": "Sound/GameOver",
-            "Error": "Sound/Error_Sound.wav",
-            "Background": "Sound/Background_Sound.wav"
+            "Transition": transitionSound,
+            "Pc": pcSound,
+            "TaskDone": taskDoneSound,
+            "TaskSuccess": taskSucessSound,
+            "InBed": inBedSound,
+            "OutBed": outBedSound,
+            "Social": socialSound,
+            "ProgBarFull": progBarFullSound,
+            #"GameOver": gameOverSound,
+            "Error": errorSound,
+            "Background": backgroundSound
         }
         # Création de différent channel(piste) de son (8 channel différent par défaut)
         self.channelBackground = mixer.Channel(0) # musique de fond du jeu
@@ -32,12 +44,12 @@ class SoundManager:
         channelUse.set_volume(volume)
 
         # Load and play the music corresponding to the provided key
-        music_file = self.playList.get(music_key)
         sound = None  # Initialize sound variable outside the if block
+        sound = self.playList.get(music_key)
 
-        if music_file:
+        if sound:
             # Load a sound file to play on a channel
-            sound = mixer.Sound(music_file)
+            #sound = mixer.Sound(sound)
 
             # 0 loops mean played once and repeated 0 times
             channelUse.play(sound, numberOfLoop, fade_ms=fadeInMs)
