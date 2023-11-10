@@ -51,7 +51,7 @@ class Social(pg.sprite.Sprite):
         # Si pixel tranparent, les converties à l'affichage
         #print("SUS", self.intervalSuccess)
         SocialeSurface = SocialeSurface.convert_alpha()
-        self.SocialeUI = pg.transform.scale(SocialeSurface, (SocialeSurface.get_width()*5, SocialeSurface.get_height()*5 )) #+ self.intervalSuccess - 5
+        self.SocialeUI = pg.transform.scale(SocialeSurface, (SocialeSurface.get_width()*5, SocialeSurface.get_height()*5 -5)) #+ self.intervalSuccess - 5
         #print("TAILLE DE L'IMGAE: ", SocialeSurface.get_height()*5)
         #print("TAILLE DE L'IMGAE:  AVEC l'interval couver : ", SocialeSurface.get_height()*5 + self.intervalSuccess)
         self.rectSocialeUI = SocialeSurface.get_rect(topleft=(self.barOffsetX, self.barSuccessOffsetY))
