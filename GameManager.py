@@ -41,6 +41,14 @@ class GameManager():
 
         # Création d'un player
         self.player = Player.Player(50, 110, 300, 350, (255, 75, 25), parameters, self.soundManager)
+
+        # Chargement de l'icone des barres de progressions
+        self.iconeBarSurface = pygame.image.load("Art/Bar_Icon.png").convert()
+        self.iconeBarSurface.set_colorkey(0)
+        self.iconeBarSurface = self.iconeBarSurface.convert_alpha()
+        self.iconeBarUI = pygame.transform.scale(self.iconeBarSurface, ((self.iconeBarSurface.get_width() * 2.5), self.iconeBarSurface.get_height() * 2.5))
+        self.rectIconeBarUI = self.iconeBarSurface.get_rect(topleft=(20, 25))
+
         # Group du joueur
         self.playerGroup = pygame.sprite.Group()
         self.playerGroup.add(self.player)
