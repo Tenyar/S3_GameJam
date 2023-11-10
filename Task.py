@@ -40,18 +40,23 @@ class Task (pygame.sprite.Sprite):
         self.completionPercentage += amount * self.amountPerKey
         self.progressBar.addProgress(amount * self.amountPerKey)
 
-    
-    def hasTimeRemaining(self):
-        return self.remainingTime > -1
-
+    # check if there is no time remaining to do the task
+    # We check with the value -1 to allow the task to be displayed for some frames after being missed
     def hasNoTimeRemaining(self):
-        return not self.hasTimeRemaining()
+        return self.remainingTime <= -1
+    
+
+    def hasTimeRemaining(self):
+        return not self.hasNoTimeRemaining()
+
+    
     
     def isFinished(self):
         return self.completionPercentage >= 100 and self.hasTimeRemaining()
     
-    def isMissed(self):
-        return self.hasNoTimeRemaining() and not self.isFinished()
+    # deprecated
+    #def isMissed(self):
+    #    return self.hasNoTimeRemaining() and not self.isFinished()
     
     def getTaskScore(self)->int:
         return self.pointPerSuccess
@@ -68,10 +73,11 @@ class Task (pygame.sprite.Sprite):
         screen.blit(self.image,(self.position.x,self.position.y))
         # dessin de la barre de progression de la tâche
         self.progressBar.update(screen)
-        # dessing de font
+        # dessin de font
         text = font.render(self.title, False, (0,0,0))
         screen.blit(text, (self.position.x + 10, self.position.y + 10))
 
+        # boucle d'affichage du temps restant pour la tache 
         if self.remainingTime > 0.0 and self.remainingTime < 6.0:
             timer = font.render(self.timer,False,(255,0,0))
         elif self.remainingTime >= 6.0:

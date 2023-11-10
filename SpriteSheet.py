@@ -1,7 +1,6 @@
 import pygame 
 #classe qui représente la notion de sprite sheet 
 # Elle permet de stocker toutes les images d'une sprite sheet dans l'ordre avec leur numéro de colonne et de ligne
-#TODO ajout offsets
 class SpriteSheet():
     # filename : Path to the sprite sheet file
     # spritePerline : number of sprites on each line

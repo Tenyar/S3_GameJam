@@ -14,7 +14,9 @@ class TaskManager:
         TaskManager.instance = self
         self.parameters = parameters.parameters
 
+
         self.tasksDifficulty = self.parameters["tasksDifficulty"]/2
+        # list of possible tasks 
         self.listTasks = [
             ("SAE", 120, 1, 80*self.tasksDifficulty),
             ("REVISION", 40, 2.5, 35*self.tasksDifficulty),
@@ -41,7 +43,7 @@ class TaskManager:
     def update(self, deltaTime):
 
         self.counter -= deltaTime * 0.001
-
+  
         if(self.counter <= 0 and self.getTaskAmount() < self.maxTask):
             self.counterCurrentMax = max(self.counterCurrentMax - self.counterDecreaseStep, self.counterClampMin)
             self.counter = self.counterCurrentMax
@@ -51,7 +53,7 @@ class TaskManager:
         if self.getTaskAmount() > 0:
             self.tasks[0].update(deltaTime)
 
-
+    # check if the task is failed and does not have to be on screen anymore. If so, delete the current task from the tasks list and returns True, else returns False
     def isTaskTimedOut(self):
         if self.getTaskAmount() > 0 and self.tasks[0].hasNoTimeRemaining():
             self.deleteCurrentTask()
@@ -66,12 +68,12 @@ class TaskManager:
 
 
     def addPoints(self):
-        points = self.getCurrentTaskScore()
-        self.pointsCounter += points
+        self.pointsCounter += self.getCurrentTaskScore()
 
-    def getCompteurPoints(self) -> int:
+    def getPointsCounter(self) -> int:
         return self.pointsCounter
 
+    # adds amount to the progress of the current task. If after adding the amount, the task is finished , adds the task points to the score counter and delete the current task from the tasks list.
     def progressCurrentTask(self, amount : float):
         self.tasks[0].addProgress(amount)
         if self.tasks[0].isFinished():

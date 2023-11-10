@@ -41,8 +41,9 @@ class Application(object):
             gameManager.update(self.deltaTime)
             pygame.display.update() # Update les données sur la fenêtre
             pygame.display.flip() # Met les "dessins" stocké dans le buffer à l'écran
-        score = gameManager.taskManager.getCompteurPoints()
+        score = gameManager.taskManager.getPointsCounter()
         isScore = True
+        gameManager.soundManager.playMusic("GameOver", 0, 0.2, 0)
         gameManager.deleteInstance()
         return score, isScore
 
@@ -111,7 +112,7 @@ def mainMenu():
         app.deltaTime = app.clock.tick(60)
         if timeBeforeNextGame > 0:
             timeBeforeNextGame -= app.deltaTime
-        print(timeBeforeNextGame)
+        #print(timeBeforeNextGame)
         for event in pygame.event.get():
             # On regarde si l'évenement "quitter la fenêtre" est déclenché.
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:

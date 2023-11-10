@@ -145,7 +145,7 @@ class GameManager():
                 item.stopInteraction()
 
     def updateScore(self):
-        updatedScore = self.taskManager.getCompteurPoints()
+        updatedScore = self.taskManager.getPointsCounter()
         #print(updatedScore)
         self.score = updatedScore
 
