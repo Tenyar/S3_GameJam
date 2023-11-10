@@ -27,13 +27,16 @@ class Parameters:
             "socialBarMinTime": 0.3,
             "socialBarMaxTime": 1,
             "socialTimeAfterError": 0.5,
-            "socialZoneLength": 10
+            "socialZoneLength": 10,
+
+            "isDebug" : 0
         }
 
         for text in argv[1:]:
             try:
                 key, strvalue = text.split('=')
                 value = float(strvalue)
+                key = key[1:]
                 if key in self.parameters and value != None:
                     self.parameters[key] = value
             except:

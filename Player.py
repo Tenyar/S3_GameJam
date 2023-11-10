@@ -128,16 +128,20 @@ class Player(pygame.sprite.Sprite):
         for i in range(2):
             if translatedRects[i].clipline(backgroundRect.topleft, backgroundRect.topright):
                 translationDirectionChecks[i] = False
-                pygame.draw.lines(pygame.display.get_surface(), (255, 0, 0), True, [backgroundRect.topleft, backgroundRect.topright])
+                if self.parameters["isDebug"] == 1:
+                    pygame.draw.lines(pygame.display.get_surface(), (255, 0, 0), True, [backgroundRect.topleft, backgroundRect.topright])
             if translatedRects[i].clipline(backgroundRect.bottomleft, backgroundRect.bottomright):
                 translationDirectionChecks[i] = False
-                pygame.draw.lines(pygame.display.get_surface(), (255, 0, 0), True, [backgroundRect.bottomleft, backgroundRect.bottomright])
+                if self.parameters["isDebug"] == 1:
+                    pygame.draw.lines(pygame.display.get_surface(), (255, 0, 0), True, [backgroundRect.bottomleft, backgroundRect.bottomright])
             if translatedRects[i].clipline(backgroundRect.topleft, backgroundRect.bottomleft):
                 translationDirectionChecks[i] = False
-                pygame.draw.lines(pygame.display.get_surface(), (255, 0, 0), True, [backgroundRect.topleft, backgroundRect.bottomleft])
+                if self.parameters["isDebug"] == 1:
+                    pygame.draw.lines(pygame.display.get_surface(), (255, 0, 0), True, [backgroundRect.topleft, backgroundRect.bottomleft])
             if translatedRects[i].clipline(backgroundRect.topright, backgroundRect.bottomright):
                 translationDirectionChecks[i] = False
-                pygame.draw.lines(pygame.display.get_surface(), (255, 0, 0), True, [backgroundRect.topright, backgroundRect.bottomright])
+                if self.parameters["isDebug"] == 1:
+                    pygame.draw.lines(pygame.display.get_surface(), (255, 0, 0), True, [backgroundRect.topright, backgroundRect.bottomright])
 
             # Check collisions entre player et tout les sprites
             for collisionRect in collisionGroup:
@@ -151,18 +155,19 @@ class Player(pygame.sprite.Sprite):
                 #    isPositionPossible = False
                 if pygame.Rect.colliderect(collisionRect, translatedRects[i]):
                     translationDirectionChecks[i] = False
-                    pygame.draw.rect(pygame.display.get_surface(), (255, 0, 0), collisionRect, 1)
+                    if self.parameters["isDebug"] == 1:
+                        pygame.draw.rect(pygame.display.get_surface(), (255, 0, 0), collisionRect, 1)
 
 
         if translationDirectionChecks[0]:
             self.position += (translation.x, 0)
-        else:
+        elif self.parameters["isDebug"] == 1:
             pygame.draw.lines(pygame.display.get_surface(), (200, 55, 0), True,
                 [translatedRect.topleft, translatedRect.topright, translatedRect.bottomright, translatedRect.bottomleft])
             
         if translationDirectionChecks[1]:
             self.position += (0, translation.y)
-        else:
+        elif self.parameters["isDebug"] == 1:
             pygame.draw.lines(pygame.display.get_surface(), (200, 55, 0), True,
                 [translatedRect.topleft, translatedRect.topright, translatedRect.bottomright, translatedRect.bottomleft])
 
@@ -173,8 +178,9 @@ class Player(pygame.sprite.Sprite):
         self.checkComicTransition()
 
     def checkComicTransition(self):
-        pygame.draw.lines(pygame.display.get_surface(), (255, 0, 0), True, [(765, 0), (765, 1000)])
-        pygame.draw.lines(pygame.display.get_surface(), (255, 0, 0), True, [(0, 360), (765, 360)])
+        if self.parameters["isDebug"] == 1:
+            pygame.draw.lines(pygame.display.get_surface(), (255, 0, 0), True, [(765, 0), (765, 1000)])
+            pygame.draw.lines(pygame.display.get_surface(), (255, 0, 0), True, [(0, 360), (765, 360)])
 
         if self.rect.clipline((765, 0), (765, 1000)) or self.rect.clipline((0, 360), (765, 360)):
             if not self.isDoingComicTransition:

@@ -74,8 +74,8 @@ class Lit(pg.sprite.Sprite):
     
     def update(self, deltaTime):
 
-        pg.draw.lines(pg.display.get_surface(), (200, 55, 0), True,
-                [self.rect.topleft, self.rect.topright, self.rect.bottomright, self.rect.bottomleft])
+        #pg.draw.lines(pg.display.get_surface(), (200, 55, 0), True,
+        #        [self.rect.topleft, self.rect.topright, self.rect.bottomright, self.rect.bottomleft])
 
 
         if self.isActive:
