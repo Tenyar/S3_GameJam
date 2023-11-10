@@ -75,8 +75,8 @@ class GameManager():
 
     def isRunning(self):
         if self.sleepBar.getProg() <= 0 or self.socialBar.getProg() <= 0 or self.nbErrorLeft == 0:
-            #return False
-            print ("fin du jeu")
+            return False
+            #print ("fin du jeu")
         return True
     
     def draw_text(self,text, default_color, x, y, screen):
@@ -129,7 +129,7 @@ class GameManager():
 
     def updateScore(self):
         updatedScore = self.taskManager.getCompteurPoints()
-        print(updatedScore)
+        #print(updatedScore)
         self.score = updatedScore
 
     def setPlayerVisible(self, isVisible : bool):
